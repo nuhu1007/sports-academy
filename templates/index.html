@@ -1,0 +1,301 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Altar Sports Academy</title>
+  <link rel="icon" href="static/images/altar_logo.jpeg">
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="{% static '/css/style.css' %}">
+
+  <!-- Vendor CSS Files -->
+  <link href="{%static '/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{%static '/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+  <link href="{%static '/vendor/icofont/icofont.min.css'%}" rel="stylesheet">
+  <link href="{%static '/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{%static '/vendor/venobox/venobox.css'%}" rel="stylesheet">
+  <link href="{%static '/vendor/owl.carousel/assets/owl.carousel.min.css'%}" rel="stylesheet">
+  <link href="{%static '/vendor/aos/aos.css'%}" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top header-transparent">
+    <div class="container">
+
+      <div class="logo float-left">
+ 
+        <h1 class="text-light"><a href="{%url 'index'%}"><span><b>Altar Sports Academy</b></span></a></h1>
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="{%url 'index'%}">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#services">Services</a></li>        
+          <li><a href="#footer">Contact Us</a></li>
+          <li><a href="">Rent a Space</a></li>
+          <li><a href="">Get Started</a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex justify-cntent-center align-items-center">
+    <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
+
+      <!-- Slide 1 -->
+      <div class="carousel-item active">
+        <div class="carousel-container">
+          <h2 class="animated fadeInDown">Welcome to <span>Altar Sports Academy</span></h2>
+          <p class="animated fadeInUp">At Netbot, we believe in the power of technology to simplify visitor management and enhance security.</p>
+          <a href="" class="btn-get-started animated fadeInUp">Get Started</a>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="carousel-item">
+        <div class="carousel-container">
+          <h2 class="animated fadeInDown">Our System</h2>
+          <p class="animated fadeInUp">Our state-of-the-art system streamlines the check-in process, eliminates paper logs, and provides real-time data and analytics.</p>
+          <a href="" class="btn-get-started animated fadeInUp">Get Started</a>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="carousel-item">
+        <div class="carousel-container">
+          <h2 class="animated fadeInDown">Commitment</h2>
+          <p class="animated fadeInUp">We are committed to delivering exceptional customer service and customizable solutions to meet the unique needs of every client.</p>
+          <a href="" class="btn-get-started animated fadeInUp">Get Started</a>
+        </div>
+      </div>
+
+      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon bx bx-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+
+      <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon bx bx-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+<!-- ======= Services Section ======= -->
+<section id="services" class="services">
+    <div class="container">
+        <h3 class="title"><a href="">Our Services</a></h3>
+  
+      <div class="row">
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+          <div class="icon-box icon-box-blue">
+            <div class="icon"><i class="bx bx-user"></i></div>
+            <h4 class="title"><a href="#">Visitor Registration</a></h4>
+            <p class="description">Effortlessly register visitors and collect their details, such as name, email, phone number, and purpose of visit.</p>
+          </div>
+        </div>
+  
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+          <div class="icon-box icon-box-cyan">
+            <div class="icon"><i class="bx bx-time"></i></div>
+            <h4 class="title"><a href="#">Check-in and Check-out</a></h4>
+            <p class="description">Streamline the check-in and check-out process for visitors, and keep track of their entry and exit times.</p>
+          </div>
+        </div>
+  
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+          <div class="icon-box icon-box-green">
+            <div class="icon"><i class="bx bx-message-dots"></i></div>
+            <h4 class="title"><a href="#">Notifications</a></h4>
+            <p class="description">Receive real-time notifications when visitors arrive, and send them automatic updates about their appointment or meeting.</p>
+          </div>
+        </div>
+  
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+          <div class="icon-box icon-box-blue">
+            <div class="icon"><i class="bx bx-analyse"></i></div>
+            <h4 class="title"><a href="#">Analytics and Reporting</a></h4>
+            <p class="description">Generate reports and analyze visitor data to gain insights into visitor trends, peak times, and visitor behavior.</p>
+          </div>
+        </div>
+  
+      </div>
+  
+    </div>
+  </section><!-- End Services Section -->
+  
+
+  <section class="why-us" id="about">
+    <div class="container">
+        <h4 class="title"><a href="">Why Us</a></h4>
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center p-5">
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-key"></i></div>
+            <h4 class="title"><a href="">Efficient Visitor Management</a></h4>
+            <p class="description">Our Visitor Management System streamlines the check-in process, eliminates paper logs, and enhances security by providing a fast and accurate record of all visitors.</p>
+          </div>
+        </div>
+        <div class="col-lg-6 d-flex flex-column justify-content-center p-5">
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-shield"></i></div>
+            <h4 class="title"><a href="">Enhanced Security</a></h4>
+            <p class="description">Our system helps protect your organization by screening visitors, tracking their movements, and issuing badges that clearly identify authorized personnel.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><!-- End Why Us Section -->
+
+ <!-- ======= Features Section ======= -->
+ <section class="features">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Our Clients</h2>
+      </div>
+      
+      <div class="row" data-aos="fade-up">
+        <div class="col-md-5">
+          <img src='{%static "/images/building.jpg"%}' class="img-fluid" alt="" style="max-height: 250px;">
+        </div>
+        <div class="col-md-7 pt-4">
+          <h3>Commercial Buildings</h3>
+          <p class="font-italic">
+            Streamline your visitor management process and enhance security for your commercial building with our solution. Our system allows for easy visitor registration, tracking and access control for your building.
+          </p>
+          <ul>
+            <li><i class="icofont-check"></i> Efficiently manage visitor traffic and improve building security</li>
+            <li><i class="icofont-check"></i> Simplify visitor registration and check-in process</li>
+            <li><i class="icofont-check"></i> Customizable access control and visitor restrictions</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="row" data-aos="fade-up">
+        <div class="col-md-5 order-1 order-md-2">
+            <img src='{%static "/images/factory.jpg"%}' class="img-fluid" alt style="max-height: 250px;">
+        </div>
+        <div class="col-md-7 pt-5 order-2 order-md-1">
+          <h3>Factories</h3>
+          <p class="font-italic">
+            Enhance safety and security for your factory by implementing our visitor management solution. Our system allows for easy tracking and management of visitors, contractors, and employees.
+          </p>
+          <ul>
+            <li><i class="icofont-check"></i> Streamline visitor registration and check-in process</li>
+            <li><i class="icofont-check"></i> Ensure compliance with safety and security regulations</li>
+            <li><i class="icofont-check"></i> Monitor visitor traffic and keep your factory safe</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="row" data-aos="fade-up">
+        <div class="col-md-5">
+            <img src='{%static "/images/apartment.jpg"%}' class="img-fluid" alt style="max-height: 250px;">
+        </div>
+        <div class="col-md-7 pt-5">
+          <h3>Residential Buildings</h3>
+          <p>Keep your residential building secure and well-managed with our visitor management system. Our solution simplifies the visitor registration process and enhances the safety and security of your building.</p>
+          <ul>
+            <li><i class="icofont-check"></i> Efficiently manage visitor traffic and improve building security</li>
+            <li><i class="icofont-check"></i> Simplify visitor registration and check-in process</li>
+            <li><i class="icofont-check"></i> Customizable access control and visitor restrictions</li>
+          </ul>
+        </div>
+      </div>
+      
+
+    </div>
+  </section><!-- End Features Section -->
+
+
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+
+    <div class="footer-newsletter" id="start">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+              <p>Start your free trial today</p>
+            </div>
+            
+            <button style="font-size: 1.2em; padding: 10px 30px; background-color: #2b6b2d; color: white; border: none; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); height: 50px;">Start Free Trial</button>
+
+          </div>
+        </div>
+      </div> 
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-6 col-md-6 footer-contact">
+            <h4>Contact Us</h4>
+            <p>
+              5th Floor, Kalson Towers Crescent Lane, <br>
+              Off Parklands Rd, Nairobi<br>
+              Kenya <br><br>
+              <strong>Phone:</strong> +254738361781<br>
+              <strong>Email:</strong> info@netbot.com<br>
+            </p>
+
+          </div>
+
+          <div class="col-lg-13 col-md-6 footer-info">
+            <h3>About Netbot</h3>
+            <p>Our company's mission is to help clients realize the limitless potential of the internet as a sales channel, while providing a wide range of technology solutions to meet the needs of various industries. Our team of experts has experience serving clients in diverse sectors, such as education, finance, healthcare, hospitality, media, retail, and non-profit organizations. We offer information technology services and solutions to help our clients address their technology needs and achieve their business goals.</p>
+            <div class="social-links mt-3">
+              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Netbot</span></strong>. All Rights Reserved
+      </div>
+     
+    </div>
+  </footer>
+  <!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{%static '/vendor/jquery/jquery.min.js'%}"></script>
+  <script src="{%static '/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{%static '/vendor/jquery.easing/jquery.easing.min.js'%}"></script>
+  <script src="{%static '/vendor/venobox/venobox.min.js'%}"></script>
+  <script src="{%static '/vendor/waypoints/jquery.waypoints.min.js'%}"></script>
+  <script src="{%static '/vendor/counterup/counterup.min.js'%}"></script>
+  <script src="{%static '/vendor/owl.carousel/owl.carousel.min.js'%}"></script>
+  <script src="{%static '/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+  <script src="{%static '/vendor/aos/aos.js'%}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{%static '/js/main.js'%}"></script>
+
+</body>
+</html>
