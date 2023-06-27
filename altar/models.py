@@ -5,6 +5,8 @@ from django.utils import timezone
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
+from .managers import UserManager
+
 # Create your models here.
 class User(AbstractUser):
     first_name = models.CharField(_('First Name'), max_length=100, blank=True, null=True)
@@ -14,6 +16,8 @@ class User(AbstractUser):
     national_id = models.IntegerField(_('National Identification Number'), blank=True, null=True)
     image = models.ImageField(upload_to='media/profile_pics/', blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
+
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
