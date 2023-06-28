@@ -18,8 +18,8 @@ class RegistrationForm(UserCreationForm):
 
 
 class LoginForm(forms.ModelForm):
-    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'custom-email-input'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Enter Password', 'class': 'prompt srch_explore'}))
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder':'Enter your email', 'class':'custom-email-input form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Enter your password', 'class':'prompt srch_explore form-control'}))
 
     class Meta:
         model = User

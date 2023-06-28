@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altar Sports Academy</title>
+    <link rel="shortcut icon" href="{%static '/images/altar_logo.jpeg'%}" />
+
+    <!-- START: Template CSS-->
+    <link rel="stylesheet" href="{%static '/vendors/bootstrap/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{%static '/vendors/jquery-ui/jquery-ui.min.css'%}">
+    <link rel="stylesheet" href="{%static '/vendors/jquery-ui/jquery-ui.theme.min.css'%}">
+    <link rel="stylesheet" href="{%static '/vendors/simple-line-icons/css/simple-line-icons.css'%}">        
+    <link rel="stylesheet" href="{%static '/vendors/flags-icon/css/flag-icon.min.css'%}"> 
+    <link rel="stylesheet" href="{%static '/vendors/fontawesome/css/all.min.css'%}">
+    <!-- END Template CSS-->     
+
+    <!-- START: Page CSS-->   
+    <link rel="stylesheet" href="{%static '/vendors/social-button/bootstrap-social.css'%}"/>   
+    <!-- END: Page CSS-->
+
+    <!-- START: Custom CSS-->
+    <link rel="stylesheet" href="{%static '/css/main.css'%}">
+    <!-- END: Custom CSS-->
+
+    <!-- STYLING -->
+    <style>
+		body {
+			background-color: #f5f5f5;
+			font-family: 'Montserrat', sans-serif;
+			font-size: 16px;
+			line-height: 1.6;
+			margin: 0;
+			padding: 0;
+		}
+		.auth {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: #f5f5f5;
+		}
+		.auth_left {
+			max-width: 500px;
+			margin: 0 auto;
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 5px;
+			box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+		}
+		.card {
+			border: none;
+		}
+		h1 {
+			font-size: 36px;
+			margin-top: 0;
+			margin-bottom: 20px;
+			color: #333;
+			text-align: center;
+		}
+		p {
+			font-size: 18px;
+			margin-bottom: 20px;
+			color: #333;
+			text-align: center;
+		}
+		a {
+			color: #fff;
+			background-color: #007bff;
+			text-decoration: none;
+			padding: 10px 20px;
+			border-radius: 3px;
+			display: inline-block;
+			transition: all 0.3s ease;
+		}
+		a:hover {
+			background-color: #0056b3;
+		}
+	</style>
+
+</head>
+<body>
+    <div class="auth">
+		<div class="auth_left">
+			<div class="card">
+				<div class="card-body">
+					<h1 class="h5 mb-3">Password Reset Email Sent!</h1>
+					<p class="h6 text-muted font-weight-normal mb-3"> We have sent an email with instructions for setting your password.
+                        If an account exists with the email you entered, you should receive them shortly.
+                        If you do not receive an email,  
+                        please make sure you entered the correct email you registered with, or check your spam folder.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

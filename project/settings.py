@@ -126,6 +126,21 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'altar.User'
 
 
+########################################################################
+# EMAIL SETTINGS
+########################################################################
+
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = env("EMAIL_PORT")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_USE_SSL = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
