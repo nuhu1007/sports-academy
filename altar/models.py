@@ -54,3 +54,26 @@ class Player(models.Model):
     def __str__(self):
         return str(self.full_name)
     
+
+class Game(models.Model):
+    opponent = models.CharField(max_length=100, blank=True, null=True)
+    date = models.DateField()
+    time = models.TimeField()
+    location = models.CharField(max_length=100, null=True, blank=True)
+    result = models.CharField(max_length=50, null=True, blank=True)
+    comments = models.TextField()
+    highlights = models.FileField(upload_to='media/highlights/', blank=True)
+
+    def __str__(self):
+        return f"Game vs {self.opponent} on {self.date} at {self.time}"
+    
+
+class TrainingSession(models.Model):
+    date = models.DateField()
+    time = models.TimeField()
+    location = models.CharField(max_length=100, null=True, blank=True)
+    attendees = models.ManyToManyField(Player)
+    notes = models.TextField()
+
+    def __str__(self):
+        return f"Training Session on {self.date} - {self.location}"
