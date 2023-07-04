@@ -45,3 +45,10 @@ class Player(models.Model):
 
     def __str__(self):
         return str(self.full_name)
+    
+
+class Categories(models.Model):
+    category = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.category)
