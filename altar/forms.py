@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import User
+from .models import User, Categories
 
 # Create Here
 class RegistrationForm(UserCreationForm):
@@ -24,3 +24,11 @@ class LoginForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['email', 'password']
+
+
+class CategoryForm(forms.ModelForm):
+    category = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Enter a category e.g. Under 9s, Under 11s', 'class':'form-control'}))
+
+    class Meta:
+        model = Categories
+        fields = ['category',]

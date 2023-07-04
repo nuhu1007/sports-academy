@@ -17,4 +17,5 @@ urlpatterns = [
 
     # Dashboard URLs
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('categories/', views.categories, name='categories'),
 ]

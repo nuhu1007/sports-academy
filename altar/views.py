@@ -7,7 +7,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 
-from .forms import LoginForm
+from . models import Categories
+from .forms import LoginForm, CategoryForm
 
 # Create your views here.
 
@@ -50,3 +51,27 @@ def index(request):
 @login_required
 def dashboard(request):
     return render(request, 'app/dashboard.html')
+
+
+# Category View
+@login_required
+def categories(request):
+    categories = Categories.objects.all()
+    form = CategoryForm()
+
+    # Creating a category
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save(commit=False)
+            category.save()
+            messages.success(request, f"Category added and saved successfully.")
+            return redirect('categories')
+        else:
+            form = CategoryForm()
+
+    context = {
+        'categories': categories,
+        'form': CategoryForm(),
+    }
+    return render(request, 'app/categories.html', context)
