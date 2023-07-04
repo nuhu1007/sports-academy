@@ -27,12 +27,20 @@ class User(AbstractUser):
         return str(self.email)
     
 
+class Categories(models.Model):
+    category = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.category)
+    
+
 class Player(models.Model):
     full_name = models.CharField(max_length=150, blank=False, null=False)
     date_of_birth = models.CharField(max_length=100, blank=False, null=False)
     home_address = models.CharField(max_length=200, blank=False, null=False)
     school_attended = models.CharField(max_length=200, blank=False, null=False)
     player_position = models.CharField(max_length=100, null=True, blank=True)
+    player_category = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True, related_name='player_category')
     medical_condition = models.BooleanField(default=False)
     parent_full_name = models.CharField(max_length=150, blank=False, null=False)
     parent_phone_number = models.CharField(max_length=20, blank=False, null=False)
@@ -46,9 +54,3 @@ class Player(models.Model):
     def __str__(self):
         return str(self.full_name)
     
-
-class Categories(models.Model):
-    category = models.CharField(max_length=100, null=True, blank=True)
-
-    def __str__(self):
-        return str(self.category)
