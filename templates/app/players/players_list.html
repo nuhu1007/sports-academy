@@ -18,12 +18,12 @@
                         <h4 class="card-title">Security in {{building.name}}</h4> 
                     </div> -->
                     <div class="card-header d-flex justify-content-between align-items-center left"> 
-                        <h4 class="card-title" style="font-size:20px;"><i class="fas fa-user-shield mr-2"></i>Players in Altar Sports Academy</h4>
+                        <h4 class="card-title" style="font-size:20px;"><i class="fas fa-users mr-3"></i>Players in Altar Sports Academy</h4>
 
                         <input type="text" style="position:relative; left:420px; border-radius:30px;" id="searchInput" placeholder="Search...">
 
                         {% if user.is_authenticated %}                              
-                        <button class="btn btn-secondary rounded-btn mb-2 " style="float:right;"><a href="{%url 'add_player'%}" class="white-links"><i class="fas fa-plus-circle"></i> Add Player</a></button>
+                        <button class="btn btn-primary rounded-btn mb-2 " style="float:right;"><a href="{%url 'add_player'%}"><i class="fas fa-plus-circle" style="margin-right:9px;"></i>Add Player</a></button>
                         {% endif %} 
                     </div>
                     <div class="card-body">
@@ -39,6 +39,7 @@
                                         <th style="font-size: 15px;">Category</th>
                                         <th style="font-size: 15px;">Medical Condition</th>
                                         <th style="font-size: 15px;">Date Joined</th>
+                                        <th style="font-size: 15px;">View</th>
                                     </tr>
                                 </thead>
 
@@ -53,6 +54,7 @@
                                         <td> {{player.player_category}} </td>
                                         <td> {{player.medical_condition}} </td>
                                         <td> {{player.date_joined}} </td>
+                                        <td><a href="{% url 'player_details' player.id %}" class="dropdown-item px-2 align-self-center d-flex"><span class="far fa-eye mr-2 h6 mb-0" title="View Details"></span></a></td>
 
                                         <!-- <td><a href="" class="dropdown-item px-2 align-self-center d-flex"><span class="icon-pencil mr-2 h6 mb-0"></span></a></td>
                                         <td><a href="" class="dropdown-item px-2 text-danger align-self-center d-flex">

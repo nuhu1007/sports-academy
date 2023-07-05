@@ -43,8 +43,8 @@ class PlayerForm(forms.ModelForm):
     player_category = forms.ModelChoiceField(required=True, queryset=Categories.objects.all(), widget=forms.Select(attrs={
                                                                                                     'class':'my-select',
                                                                                                     'placeholder': 'Choose a category...'}))
-    medical_condition = forms.BooleanField(required=True, widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'medical-condition-checkbox'}))
-    medical_condition_details = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'medical-condition-details'}))
+    medical_condition = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'medical-condition-checkbox'}))
+    medical_condition_details = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'medical-condition-details'}))
     parent_full_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Parent Full Name', 'class':'form-control'}))
     parent_phone_number = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Parent Phone Number', 'class':'form-control'}))
     emergency_contact = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Emergency Contact', 'class':'form-control'}))
@@ -55,11 +55,14 @@ class PlayerForm(forms.ModelForm):
         fields = ['full_name', 'date_of_birth', 'home_address', 'school_attended', 'player_position', 'player_category', 'medical_condition', 'medical_condition_details' ,'parent_full_name', 'parent_phone_number', 'emergency_contact', 'email_address']
 
     def clean(self):
-        cleaned_data = super(PlayerForm, self).clean()
+        cleaned_data = super().clean()
         medical_condition = cleaned_data.get('medical_condition')
-        medical_condition_details = cleaned_data.get('medical_condition_details')
 
-        if medical_condition and not medical_condition_details:
-            self.add_error('medical_condition_details', 'Please provide details for the medical condition.')
+        if medical_condition:
+            medical_condition_details = cleaned_data.get('medical_condition_details')
+            if medical_condition_details == '':
+                self.add_error('medical_condition_details', 'Please provide details for the medical condition.')
+        else:
+            pass
 
         return cleaned_data

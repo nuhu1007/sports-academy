@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -107,3 +107,14 @@ def players_list(request):
         'players': players,
     }
     return render(request, 'app/players/players_list.html', context)
+
+
+@login_required
+def player_details(request, player_id):
+    player = get_object_or_404(Player, id=player_id)
+
+    context = {
+        'player': player
+    }
+    messages.success(request, f"{player.full_name}'s details retrieved successfully.")
+    return render(request, 'app/players/player_details.html', context)

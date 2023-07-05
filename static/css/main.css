@@ -696,7 +696,7 @@ main {
 }
 
 a {
-    color: var(--bodycolor);
+    color: white;
     text-decoration: none;
 }
 

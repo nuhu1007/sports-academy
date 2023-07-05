@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<style>
+    .center-div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 450px;
+    }
+</style>
+
+<!-- START: Main Content-->
+<main>
+    <div class="container-fluid site-width">
+        <!-- START: Breadcrumbs-->
+        <div class="row">
+            <div class="col-12 align-self-center">
+                <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+                    <div class="w-sm-100 mr-auto"><h4 class="mb-0"><i class="fas fa-user mr-3"></i>Player Details</h4></div>
+
+                    <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                        <li class="breadcrumb-item">Home</li>
+                        <li class="breadcrumb-item">Player</li>
+                        <li class="breadcrumb-item">View</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- END: Breadcrumbs-->
+
+        <!-- START: Card Data-->
+        <div class="center-div">
+            <div class="row">
+                <div class="col-12 col-md-6 mt-3">
+                    <div class="card">
+                        <div class="card-header  justify-content-between align-items-center">                               
+                            <h4 class="card-title">{{player.full_name}}'s Information</h4> 
+                        </div>
+                        <div class="card-body">
+                            <dl class="row mb-0 redial-line-height-2_5">
+                                <dt class="col-sm-5">Full Name:</dt>
+                                <dd class="col-sm-7">{{player.full_name}}</dd>
+
+                                <dt class="col-sm-5">Date of Birth:</dt>
+                                <dd class="col-sm-7">{{player.date_of_birth}}</dd>
+
+                                <dt class="col-sm-5">Home Address:</dt>
+                                <dd class="col-sm-7">{{player.home_address}}</dd>
+
+                                <dt class="col-sm-5">School Attended:</dt>
+                                <dd class="col-sm-7">{{player.school_attended}}</dd>
+
+                                <dt class="col-sm-5">Player Position:</dt>
+                                <dd class="col-sm-7">{{player.player_position}}</dd>
+
+                                <dt class="col-sm-5">Player Category:</dt>
+                                <dd class="col-sm-7">{{player.player_category}}</dd>
+
+                                <dt class="col-sm-5">Medical Condition:</dt>
+                                {% if player.medical_condition %}
+                                    <dd class="col-sm-7">Yes</dd>
+                                {% else %}
+                                    <dd class="col-sm-7">No</dd>
+                                {% endif %}
+
+                                {% if player.medical_condition %}
+                                <dt class="col-sm-5">Medical Condition Details:</dt>
+                                <dd class="col-sm-7">{{player.medical_condition_details}}</dd>
+                                {% endif %}
+
+                                <dt class="col-sm-5">Parent's Full Name:</dt>
+                                <dd class="col-sm-7">{{player.parent_full_name}}</dd>
+
+                                <dt class="col-sm-5">Parent's Phone Number:</dt>
+                                <dd class="col-sm-7">{{player.parent_phone_number}}</dd>
+
+                                <dt class="col-sm-5">Emergency Contact:</dt>
+                                <dd class="col-sm-7">{{player.emergency_contact}}</dd>
+
+                                <dt class="col-sm-5">Email Address:</dt>
+                                <dd class="col-sm-7">{{player.email_address}}</dd>
+
+                                <dt class="col-sm-5">Date Joined:</dt>
+                                <dd class="col-sm-7">{{player.date_joined}}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: Card DATA--> 
+    </div>
+</main>
+<!-- END: Content-->
+
+
+{% endblock %}
