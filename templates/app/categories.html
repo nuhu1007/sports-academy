@@ -39,6 +39,7 @@
                                     <tr class="table-primary">
                                         <th scope="col">#</th>
                                         <th style="font-size: 15px;">Category Name</th>
+                                        <th style="font-size: 15px;">Number of Players</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,6 +47,7 @@
                                     <tr>
                                         <th scope="row">{{ forloop.counter }}</th>
                                         <td>{{category.category}}</td>
+                                        <td>{{category.player_count}}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

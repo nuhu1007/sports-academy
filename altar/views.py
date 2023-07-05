@@ -8,6 +8,7 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.db.models import Count
 
 import pdfkit
 
@@ -47,7 +48,6 @@ class VerificationEmail(TemplateView):
     template_name ="authentication/verification-email-sent.html"
     
 
-
 def index(request):
     return render(request, 'index.html')
 
@@ -60,7 +60,7 @@ def dashboard(request):
 # Category View
 @login_required
 def categories(request):
-    categories = Categories.objects.all()
+    categories = Categories.objects.annotate(player_count=Count('player_category'))
     form = CategoryForm()
 
     # Creating a category
@@ -81,7 +81,7 @@ def categories(request):
     return render(request, 'app/categories.html', context)
 
 
-# Add Player
+# Players' View
 @login_required
 def add_player(request):
     categories = Categories.objects.all()
@@ -120,26 +120,20 @@ def player_details(request, player_id):
     context = {
         'player': player
     }
+
+    if request.method == 'POST':
+        # Generate PDF
+        html_string = render_to_string('app/players/player_details.html', context)
+
+        options = {
+            'page-size': 'A4',
+            'encoding': 'UTF-8',
+        }
+        
+        pdf = pdfkit.from_string(html_string, False, options)
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="player_details.pdf"'
+        response.write(pdf)
+        return response
+
     return render(request, 'app/players/player_details.html', context)
-
-
-@login_required
-def generate_plater_pdf(request, pk):
-    player = Player.objects.get(id=pk)
-
-    html = render_to_string('player_details.html', {'player': player})
-
-    options = {
-        'page-size': 'A4',
-        'encoding': 'UTF-8',
-    }
-
-    pdf = pdfkit.from_string(html, False, options)
-
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="player_information.pdf"'
-
-    # Write the PDF file content to the response
-    response.write(pdf)
-
-    return response

@@ -23,5 +23,4 @@ urlpatterns = [
     path('add-player/', views.add_player, name='add_player'),
     path('players/', views.players_list, name='players'),
     path('player-details/<int:player_id>/', views.player_details, name='player_details'),
-    path('player-pdf/<int:pk>/', views.generate_plater_pdf, name='player_pdf'),
 ]
