@@ -42,6 +42,7 @@ class Player(models.Model):
     player_position = models.CharField(max_length=100, null=True, blank=True)
     player_category = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True, related_name='player_category')
     medical_condition = models.BooleanField(default=False)
+    medical_condition_details = models.CharField(max_length=500, blank=True)
     parent_full_name = models.CharField(max_length=150, blank=False, null=False)
     parent_phone_number = models.CharField(max_length=20, blank=False, null=False)
     emergency_contact = models.CharField(max_length=20, blank=False, null=False)

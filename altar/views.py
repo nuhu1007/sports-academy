@@ -7,8 +7,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 
-from . models import Categories
-from .forms import LoginForm, CategoryForm
+from . models import Categories, Player
+from .forms import LoginForm, CategoryForm, PlayerForm
 
 # Create your views here.
 
@@ -75,3 +75,35 @@ def categories(request):
         'form': CategoryForm(),
     }
     return render(request, 'app/categories.html', context)
+
+
+# Add Player
+@login_required
+def add_player(request):
+    categories = Categories.objects.all()
+    form = PlayerForm(request.POST)
+    
+    if request.method == 'POST':
+        if form.is_valid():
+            player = form.save(commit=False)
+            player.save()
+            messages.success(request, f"{player.full_name} has been created and saved successfully.")
+            return redirect('/players')
+        else:
+            form = PlayerForm()
+
+    context = {
+        'form': form,
+        'categories': categories,
+    }
+    return render(request, 'app/players/add_player.html', context)
+
+
+@login_required
+def players_list(request):
+    players = Player.objects.all()
+
+    context = {
+        'players': players,
+    }
+    return render(request, 'app/players/players_list.html', context)
