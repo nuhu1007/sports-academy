@@ -3,14 +3,7 @@
 {% block content %}
 
 
-<style>
-    .center-div{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 450px;
-    }
-</style>
+
 
 <!-- START: Main Content-->
 <main>
@@ -36,58 +29,73 @@
             <div class="row">
                 <div class="col-12 col-md-6 mt-3">
                     <div class="card">
-                        <div class="card-header  justify-content-between align-items-center">                               
-                            <h4 class="card-title">{{player.full_name}}'s Information</h4> 
+                        <div class="card-header justify-content-between align-items-center">
+                            <h4 class="card-title">{{ player.full_name }}'s Information</h4>
+                            <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example" type="button"><i class="fas fa-print mr-2 mb-0"></i>Generate PDF</button>
                         </div>
-                        <div class="card-body">
-                            <dl class="row mb-0 redial-line-height-2_5">
-                                <dt class="col-sm-5">Full Name:</dt>
-                                <dd class="col-sm-7">{{player.full_name}}</dd>
-
-                                <dt class="col-sm-5">Date of Birth:</dt>
-                                <dd class="col-sm-7">{{player.date_of_birth}}</dd>
-
-                                <dt class="col-sm-5">Home Address:</dt>
-                                <dd class="col-sm-7">{{player.home_address}}</dd>
-
-                                <dt class="col-sm-5">School Attended:</dt>
-                                <dd class="col-sm-7">{{player.school_attended}}</dd>
-
-                                <dt class="col-sm-5">Player Position:</dt>
-                                <dd class="col-sm-7">{{player.player_position}}</dd>
-
-                                <dt class="col-sm-5">Player Category:</dt>
-                                <dd class="col-sm-7">{{player.player_category}}</dd>
-
-                                <dt class="col-sm-5">Medical Condition:</dt>
-                                {% if player.medical_condition %}
-                                    <dd class="col-sm-7">Yes</dd>
-                                {% else %}
-                                    <dd class="col-sm-7">No</dd>
-                                {% endif %}
-
-                                {% if player.medical_condition %}
-                                <dt class="col-sm-5">Medical Condition Details:</dt>
-                                <dd class="col-sm-7">{{player.medical_condition_details}}</dd>
-                                {% endif %}
-
-                                <dt class="col-sm-5">Parent's Full Name:</dt>
-                                <dd class="col-sm-7">{{player.parent_full_name}}</dd>
-
-                                <dt class="col-sm-5">Parent's Phone Number:</dt>
-                                <dd class="col-sm-7">{{player.parent_phone_number}}</dd>
-
-                                <dt class="col-sm-5">Emergency Contact:</dt>
-                                <dd class="col-sm-7">{{player.emergency_contact}}</dd>
-
-                                <dt class="col-sm-5">Email Address:</dt>
-                                <dd class="col-sm-7">{{player.email_address}}</dd>
-
-                                <dt class="col-sm-5">Date Joined:</dt>
-                                <dd class="col-sm-7">{{player.date_joined}}</dd>
-                            </dl>
+                        <div class="table-responsive">
+                            <table id="example" class="display table dataTable table-striped table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Full Name:</th>
+                                        <td>{{ player.full_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date of Birth:</th>
+                                        <td>{{ player.date_of_birth }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Home Address:</th>
+                                        <td>{{ player.home_address }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>School Attended:</th>
+                                        <td>{{ player.school_attended }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Player Position:</th>
+                                        <td>{{ player.player_position }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Player Category:</th>
+                                        <td>{{ player.player_category }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Medical Condition:</th>
+                                        <td>{% if player.medical_condition %}Yes{% else %}No{% endif %}</td>
+                                    </tr>
+                                    {% if player.medical_condition %}
+                                    <tr>
+                                        <th>Medical Condition Details:</th>
+                                        <td>{{ player.medical_condition_details }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <th>Parent's Full Name:</th>
+                                        <td>{{ player.parent_full_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Parent's Phone Number:</th>
+                                        <td>{{ player.parent_phone_number }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Emergency Contact:</th>
+                                        <td>{{ player.emergency_contact }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email Address:</th>
+                                        <td>{{ player.email_address }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date Joined:</th>
+                                        <td>{{ player.date_joined }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                    
+                    
                 </div>
             </div>
         </div>
@@ -95,6 +103,40 @@
     </div>
 </main>
 <!-- END: Content-->
+
+
+
+
+<!-- START: Template JS-->
+<script src="{% static '/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static '/vendors/jquery-ui/jquery-ui.min.js' %}"></script>
+<script src="{% static '/vendors/moment/moment.js' %}"></script>
+<script src="{% static '/vendors/bootstrap/js/bootstrap.bundle.min.js' %}"></script>    
+<script src="{% static '/vendors/slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+<!-- END: Template JS-->
+
+<!-- START: APP JS-->
+<script src="{% static '/js/app.js' %}"></script>
+<!-- END: APP JS-->
+
+<!-- START: Page Vendor JS-->
+<script src="{% static '/vendors/datatable/js/jquery.dataTables.min.js' %}"></script> 
+<script src="{% static '/vendors/datatable/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/jszip/jszip.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/buttons.flash.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/buttons.print.min.js' %}"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- START: Page Script JS-->        
+<script src="{% static '/js/datatable.script.js' %}"></script>
+<!-- END: Page Script JS-->
 
 
 {% endblock %}

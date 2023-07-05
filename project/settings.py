@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'altar',
     'crispy_forms',
     'crispy_bootstrap5',
+    'wkhtmltopdf',
 ]
 
 # Crsipy Configurations

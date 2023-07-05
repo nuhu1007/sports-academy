@@ -6,6 +6,10 @@ from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
+import pdfkit
 
 from . models import Categories, Player
 from .forms import LoginForm, CategoryForm, PlayerForm
@@ -116,5 +120,26 @@ def player_details(request, player_id):
     context = {
         'player': player
     }
-    messages.success(request, f"{player.full_name}'s details retrieved successfully.")
     return render(request, 'app/players/player_details.html', context)
+
+
+@login_required
+def generate_plater_pdf(request, pk):
+    player = Player.objects.get(id=pk)
+
+    html = render_to_string('player_details.html', {'player': player})
+
+    options = {
+        'page-size': 'A4',
+        'encoding': 'UTF-8',
+    }
+
+    pdf = pdfkit.from_string(html, False, options)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="player_information.pdf"'
+
+    # Write the PDF file content to the response
+    response.write(pdf)
+
+    return response

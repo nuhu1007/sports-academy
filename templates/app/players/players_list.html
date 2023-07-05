@@ -14,16 +14,11 @@
         <div class="row">
             <div class="col-12" style="margin-top:50px;">
                 <div class="card">
-                    <!-- <div class="card-header  justify-content-between align-items-center">                               
-                        <h4 class="card-title">Security in {{building.name}}</h4> 
-                    </div> -->
                     <div class="card-header d-flex justify-content-between align-items-center left"> 
                         <h4 class="card-title" style="font-size:20px;"><i class="fas fa-users mr-3"></i>Players in Altar Sports Academy</h4>
 
-                        <input type="text" style="position:relative; left:420px; border-radius:30px;" id="searchInput" placeholder="Search...">
-
                         {% if user.is_authenticated %}                              
-                        <button class="btn btn-primary rounded-btn mb-2 " style="float:right;"><a href="{%url 'add_player'%}"><i class="fas fa-plus-circle" style="margin-right:9px;"></i>Add Player</a></button>
+                        <button class="btn btn-primary rounded-btn mb-2 " style="float:right;"><a href="{%url 'add_player'%}"><i class="fas fa-plus-circle mr-2"></i>Add Player</a></button>
                         {% endif %} 
                     </div>
                     <div class="card-body">
@@ -32,17 +27,15 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th style="font-size: 15px;">Full Name</th>
+                                        <th style="font-size: 15px;">Name</th>
                                         <th style="font-size: 15px;">Date of Birth</th>
-                                        <th style="font-size: 15px;">School Attended</th>
-                                        <th style="font-size: 15px;">PLayer Position</th>
+                                        <th style="font-size: 15px;">School</th>
+                                        <th style="font-size: 15px;">Position</th>
                                         <th style="font-size: 15px;">Category</th>
-                                        <th style="font-size: 15px;">Medical Condition</th>
                                         <th style="font-size: 15px;">Date Joined</th>
                                         <th style="font-size: 15px;">View</th>
                                     </tr>
                                 </thead>
-
                                 <tbody>
                                     {% for player in players %}
                                     <tr>
@@ -52,7 +45,6 @@
                                         <td> {{player.school_attended}} </td>
                                         <td> {{player.player_position}}</td>
                                         <td> {{player.player_category}} </td>
-                                        <td> {{player.medical_condition}} </td>
                                         <td> {{player.date_joined}} </td>
                                         <td><a href="{% url 'player_details' player.id %}" class="dropdown-item px-2 align-self-center d-flex"><span class="far fa-eye mr-2 h6 mb-0" title="View Details"></span></a></td>
 
@@ -62,6 +54,18 @@
                                     </tr>
                                     {%endfor%}
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Date of Birth</th>
+                                        <th>School</th>
+                                        <th>Position</th>
+                                        <th>Category</th>
+                                        <th>Date Joined</th>
+                                        <th>VIew</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                             {% if messages %}
                             <div class="messages">
@@ -95,5 +99,36 @@
     });
     });
 </script>
+
+<!-- START: Template JS-->
+<script src="{% static '/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static '/vendors/jquery-ui/jquery-ui.min.js' %}"></script>
+<script src="{% static '/vendors/moment/moment.js' %}"></script>
+<script src="{% static '/vendors/bootstrap/js/bootstrap.bundle.min.js' %}"></script>    
+<script src="{% static '/vendors/slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+<!-- END: Template JS-->
+
+<!-- START: APP JS-->
+<script src="{% static '/js/app.js' %}"></script>
+<!-- END: APP JS-->
+
+<!-- START: Page Vendor JS-->
+<script src="{% static '/vendors/datatable/js/jquery.dataTables.min.js' %}"></script> 
+<script src="{% static '/vendors/datatable/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/jszip/jszip.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/buttons.flash.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static '/vendors/datatable/buttons/js/buttons.print.min.js' %}"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- START: Page Script JS-->        
+<script src="{% static '/js/datatable.script.js' %}"></script>
+<!-- END: Page Script JS-->
 
 {% endblock %}
