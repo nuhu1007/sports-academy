@@ -26,4 +26,8 @@ urlpatterns = [
 
     # Training URLs
     path('training-management/', views.training_management, name='training_management'),
+    path('training-details/<int:training_id>/', views.training_details, name='training_details'),
+
+    # Attendance URLs
+    path('attendance-management/', views.attendance_management, name='attendance_management'),
 ]

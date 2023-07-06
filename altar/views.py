@@ -12,8 +12,8 @@ from django.db.models import Count
 
 import pdfkit
 
-from . models import Categories, Player, TrainingSession
-from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm
+from . models import Categories, Player, TrainingSession, Attendance
+from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm
 
 # Create your views here.
 
@@ -160,3 +160,46 @@ def training_management(request):
         'form': TrainingSessionForm()
     }
     return render(request, 'app/training/training_management.html', context)
+
+
+@login_required
+def training_details(request, training_id):
+    training = get_object_or_404(TrainingSession, id=training_id)
+
+    context = {
+        'training': training,
+    }
+    return render(request, 'app/training/training_details.html', context)
+
+
+# Attendance Views
+@login_required
+def attendance_management(request):
+    attendances = Attendance.objects.all()
+    form = AttendanceForm()
+
+    # Handling the attendance
+    if request.method == 'POST':
+        form = AttendanceForm(request.POST)
+        if form.is_valid():
+            training_session = form.cleaned_data['training_session']
+            players = form.cleaned_data['players']
+            attended = form.cleaned_data['attended']
+
+            # Save the attendance records for each selected player
+            for player in players:
+                attendance = Attendance.objects.create(
+                    training_session=training_session,
+                    attended=attended
+                )
+                attendance.player.add(player)
+            messages.success(request, f"Attendance marked and saved successfully.")
+            return redirect('attendance_management')
+        else:
+            form = AttendanceForm()
+
+    context = {
+        'attendances': attendances,
+        'form': AttendanceForm()
+    }
+    return render(request, 'app/attendance/attendance_management.html', context)

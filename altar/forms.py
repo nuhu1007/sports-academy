@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
+from multiupload.fields import MultiFileField
+
 from .models import User, Categories, Player, TrainingSession
 
 # Create Here
@@ -43,6 +45,26 @@ class TrainingSessionForm(forms.ModelForm):
     class Meta:
         model = TrainingSession
         fields = ['date', 'start_time', 'end_time', 'location']
+
+
+class TrainingSessionExtrasForm(forms.Form):
+    notes = forms.Textarea(attrs={'placeholder':'Enter any additional notes about the training session', 'class':'form-control'})
+    # highlights = MultiFileField(required=False, max_num=10, min_num=1, max_file_size=1024 * 1024 * 5, widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+    class Meta:
+        model = TrainingSession
+        fields = ['notes', 'highlights']
+
+
+
+class AttendanceForm(forms.Form):
+    training_session = forms.ModelChoiceField(required=True, queryset=TrainingSession.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Select a training session'}))
+    players = forms.ModelMultipleChoiceField(queryset=Player.objects.all())
+    attended = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class':'my-checkbox'}))
+
+    def __init__(self, *args, **kwargs):
+        super(AttendanceForm, self).__init__(*args, **kwargs)
+        self.fields['players'].widget.attrs['class'] = 'checkbox-list'
 
 
 
