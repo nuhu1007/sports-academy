@@ -29,7 +29,6 @@ def login(request):
             messages.error(request, f'Incorrect credentials.')
             return render(request, 'authentication/login.html', {'form':LoginForm()})
     else:
-        messages.error(request, f'Check your details and try again.')
         return render(request, 'authentication/login.html', {'form':LoginForm()})
 
 
@@ -149,3 +148,9 @@ def player_details(request, player_id):
         return response
 
     return render(request, 'app/players/player_details.html', context)
+
+
+# Training Views
+@login_required
+def training_management(request):
+    return render(request, 'app/training/training_management.html')

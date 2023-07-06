@@ -23,4 +23,7 @@ urlpatterns = [
     path('add-player/', views.add_player, name='add_player'),
     path('players/', views.players_list, name='players'),
     path('player-details/<int:player_id>/', views.player_details, name='player_details'),
+
+    # Training URLs
+    path('training-management/', views.training_management, name='training_management'),
 ]
