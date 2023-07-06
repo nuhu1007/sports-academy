@@ -54,7 +54,19 @@ def index(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'app/dashboard.html')
+    under_9 = get_object_or_404(Categories, id=1)
+    under9_count = Player.objects.filter(player_category=under_9).count()
+    under_11 = get_object_or_404(Categories, id=2)
+    under11_count = Player.objects.filter(player_category=under_11).count()
+    under_13 = get_object_or_404(Categories, id=3)
+    under13_count = Player.objects.filter(player_category=under_13).count()
+
+    context = {
+        'under9_count': under9_count,
+        'under11_count': under11_count,
+        'under13_count': under13_count,
+    }
+    return render(request, 'app/dashboard.html', context)
 
 
 # Category View
