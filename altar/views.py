@@ -12,8 +12,8 @@ from django.db.models import Count
 
 import pdfkit
 
-from . models import Categories, Player
-from .forms import LoginForm, CategoryForm, PlayerForm
+from . models import Categories, Player, TrainingSession
+from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm
 
 # Create your views here.
 
@@ -53,19 +53,7 @@ def index(request):
 
 @login_required
 def dashboard(request):
-    under_9 = get_object_or_404(Categories, id=1)
-    under9_count = Player.objects.filter(player_category=under_9).count()
-    under_11 = get_object_or_404(Categories, id=2)
-    under11_count = Player.objects.filter(player_category=under_11).count()
-    under_13 = get_object_or_404(Categories, id=3)
-    under13_count = Player.objects.filter(player_category=under_13).count()
-
-    context = {
-        'under9_count': under9_count,
-        'under11_count': under11_count,
-        'under13_count': under13_count,
-    }
-    return render(request, 'app/dashboard.html', context)
+    return render(request, 'app/dashboard.html')
 
 
 # Category View
@@ -153,4 +141,22 @@ def player_details(request, player_id):
 # Training Views
 @login_required
 def training_management(request):
-    return render(request, 'app/training/training_management.html')
+    trainings = TrainingSession.objects.all()
+    form = TrainingSessionForm()
+
+    # Creating the training schedule
+    if request.method == 'POST':
+        form = TrainingSessionForm(request.POST)
+        if form.is_valid():
+            training = form.save(commit=False)
+            training.save()
+            messages.success(request, f"Training schedule created and saved successfully.")
+            return redirect('training_management')
+        else:
+            form = TrainingSessionForm()
+
+    context = {
+        'trainings': trainings,
+        'form': TrainingSessionForm()
+    }
+    return render(request, 'app/training/training_management.html', context)

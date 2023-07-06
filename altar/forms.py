@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import User, Categories, Player
+from .models import User, Categories, Player, TrainingSession
 
 # Create Here
 class RegistrationForm(UserCreationForm):
@@ -32,6 +32,18 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Categories
         fields = ['category',]
+
+
+class TrainingSessionForm(forms.ModelForm):
+    date = forms.DateField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'placeholder':'Enter the date', 'class':'form-control'}))
+    start_time = forms.TimeField(required=True, widget=forms.TimeInput(attrs={'type':'time', 'placeholder':'Enter the time', 'class':'form-control'}))
+    end_time = forms.TimeField(required=True, widget=forms.TimeInput(attrs={'type':'time', 'placeholder':'Enter the time', 'class':'form-control'}))
+    location = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder':'Enter the location', 'class':'form-control'}))
+
+    class Meta:
+        model = TrainingSession
+        fields = ['date', 'start_time', 'end_time', 'location']
+
 
 
 class PlayerForm(forms.ModelForm):

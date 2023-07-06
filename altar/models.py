@@ -63,7 +63,7 @@ class Game(models.Model):
     location = models.CharField(max_length=100, null=True, blank=True)
     result = models.CharField(max_length=50, null=True, blank=True)
     comments = models.TextField()
-    highlights = models.FileField(upload_to='media/highlights/', blank=True)
+    highlights = models.FileField(upload_to='media/game_highlights/', blank=True)
 
     def __str__(self):
         return f"Game vs {self.opponent} on {self.date} at {self.time}"
@@ -71,10 +71,21 @@ class Game(models.Model):
 
 class TrainingSession(models.Model):
     date = models.DateField()
-    time = models.TimeField()
+    start_time = models.TimeField(null=True)
+    end_time = models.TimeField(null=True)
     location = models.CharField(max_length=100, null=True, blank=True)
-    attendees = models.ManyToManyField(Player)
     notes = models.TextField()
+    highlights = models.FileField(upload_to='media/training_highlights/', blank=True)
 
     def __str__(self):
         return f"Training Session on {self.date} - {self.location}"
+    
+
+class Attendance(models.Model):
+    training_session = models.ForeignKey(TrainingSession, on_delete=models.CASCADE, blank=True, null=True, related_name='training_attendance')
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, blank=True, null=True, related_name='player_attendance')
+    attended = models.BooleanField(default=False)
+    recorded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Attendance for {self.player.full_name} at {self.training_session}"
