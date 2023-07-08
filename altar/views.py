@@ -13,7 +13,7 @@ from django.db.models import Count
 import pdfkit
 
 from . models import Categories, Player, TrainingSession, Attendance
-from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm
+from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm
 
 # Create your views here.
 
@@ -165,9 +165,21 @@ def training_management(request):
 @login_required
 def training_details(request, training_id):
     training = get_object_or_404(TrainingSession, id=training_id)
+    form = TrainingSessionExtrasForm()
+
+    # Adding training notes & highlights
+    if request.method == 'POST':
+        form = TrainingSessionExtrasForm(request.POST, request.FILES, instance=training)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Training session has been updated successfully.")
+            return redirect('training_details')
+        else:
+            form = TrainingSessionExtrasForm()
 
     context = {
         'training': training,
+        'form': TrainingSessionExtrasForm()
     }
     return render(request, 'app/training/training_details.html', context)
 

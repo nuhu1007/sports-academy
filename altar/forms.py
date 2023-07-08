@@ -48,8 +48,8 @@ class TrainingSessionForm(forms.ModelForm):
 
 
 class TrainingSessionExtrasForm(forms.Form):
-    notes = forms.Textarea(attrs={'placeholder':'Enter any additional notes about the training session', 'class':'form-control'})
-    # highlights = MultiFileField(required=False, max_num=10, min_num=1, max_file_size=1024 * 1024 * 5, widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    notes = forms.CharField(required=False, widget=forms.Textarea(attrs={'placeholder':'Any notes about the training session', 'class':'form-control'}))
+    highlights = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'class':'form-control'}))
 
     class Meta:
         model = TrainingSession
