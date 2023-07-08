@@ -47,7 +47,7 @@ class TrainingSessionForm(forms.ModelForm):
         fields = ['date', 'start_time', 'end_time', 'location']
 
 
-class TrainingSessionExtrasForm(forms.Form):
+class TrainingSessionExtrasForm(forms.ModelForm):
     notes = forms.CharField(required=False, widget=forms.Textarea(attrs={'placeholder':'Any notes about the training session', 'class':'form-control'}))
     highlights = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'class':'form-control'}))
 

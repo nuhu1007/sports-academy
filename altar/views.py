@@ -165,7 +165,7 @@ def training_management(request):
 @login_required
 def training_details(request, training_id):
     training = get_object_or_404(TrainingSession, id=training_id)
-    form = TrainingSessionExtrasForm()
+    form = TrainingSessionExtrasForm(instance=training)
 
     # Adding training notes & highlights
     if request.method == 'POST':
@@ -173,13 +173,13 @@ def training_details(request, training_id):
         if form.is_valid():
             form.save()
             messages.success(request, f"Training session has been updated successfully.")
-            return redirect('training_details')
+            return redirect('training_details', training_id=training.id)
         else:
             form = TrainingSessionExtrasForm()
 
     context = {
         'training': training,
-        'form': TrainingSessionExtrasForm()
+        'form': form
     }
     return render(request, 'app/training/training_details.html', context)
 

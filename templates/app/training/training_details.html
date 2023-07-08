@@ -25,33 +25,42 @@
 
         <!-- START: Card Data-->
         <div class="row">
-            <div class="col-12 col-md-6 mt-3">
+            <div class="col-12 col-md-6 mt-3 mx-auto">
                 <div class="card">
-                    <div class="card-header  justify-content-between align-items-center">                               
-                        <h4 class="card-title">Training Information</h4> 
+                    <div class="card-header justify-content-between align-items-center">                               
+                        <h4 class="mb-0 card-title"><i class="fas fa-chalkboard-teacher mr-3"></i>Training Information</h4>
 
                         {% if user.is_authenticated %}
-                        <button data-toggle="modal" data-target="#cancel" class="btn btn-primary rounded-btn mb-2" style="float:right;"><i class="fas fa-edit" style="margin-right:9px;"></i>Edit Training Session</button>
+                        <button data-toggle="modal" data-target="#cancel" class="btn btn-primary rounded-btn mb-2" style="float:right;"><i class="fas fa-edit mr-9"></i>Edit Training Session</button>
                         {% endif %}
                     </div>
                     <div class="card-body">
-                        <dl class="row mb-0 redial-line-height-2_5">
-                            <dt class="col-sm-5">Training Date:</dt>
-                            <dd class="col-sm-7">{{training.date}}</dd>
-
-                            <dt class="col-sm-5">Start Time:</dt>
-                            <dd class="col-sm-7">{{training.start_time}}</dd>
-
-                            <dt class="col-sm-5">End Time:</dt>
-                            <dd class="col-sm-7">{{training.end_time}}</dd>
-
-                            <dt class="col-sm-5">Location:</dt>
-                            <dd class="col-sm-7">{{training.location}}</dd>
-
-                            <dt class="col-sm-5">Status</dt>
-                            <dd class="col-sm-7"><span class="badge badge-primary text-white">Shipped</span></dd>
-                        </dl>
+                        <table class="table">
+                            <tr>
+                                <th>Training Date:</th>
+                                <td>{{ training.date }}</td>
+                            </tr>
+                            <tr>
+                                <th>Start Time:</th>
+                                <td>{{ training.start_time }}</td>
+                            </tr>
+                            <tr>
+                                <th>End Time:</th>
+                                <td>{{ training.end_time }}</td>
+                            </tr>
+                            <tr>
+                                <th>Location:</th>
+                                <td>{{ training.location }}</td>
+                            </tr>
+                            {% if training.notes %}
+                            <tr>
+                                <th>Notes:</th>
+                                <td>{{ training.notes }}</td>
+                            </tr>
+                            {% endif %}
+                        </table>
                     </div>
+                    
                 </div>
             </div>
             {% if messages %}

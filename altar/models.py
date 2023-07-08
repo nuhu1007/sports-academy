@@ -70,7 +70,7 @@ class Game(models.Model):
     
 
 class TrainingSession(models.Model):
-    date = models.DateField()
+    date = models.DateField(null=True)
     start_time = models.TimeField(null=True)
     end_time = models.TimeField(null=True)
     location = models.CharField(max_length=100, null=True, blank=True)
