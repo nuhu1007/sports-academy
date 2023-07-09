@@ -31,7 +31,7 @@
                         <h4 class="mb-0 card-title"><i class="fas fa-chalkboard-teacher mr-3"></i>Training Information</h4>
 
                         {% if user.is_authenticated %}
-                        <button data-toggle="modal" data-target="#cancel" class="btn btn-primary rounded-btn mb-2" style="float:right;"><i class="fas fa-edit mr-9"></i>Edit Training Session</button>
+                        <button data-toggle="modal" data-target="#cancel" class="btn btn-primary rounded-btn mb-2" style="float:right;"><i class="fas fa-edit" style="margin-right: 9px;"></i>Edit Training Session</button>
                         {% endif %}
                     </div>
                     <div class="card-body">
@@ -57,6 +57,14 @@
                                 <th>Notes:</th>
                                 <td>{{ training.notes }}</td>
                             </tr>
+                            {% endif %}
+                            {% if training.highlights %}
+                                <tr>
+                                    <th>Highlights:</th>
+                                    <td>
+                                        <a href="{{training.highlights.url}}" download target="_blank" style="color: red;">{{ training.highlights.name }}</a>
+                                    </td>
+                                </tr>
                             {% endif %}
                         </table>
                     </div>
@@ -89,7 +97,7 @@
                         <i class="icon-close"></i>
                     </button>
                 </div>
-                <form class="add-note-form" action="{% url 'training_details' training.id %}" method="post">
+                <form class="add-note-form" action="{% url 'training_details' training.id %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="modal-body">                                               
                         <div class="form-group">
