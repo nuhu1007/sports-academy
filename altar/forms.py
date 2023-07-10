@@ -1,9 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from multiupload.fields import MultiFileField
-
-from .models import User, Categories, Player, TrainingSession
+from .models import User, Categories, Player, TrainingSession, Attendance
 
 # Create Here
 class RegistrationForm(UserCreationForm):
@@ -56,27 +54,13 @@ class TrainingSessionExtrasForm(forms.ModelForm):
         fields = ['notes', 'highlights']
 
 
-
-class AttendanceForm(forms.Form):
-    training_session = forms.ModelChoiceField(required=True, queryset=TrainingSession.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Select a training session'}))
-    players = forms.ModelMultipleChoiceField(queryset=Player.objects.all())
-    attended = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class':'my-checkbox'}))
-
-    def __init__(self, *args, **kwargs):
-        super(AttendanceForm, self).__init__(*args, **kwargs)
-        self.fields['players'].widget.attrs['class'] = 'checkbox-list'
-
-
-
 class PlayerForm(forms.ModelForm):
     full_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Full Name', 'class':'form-control'}))
     date_of_birth = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Date of Birth', 'class':'form-control'}))
     home_address = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Home Address', 'class':'form-control'}))
     school_attended = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'School Attended', 'class':'form-control'}))
     player_position = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Player Position', 'class':'form-control'}))
-    player_category = forms.ModelChoiceField(required=True, queryset=Categories.objects.all(), widget=forms.Select(attrs={
-                                                                                                    'class':'my-select',
-                                                                                                    'placeholder': 'Choose a category...'}))
+    player_category = forms.ModelChoiceField(required=True, queryset=Categories.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Choose a category...'}))
     medical_condition = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'medical-condition-checkbox'}))
     medical_condition_details = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'medical-condition-details'}))
     parent_full_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Parent Full Name', 'class':'form-control'}))
@@ -91,12 +75,40 @@ class PlayerForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         medical_condition = cleaned_data.get('medical_condition')
-
         if medical_condition:
             medical_condition_details = cleaned_data.get('medical_condition_details')
             if medical_condition_details == '':
                 self.add_error('medical_condition_details', 'Please provide details for the medical condition.')
         else:
             pass
-
         return cleaned_data
+    
+
+class AttendanceForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        players = kwargs.pop('players')
+        super().__init__(*args, **kwargs)
+        
+        for player in players:
+            self.fields[f'player_{player.id}'] = forms.BooleanField(label=player.full_name, required=False)
+
+    def save(self, training_session):
+        for name, value in self.cleaned_data.items():
+            if value:
+                player_id = int(name.split('_')[1])
+                player = Player.objects.get(id=player_id)
+                attendance, created = Attendance.objects.get_or_create(
+                    player=player,
+                    training_session=training_session,
+                )
+                attendance.attended = True
+                attendance.save()
+            else:
+                player_id = int(name.split('_')[1])
+                player = Player.objects.get(id=player_id)
+                attendance = Attendance.objects.filter(
+                    player=player,
+                    training_session=training_session,
+                ).first()
+                if attendance:
+                    attendance.delete()

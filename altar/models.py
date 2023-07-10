@@ -74,7 +74,7 @@ class TrainingSession(models.Model):
     start_time = models.TimeField(null=True)
     end_time = models.TimeField(null=True)
     location = models.CharField(max_length=100, null=True, blank=True)
-    attendees = models.ManyToManyField(Player, through='Attendance')
+    players = models.ManyToManyField(Player, through='Attendance')
     notes = models.TextField()
     highlights = models.FileField(upload_to='media/training_highlights/', blank=True)
 

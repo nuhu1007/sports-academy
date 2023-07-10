@@ -187,31 +187,38 @@ def training_details(request, training_id):
 # Attendance Views
 @login_required
 def attendance_management(request):
-    attendances = Attendance.objects.all()
-    form = AttendanceForm()
-
-    # Handling the attendance
-    if request.method == 'POST':
-        form = AttendanceForm(request.POST)
-        if form.is_valid():
-            training_session = form.cleaned_data['training_session']
-            players = form.cleaned_data['players']
-            attended = form.cleaned_data['attended']
-
-            # Save the attendance records for each selected player
-            for player in players:
-                attendance = Attendance.objects.create(
-                    training_session=training_session,
-                    attended=attended
-                )
-                attendance.player.add(player)
-            messages.success(request, f"Attendance marked and saved successfully.")
-            return redirect('attendance_management')
-        else:
-            form = AttendanceForm()
+    sessions = TrainingSession.objects.all()
 
     context = {
-        'attendances': attendances,
-        'form': AttendanceForm()
+        'sessions': sessions,
     }
     return render(request, 'app/attendance/attendance_management.html', context)
+
+
+@login_required
+def record_attendance(request, session_id):
+    session = get_object_or_404(TrainingSession, pk=session_id)
+    ballers = session.players.all()
+    players = Player.objects.all()
+
+    attendance_records = {}
+    for baller in ballers:
+        attendance_records[baller.id] = baller.player_attendance.filter(training_session=session).first()
+
+    if request.method == 'POST':
+        form = AttendanceForm(request.POST, players=players)
+        if form.is_valid():
+            form.save(session)
+            messages.success(request, f"Attendance marked and saved successfully.")
+            return redirect('record_attendance', session_id=session.id)
+    else:
+        form = AttendanceForm(players=players)
+
+    context = {
+        'session': session,
+        'players': players,
+        'ballers': ballers,
+        'attendance_records': attendance_records,
+        'form': form,
+    }
+    return render(request, 'app/attendance/attendance_details.html', context)

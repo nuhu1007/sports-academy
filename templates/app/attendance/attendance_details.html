@@ -1,9 +1,130 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 
+<!-- START: Main Content-->
+<main>
+    <div class="container-fluid site-width">
+        <!-- START: Breadcrumbs-->
+        <div class="row">
+            <div class="col-12 align-self-center">
+                <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+                    <div class="w-sm-100 mr-auto"><h4 class="mb-0">Attendance Record</h4></div>
+
+                    <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                        <li class="breadcrumb-item">Home</li>
+                        <li class="breadcrumb-item">Attendance</li>
+                        <li class="breadcrumb-item active">Attendance Record</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- END: Breadcrumbs-->
+
+        <!-- START: Card Data-->
+        <div class="row">
+            <div class="col-12 col-md-6 mt-3 mx-auto">
+                <div class="card">
+                    <div class="card-header justify-content-between align-items-center">                               
+                        <h4 class="mb-0 card-title"><i class="fas fa-chalkboard-teacher mr-3"></i>{{session}}</h4>
+
+                        {% if user.is_authenticated %}
+                        <button data-toggle="modal" data-target="#cancel" class="btn btn-primary rounded-btn mb-2" style="float:right;"><i class="fas fa-clipboard-check" style="margin-right: 9px;"></i>Mark Attendance</button>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h2>Attendance List:</h2>
+                        <table id="example" class="display table dataTable table-striped table-bordered" >
+                            <thead>
+                                <tr class="table-primary">
+                                    <th style="font-size: 15px;">Player</th>
+                                    <th style="font-size: 15px;">Attended</th>
+                                    <th style="font-size: 15px;">Date Recorded</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for baller in ballers %}
+                                <tr>
+                                    <td>{{ baller.full_name }}</td>
+                                    <td>
+                                    {% if attendance_records.ballers.id %}
+                                        {{ attendance_records.ballers.id.attended }}
+                                    {% else %}
+                                        Not recorded
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if attendance_records.ballers.id %}
+                                        {{ attendance_records.ballers.id.recorded_at }}
+                                    {% else %}
+                                        Not recorded
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <!-- END: Card DATA--> 
+    </div>
 
 
+    <!-- Mark Attendance -->
+    <div class="modal fade" id="cancel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-clipboard-check mr-2"></i> Mark Attendance
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="icon-close"></i>
+                    </button>
+                </div>
+                <form class="add-note-form" action="{% url 'record_attendance' session.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            {{ form.as_p }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Save Attendance</button>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</main>
+<!-- END: Content-->
+
+
+<!-- START: Template JS-->
+<script src="{% static '/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static '/vendors/moment/moment.js' %}"></script>
+<script src="{% static '/vendors/bootstrap/js/bootstrap.bundle.min.js' %}"></script>    
+<script src="{% static '/vendors/slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+<!-- END: Template JS-->
+
+<!-- START: APP JS-->
+<script src="{% static '/js/app.js' %}"></script>
+<!-- END: APP JS-->
 
 {% endblock %}

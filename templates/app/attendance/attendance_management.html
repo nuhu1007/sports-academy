@@ -39,15 +39,19 @@
                                     <tr class="table-primary">
                                         <th scope="col">#</th>
                                         <th style="font-size: 15px;">Training Session</th>
+                                        <th style="font-size: 15px;">Players Attended</th>
                                         <th style="font-size: 15px;">Date Recorded</th>
+                                        <th style="font-size: 15px;">Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for attendance in attendances %}
+                                    {% for session in sessions %}
                                     <tr>
                                         <th scope="row">{{ forloop.counter }}</th>
-                                        <td>{{attendance.training_session}}</td>
-                                        <td>{{attendance.recorded_at}}</td>
+                                        <td>{{session}}</td>
+                                        <td>{{session.players.count}}</td>
+                                        <td>{{session.session_attendance.training_session.recorded_at}}</td>
+                                        <td><a href="{% url 'record_attendance' session.id %}" class="dropdown-item px-2 align-self-center d-flex"><span class="far fa-eye mr-2 h6 mb-0" title="View Details"></span></a></td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -64,7 +68,7 @@
                         </div>
                     </div>
 
-                    <!-- Add Shift -->
+                    <!-- Record Attendance -->
                     <div class="modal fade" id="cancel">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -76,19 +80,16 @@
                                         <i class="icon-close"></i>
                                     </button>
                                 </div>
-                                <form class="add-note-form" action="{% url 'attendance_management' %}" method="post">
+                                <form class="add-note-form" action="" method="post">
                                     {% csrf_token %}
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <label for="shift_name" class="col-form-label" style="font-size: medium;">Training Session:</label>
-                                            <p>{{ form.training_session }}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="shift_name" class="col-form-label" style="font-size: medium;">Players:</label>
-                                            {% for player in form.players %}
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="{{ player.id_for_label }}" id="{{ player.id_for_label }}">
-                                                    <label class="form-check-label" for="{{ player.id_for_label }}">{{ player.choice_label }}</label>
+                                            {% for player in players %}
+                                                <div>
+                                                <label for="id_attended_{{ player.id }}">
+                                                    {{ player.name }}
+                                                    <input type="checkbox" name="attended_{{ player.id }}" id="id_attended_{{ player.id }}">
+                                                </label>
                                                 </div>
                                             {% endfor %}
                                         </div>
