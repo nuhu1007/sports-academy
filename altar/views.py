@@ -201,6 +201,12 @@ def record_attendance(request, session_id):
     ballers = session.players.all()
     players = Player.objects.all()
 
+    attendance_records = {}
+    for player in players:
+        attendance = Attendance.objects.filter(player=player, training_session=session).first()
+        attendance_records[player] = attendance
+
+    # Marking the attendance
     if request.method == 'POST':
         form = AttendanceForm(request.POST, players=players)
         if form.is_valid():
@@ -216,6 +222,7 @@ def record_attendance(request, session_id):
         'session': session,
         'players': players,
         'ballers': ballers,
+        'attendance_records': attendance_records,
         'form': form,
     }
     return render(request, 'app/attendance/attendance_details.html', context)
