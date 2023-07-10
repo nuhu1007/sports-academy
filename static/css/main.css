@@ -1700,6 +1700,16 @@ footer.site-footer {
     margin-left: 250px;
 }
 
+/* The style below makes the footer too always be at the bottom of the page */
+footer.site-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+  }
+
 @media (max-width: 991px) {
     footer.site-footer {
         margin-left: 0px;
