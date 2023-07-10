@@ -201,17 +201,14 @@ def record_attendance(request, session_id):
     ballers = session.players.all()
     players = Player.objects.all()
 
-    attendance_records = {}
-    for baller in ballers:
-        attendance_record = baller.player_attendance.filter(training_session=session).first()
-        attendance_records[baller.id] = attendance_record
-
     if request.method == 'POST':
         form = AttendanceForm(request.POST, players=players)
         if form.is_valid():
             form.save(session)
             messages.success(request, f"Attendance marked and saved successfully.")
             return redirect('record_attendance', session_id=session.id)
+        else:
+            messages.error(request, f"Error")
     else:
         form = AttendanceForm(players=players)
 
@@ -219,7 +216,6 @@ def record_attendance(request, session_id):
         'session': session,
         'players': players,
         'ballers': ballers,
-        'attendance_records': attendance_records,
         'form': form,
     }
     return render(request, 'app/attendance/attendance_details.html', context)

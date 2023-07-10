@@ -93,22 +93,24 @@ class AttendanceForm(forms.Form):
             self.fields[f'player_{player.id}'] = forms.BooleanField(label=player.full_name, required=False)
 
     def save(self, training_session):
-        for name, value in self.cleaned_data.items():
-            if value:
-                player_id = int(name.split('_')[1])
-                player = Player.objects.get(id=player_id)
-                attendance, created = Attendance.objects.get_or_create(
-                    player=player,
-                    training_session=training_session,
-                )
-                attendance.attended = True
-                attendance.save()
-            else:
-                player_id = int(name.split('_')[1])
-                player = Player.objects.get(id=player_id)
-                attendance = Attendance.objects.filter(
-                    player=player,
-                    training_session=training_session,
-                ).first()
-                if attendance:
-                    attendance.delete()
+        attendance_exists = Attendance.objects.filter(training_session=training_session).exists()
+        if not attendance_exists:
+            for name, value in self.cleaned_data.items():
+                if value:
+                    player_id = int(name.split('_')[1])
+                    player = Player.objects.get(id=player_id)
+                    attendance, created = Attendance.objects.get_or_create(
+                        player=player,
+                        training_session=training_session,
+                    )
+                    attendance.attended = True
+                    attendance.save()
+                else:
+                    player_id = int(name.split('_')[1])
+                    player = Player.objects.get(id=player_id)
+                    attendance = Attendance.objects.filter(
+                        player=player,
+                        training_session=training_session,
+                    ).first()
+                    if attendance:
+                        attendance.delete()

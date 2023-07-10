@@ -48,28 +48,10 @@
                                 {% for baller in ballers %}
                                 <tr>
                                     <td>{{ baller.full_name }}</td>
-                                    <td>
-                                    {% with attendance=attendance_records.ballers.id %}
-                                        {% if attendance %}
-                                        {% if attendance.attended %}
-                                            Attended
-                                        {% else %}
-                                            Not Attended
-                                        {% endif %}
-                                        {% else %}
-                                        Not recorded
-                                        {% endif %}
-                                    {% endwith %}
-                                    </td>
-                                    <td>
-                                    {% with attendance=attendance_records.ballers.id %}
-                                        {% if attendance %}
-                                        {{ attendance.recorded_at }}
-                                        {% else %}
-                                        Not recorded
-                                        {% endif %}
-                                    {% endwith %}
-                                    </td>
+                                    {% if baller.player_attendance.first.attended %}
+                                        <td>Yes</td>
+                                    {% endif %}
+                                    <td>{{ baller.player_attendance.first.recorded_at }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
