@@ -7,28 +7,13 @@
 <!-- START: Main Content-->
 <main>
     <div class="container-fluid site-width">
-        <!-- START: Breadcrumbs-->
-        <div class="row">
-            <div class="col-12 align-self-center">
-                <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
-                    <div class="w-sm-100 mr-auto"><h4 class="mb-0">Training Details</h4></div>
-
-                    <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
-                        <li class="breadcrumb-item">Home</li>
-                        <li class="breadcrumb-item">Training</li>
-                        <li class="breadcrumb-item active">Training Details</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-        <!-- END: Breadcrumbs-->
 
         <!-- START: Card Data-->
         <div class="row">
             <div class="col-12 col-md-6 mt-3 mx-auto">
                 <div class="card">
                     <div class="card-header justify-content-between align-items-center">                               
-                        <h4 class="mb-0 card-title"><i class="fas fa-chalkboard-teacher mr-3"></i>Training Information</h4>
+                        <h4 class="mb-0 card-title"><i class="fas fa-chalkboard-teacher mr-3"></i>{{training}}</h4>
 
                         {% if user.is_authenticated %}
                         <button data-toggle="modal" data-target="#cancel" class="btn btn-primary rounded-btn mb-2" style="float:right;"><i class="fas fa-edit" style="margin-right: 9px;"></i>Edit Training Session</button>

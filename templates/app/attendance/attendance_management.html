@@ -27,10 +27,6 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">                             
                         <h4 class="card-title" style="font-size:20px;"><i class="fas fa-list mr-2"></i>Attendance Records</h4> 
-
-                        {% if user.is_authenticated %}
-                        <button data-toggle="modal" data-target="#cancel" class="btn btn-primary rounded-btn mb-2" style="float:right;"><i class="fas fa-plus-circle" style="margin-right:9px;"></i>Mark Attendance</button>
-                        {% endif %}
                     </div>
                     <div class="card-body">                      
                         <div class="table-responsive">
@@ -50,7 +46,7 @@
                                         <th scope="row">{{ forloop.counter }}</th>
                                         <td>{{session}}</td>
                                         <td>{{session.players.count}}</td>
-                                        <td>{{session.session_attendance.last.recorded_at}}</td>
+                                        <td>{% if session.session_attendance.last.recorded_at %} {{session.session_attendance.last.recorded_at}} {% else %} N/A {% endif %}</td>
                                         <td><a href="{% url 'record_attendance' session.id %}" class="dropdown-item px-2 align-self-center d-flex"><span class="far fa-eye mr-2 h6 mb-0" title="View Details"></span></a></td>
                                     </tr>
                                     {% endfor %}
@@ -67,42 +63,6 @@
                             {% endif %}
                         </div>
                     </div>
-
-                    <!-- Record Attendance -->
-                    <div class="modal fade" id="cancel">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">
-                                        <i class="fas fa-clipboard-check mr-2"></i> Mark Attendance
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <i class="icon-close"></i>
-                                    </button>
-                                </div>
-                                <form class="add-note-form" action="" method="post">
-                                    {% csrf_token %}
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            {% for player in players %}
-                                                <div>
-                                                <label for="id_attended_{{ player.id }}">
-                                                    {{ player.name }}
-                                                    <input type="checkbox" name="attended_{{ player.id }}" id="id_attended_{{ player.id }}">
-                                                </label>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-success">Save Attendance</button>
-                                    </div>
-                                </form>
-                                
-                            </div>
-                        </div>
-                    </div>
-
                 </div> 
 
             </div>                  
