@@ -35,7 +35,7 @@
                         {% endif %}
                     </div>
                     <div class="card-body">
-                        <h2>Attendance List:</h2>
+                        <h4>Attendance List:</h4>
                         <table id="example" class="display table dataTable table-striped table-bordered" >
                             <thead>
                                 <tr class="table-primary">
@@ -49,18 +49,26 @@
                                 <tr>
                                     <td>{{ baller.full_name }}</td>
                                     <td>
-                                    {% if attendance_records.ballers.id %}
-                                        {{ attendance_records.ballers.id.attended }}
-                                    {% else %}
+                                    {% with attendance=attendance_records.ballers.id %}
+                                        {% if attendance %}
+                                        {% if attendance.attended %}
+                                            Attended
+                                        {% else %}
+                                            Not Attended
+                                        {% endif %}
+                                        {% else %}
                                         Not recorded
-                                    {% endif %}
+                                        {% endif %}
+                                    {% endwith %}
                                     </td>
                                     <td>
-                                    {% if attendance_records.ballers.id %}
-                                        {{ attendance_records.ballers.id.recorded_at }}
-                                    {% else %}
+                                    {% with attendance=attendance_records.ballers.id %}
+                                        {% if attendance %}
+                                        {{ attendance.recorded_at }}
+                                        {% else %}
                                         Not recorded
-                                    {% endif %}
+                                        {% endif %}
+                                    {% endwith %}
                                     </td>
                                 </tr>
                                 {% endfor %}

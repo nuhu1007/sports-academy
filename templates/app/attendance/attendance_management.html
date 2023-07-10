@@ -50,7 +50,7 @@
                                         <th scope="row">{{ forloop.counter }}</th>
                                         <td>{{session}}</td>
                                         <td>{{session.players.count}}</td>
-                                        <td>{{session.session_attendance.training_session.recorded_at}}</td>
+                                        <td>{{session.session_attendance.last.recorded_at}}</td>
                                         <td><a href="{% url 'record_attendance' session.id %}" class="dropdown-item px-2 align-self-center d-flex"><span class="far fa-eye mr-2 h6 mb-0" title="View Details"></span></a></td>
                                     </tr>
                                     {% endfor %}
