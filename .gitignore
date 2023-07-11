@@ -9,6 +9,11 @@ __pycache__/
 # Media
 media
 
+# Migrations
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+
 # Distribution / packaging
 .Python
 build/
