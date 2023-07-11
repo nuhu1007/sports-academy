@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 
 from .models import User, Categories, Player, TrainingSession, Attendance
 
@@ -88,7 +89,6 @@ class AttendanceForm(forms.Form):
     def __init__(self, *args, **kwargs):
         players = kwargs.pop('players')
         super().__init__(*args, **kwargs)
-        
         for player in players:
             self.fields[f'player_{player.id}'] = forms.BooleanField(label=player.full_name, required=False)
 
@@ -103,8 +103,18 @@ class AttendanceForm(forms.Form):
                         player=player,
                         training_session=training_session,
                     )
-                    attendance.attended = True
-                    attendance.save()
+                    if not attendance.attended:
+                        attendance.attended = True
+                        attendance.save()
+                        messages.success(
+                            self.request,
+                            f"Attendance marked for {player.full_name}."
+                        )
+                    else:
+                        messages.warning(
+                            self.request,
+                            f"Attendance already marked for {player.full_name}."
+                        )
                 else:
                     player_id = int(name.split('_')[1])
                     player = Player.objects.get(id=player_id)
@@ -114,3 +124,7 @@ class AttendanceForm(forms.Form):
                     ).first()
                     if attendance:
                         attendance.delete()
+                        messages.success(
+                            self.request,
+                            f"Attendance deleted for {player.full_name}."
+                        )

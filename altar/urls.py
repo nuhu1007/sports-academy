@@ -12,11 +12,13 @@ urlpatterns = [
     path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='authentication/password-reset-complete.html'), name='password_reset_complete'),
     path('verification', views.VerificationEmail.as_view(), name='verification'),
 
-
+    # Index URLs
     path("", views.index, name='index'),
 
     # Dashboard URLs
     path('dashboard/', views.dashboard, name='dashboard'),
+
+    # Categories URLs
     path('categories/', views.categories, name='categories'),
 
     # Player URLs

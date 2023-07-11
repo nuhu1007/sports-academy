@@ -210,11 +210,10 @@ def record_attendance(request, session_id):
     if request.method == 'POST':
         form = AttendanceForm(request.POST, players=players)
         if form.is_valid():
+            form.request = request
             form.save(session)
             messages.success(request, f"Attendance marked and saved successfully.")
             return redirect('record_attendance', session_id=session.id)
-        else:
-            messages.error(request, f"Error")
     else:
         form = AttendanceForm(players=players)
 
