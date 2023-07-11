@@ -63,7 +63,7 @@
                         <a href="#" class="sidebarCollapse" id="collapse"><i class="icon-menu"></i></a>
                     </div>
 
-                    <form class="float-left d-none d-lg-block search-form">
+                    <!-- <form class="float-left d-none d-lg-block search-form">
                         <div class="form-group mb-0 position-relative">
                             <input type="text" class="form-control border-0 rounded bg-search pl-5" placeholder="Search anything...">
                             <div class="btn-search position-absolute top-0">
@@ -73,7 +73,8 @@
                             </a>
 
                         </div>
-                    </form>
+                    </form> -->
+
                     <div class="navbar-right ml-auto h-100">
                         <ul class="ml-auto p-0 m-0 list-unstyled d-flex top-icon h-100">
                             <li class="d-inline-block align-self-center  d-block d-lg-none">
@@ -87,89 +88,18 @@
                                         </span><span class="ring-point">
                                         </span> </span>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-right border  py-0">
-                                    <li>
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="dist/images/author.jpg" alt="" class="d-flex mr-3 img-fluid rounded-circle">
-                                                <div class="media-body">
-                                                    <p class="mb-0">john</p>
-                                                    <span class="text-success">New user registered.</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="dist/images/author2.jpg" alt="" class="d-flex mr-3 img-fluid rounded-circle">
-                                                <div class="media-body">
-                                                    <p class="mb-0">Peter</p>
-                                                    <span class="text-success">Server #12 overloaded.</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="dist/images/author3.jpg" alt="" class="d-flex mr-3 img-fluid rounded-circle">
-                                                <div class="media-body">
-                                                    <p class="mb-0">Bill</p>
-                                                    <span class="text-danger">Application error.</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li><a class="dropdown-item text-center py-2" href="#"> See All Tasks <i class="icon-arrow-right pl-2 small"></i></a></li>
-                                </ul>
 
                             </li>
+
                             <li class="dropdown align-self-center d-inline-block">
                                 <a href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false"><i class="icon-bell h4"></i>
                                     <span class="badge badge-default"> <span class="ring">
                                         </span><span class="ring-point">
                                         </span> </span>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-right border   py-0">
-                                    <li>
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="dist/images/author.jpg" alt="" class="d-flex mr-3 img-fluid rounded-circle w-50">
-                                                <div class="media-body">
-                                                    <p class="mb-0 text-success">john send a message</p>
-                                                    12 min ago
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li >
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="dist/images/author2.jpg" alt="" class="d-flex mr-3 img-fluid rounded-circle">
-                                                <div class="media-body">
-                                                    <p class="mb-0 text-danger">Peter send a message</p>
-                                                    15 min ago
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li >
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="dist/images/author3.jpg" alt="" class="d-flex mr-3 img-fluid rounded-circle">
-                                                <div class="media-body">
-                                                    <p class="mb-0 text-warning">Bill send a message</p>
-                                                    5 min ago
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li><a class="dropdown-item text-center py-2" href="#"> Read All Message <i class="icon-arrow-right pl-2 small"></i></a></li>
-                                </ul>
+                                
                             </li>
+
                             <li class="dropdown user-profile align-self-center d-inline-block">
                                 <a href="#" class="nav-link py-0" data-toggle="dropdown" data-target="#profile" aria-expanded="false">
                                     <div class="media">
@@ -204,7 +134,7 @@
 
                 <!-- START: Menu-->
                 <ul id="side-menu" class="sidebar-menu">
-                    <li class="dropdown"><a href="#"><i class="fas fa-home mr-1"></i> Dashboard</a>
+                    <li class="dropdown"><a href="#"><i class="fas fa-layer-group mr-1"></i> Dashboard</a>
                         <ul>
                             <li><a href="{% url 'dashboard' %}"><i class="fas fa-home"></i> Dashboard</a></li>
                             <li><a href="{% url 'categories' %}"><i class="fas fa-list"></i> Categories</a></li>
@@ -213,14 +143,14 @@
                     </li>
                      <li class="dropdown"><a href="#"><i class="fas fa-users mr-1"></i> Players</a>
                         <ul>
-                            <li><a href="{% url 'add_player' %}"><i class="fas fa-user-plus"></i>Add Player</a></li>
+                            <li><a href="{% url 'add_player' %}"><i class="fas fa-user-plus"></i>Register Player</a></li>
                             <li><a href="{% url 'players' %}"><i class="fas fa-users"></i>View Players</a></li>
                            
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#"><i class="fas fa-user-tie mr-1"></i>Coaches</a>
                         <ul>
-                            <li><a href=""><i class="fas fa-user-plus"></i> Add Coach</a></li>
+                            <li><a href=""><i class="fas fa-user-plus"></i> Register Coach</a></li>
                             <li><a href=""><i class="fas fa-user-tie"></i> View Coaches</a></li>
                         </ul>
                     </li>

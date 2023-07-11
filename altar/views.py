@@ -7,10 +7,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.http import HttpResponse
-from django.template.loader import render_to_string
 from django.db.models import Count
-
-import pdfkit
 
 from . models import Categories, Player, TrainingSession, Attendance, Game
 from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm
@@ -127,22 +124,6 @@ def player_details(request, player_id):
     context = {
         'player': player
     }
-
-    if request.method == 'POST':
-        # Generate PDF
-        html_string = render_to_string('app/players/player_details.html', context)
-
-        options = {
-            'page-size': 'A4',
-            'encoding': 'UTF-8',
-        }
-        
-        pdf = pdfkit.from_string(html_string, False, options)
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="player_details.pdf"'
-        response.write(pdf)
-        return response
-
     return render(request, 'app/players/player_details.html', context)
 
 
