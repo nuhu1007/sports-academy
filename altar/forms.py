@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
-from .models import User, Categories, Player, TrainingSession, Attendance
+from .models import User, Categories, Player, TrainingSession, Attendance, Game
 
 # Create Here
 class RegistrationForm(UserCreationForm):
@@ -53,6 +53,17 @@ class TrainingSessionExtrasForm(forms.ModelForm):
     class Meta:
         model = TrainingSession
         fields = ['notes', 'highlights']
+
+
+class GameForm(forms.ModelForm):
+    opponent = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder':'Opponent', 'class':'form-control'}))
+    date = forms.DateField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'placeholder':'Enter the date', 'class':'form-control'}))
+    time = forms.TimeField(required=True, widget=forms.TimeInput(attrs={'type':'time', 'placeholder':'Enter the time', 'class':'form-control'}))
+    location = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder':'Enter the location', 'class':'form-control'}))
+
+    class Meta:
+        model = Game
+        fields = ['opponent', 'date', 'time', 'location']
 
 
 class PlayerForm(forms.ModelForm):

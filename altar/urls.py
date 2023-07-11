@@ -34,4 +34,7 @@ urlpatterns = [
     # Attendance URLs
     path('attendance-management/', views.attendance_management, name='attendance_management'),
     path('record-attendance/<int:session_id>/', views.record_attendance, name='record_attendance'),
+
+    # Game URLs
+    path('game-schedule/', views.game_schedule, name='game_schedule'),
 ]
