@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordResetView
@@ -30,6 +30,13 @@ def login(request):
             return render(request, 'authentication/login.html', {'form':LoginForm()})
     else:
         return render(request, 'authentication/login.html', {'form':LoginForm()})
+    
+
+@login_required
+def logout(request):
+    auth_logout(request)
+    messages.success(request, f"Successfully logged out")
+    return redirect('login')
 
 
 class ResetPasswordView(PasswordResetView, SuccessMessageMixin):
@@ -51,6 +58,7 @@ def index(request):
     return render(request, 'index.html')
 
 
+# Dashboard View
 @login_required
 def dashboard(request):
     return render(request, 'app/dashboard.html')

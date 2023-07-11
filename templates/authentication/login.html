@@ -80,10 +80,20 @@
                             <a class="btn btn-social btn-google text-white mb-2">
                                 <i class="icon-social-google align-middle"></i>
                             </a> -->
-                            <div class="mt-3"><a href="{% url 'index' %}"><i class="fas fa-step-backward mr-2"></i>Go Back</a></div>
+                            <div class="mt-3"><a href="{% url 'index' %}" style="color: black;"><i class="fas fa-step-backward mr-2"></i>Go Back</a></div>
                         </div>
                     </form>
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
+                
 
             </div>
         </div>
