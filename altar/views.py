@@ -279,3 +279,13 @@ def game_details(request, game_id):
         'form': form,
     }
     return render(request, 'app/games/game_details.html', context)
+
+
+@login_required
+def match_results(request):
+    games = Game.objects.all()
+
+    context = {
+        'games': games,
+    }
+    return render(request, 'app/games/match_results.html', context)

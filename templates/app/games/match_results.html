@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .search-container {
+      margin-bottom: 20px;
+    }
+  
+    #searchInput {
+      width: 300px;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      float: right;
+    }
+</style>
+
+
+<!-- START: Main Content-->
+<main>
+    <div class="container-fluid site-width">
+        <!-- START: Breadcrumbs-->
+        <!-- <div class="row ">
+            <div class="col-12  align-self-center">
+                <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+
+                    <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                        <li class="breadcrumb-item">Home</li>
+                        <li class="breadcrumb-item">Building</li>
+                        <li class="breadcrumb-item active"><a>Visitors</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div> -->
+        <!-- END: Breadcrumbs-->
+        
+        <!-- START: Card Data -->
+        <div class="row">
+            <div class="col-12" style="margin-top:50px;">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="card-title" style="font-size: 20px;"><i class="fas fa-equals mr-2"></i> Match Results</h4> 
+                    
+                        <input type="text" style="position:relative; border-radius:30px; margin-right:9px; float:right;" id="searchInput" placeholder="Search...">
+                    </div>
+                    <div class="card-body">                      
+                        <div class="table-responsive">
+                            <table id="example" class="display table dataTable table-striped table-bordered" >
+                                <thead>
+                                    <tr class="table-primary">
+                                        <th scope="col">#</th>
+                                        <th style="font-size: 15px;">Game</th>
+                                        {% if games.0.result %}
+                                            <th style="font-size: 15px;">Result</th>
+                                        {% endif %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for game in games %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{game}}</td>
+                                        {% if game.result %}
+                                            <td>{{game.result}}</td>
+                                        {% else %}
+                                            <td>N/A</td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% if messages %}
+                            <div class="messages">
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Add Shift -->
+                    <div class="modal fade" id="cancel">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">
+                                        <i class="fas fa-clock mr-2"></i> Schedule Game
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="icon-close"></i>
+                                    </button>
+                                </div>
+                                <form class="add-note-form" action="{% url 'game_schedule' %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="modal-body">                                               
+                                        <div class="form-group">
+                                            <label for="shift_name" class="col-form-label" style="font-size: medium;">Opponent:</label>
+                                            <p>{{form.opponent}}</p>
+                                        </div>  
+                                        <div class="form-group">
+                                            <label for="shift_name" class="col-form-label" style="font-size: medium;">Date:</label>
+                                            <p>{{form.date}}</p>
+                                        </div> 
+                                        <div class="form-group">
+                                            <label for="shift_name" class="col-form-label" style="font-size: medium;">Time:</label>
+                                            <p>{{form.time}}</p>
+                                        </div>  
+                                        <div class="form-group">
+                                            <label for="shift_name" class="col-form-label" style="font-size: medium;">Location:</label>
+                                            <p>{{form.location}}</p>
+                                        </div>                                        
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-success">Schedule Game</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> 
+
+            </div>                  
+        </div>
+        <!-- END: Card DATA-->
+    </div>
+
+</main>
+<!-- END: Content-->
+
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $("#searchInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("table tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+    });
+</script>
+
+
+
+
+
+{% endblock %}

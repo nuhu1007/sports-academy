@@ -38,4 +38,5 @@ urlpatterns = [
     # Game URLs
     path('game-schedule/', views.game_schedule, name='game_schedule'),
     path('game-details/<int:game_id>/', views.game_details, name='game_details'),
+    path('match-results/', views.match_results, name='match_results'),
 ]
