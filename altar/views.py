@@ -13,7 +13,7 @@ from django.db.models import Count
 import pdfkit
 
 from . models import Categories, Player, TrainingSession, Attendance, Game
-from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm
+from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm
 
 # Create your views here.
 
@@ -257,3 +257,25 @@ def game_schedule(request):
         'form': GameForm()
     }
     return render(request, 'app/games/game_schedule.html', context)
+
+
+@login_required
+def game_details(request, game_id):
+    game = get_object_or_404(Game, id=game_id)
+    form = GameExtrasForm(instance=game)
+
+    # Add game results, comments & highlights
+    if request.method == 'POST':
+        form = GameExtrasForm(request.POST, request.FILES, instance=game)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Game updated successfully")
+            return redirect('game_details', game_id=game.id)
+        else:
+            form = GameExtrasForm()
+
+    context = {
+        'game': game,
+        'form': form,
+    }
+    return render(request, 'app/games/game_details.html', context)

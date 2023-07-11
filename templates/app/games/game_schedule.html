@@ -73,7 +73,7 @@
                                         <td>{{game.date}}</td>
                                         <td>{{game.time}}</td>
                                         <td>{{game.location}}</td>
-                                        <td><a href="" class="dropdown-item px-2 align-self-center d-flex"><span class="far fa-eye mr-2 h6 mb-0" title="View Details"></span></a></td>
+                                        <td><a href="{% url 'game_details' game.id %}" class="dropdown-item px-2 align-self-center d-flex"><span class="far fa-eye mr-2 h6 mb-0" title="View Details"></span></a></td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

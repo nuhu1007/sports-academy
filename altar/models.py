@@ -66,7 +66,7 @@ class Game(models.Model):
     highlights = models.FileField(upload_to='media/game_highlights/', blank=True)
 
     def __str__(self):
-        return f"Game vs {self.opponent} on {self.date} at {self.time}"
+        return f"Game vs {self.opponent}, on {self.date} at {self.time}"
     
 
 class TrainingSession(models.Model):

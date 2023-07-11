@@ -66,6 +66,16 @@ class GameForm(forms.ModelForm):
         fields = ['opponent', 'date', 'time', 'location']
 
 
+class GameExtrasForm(forms.ModelForm):
+    result = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'placeholder':'Game Result', 'class':'form-control'}))
+    comments = forms.CharField(required=False, widget=forms.Textarea(attrs={'placeholder':'Any comments about the game...', 'class':'form-control'}))
+    highlights = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'class':'form-control'}))
+
+    class Meta:
+        model = Game
+        fields = ['result', 'comments', 'highlights']
+
+
 class PlayerForm(forms.ModelForm):
     full_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Full Name', 'class':'form-control'}))
     date_of_birth = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Date of Birth', 'class':'form-control'}))
