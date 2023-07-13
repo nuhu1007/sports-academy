@@ -6,11 +6,10 @@ from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
-from django.http import HttpResponse
 from django.db.models import Count
 
-from . models import Categories, Player, TrainingSession, Attendance, Game
-from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm
+from . models import Categories, Player, TrainingSession, Attendance, Game, Coach
+from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm, CoachForm
 
 # Create your views here.
 
@@ -85,7 +84,7 @@ def categories(request):
     return render(request, 'app/categories.html', context)
 
 
-# Players' View
+# Players' Views
 @login_required
 def add_player(request):
     categories = Categories.objects.all()
@@ -95,7 +94,7 @@ def add_player(request):
         if form.is_valid():
             player = form.save(commit=False)
             player.save()
-            messages.success(request, f"{player.full_name} has been created and saved successfully.")
+            messages.success(request, f"{player.full_name} has been registered and saved successfully.")
             return redirect('/players')
         else:
             form = PlayerForm()
@@ -270,3 +269,27 @@ def match_results(request):
         'games': games,
     }
     return render(request, 'app/games/match_results.html', context)
+
+
+# Coaches' Views
+@login_required
+def coaches_list(request):
+    coaches = Coach.objects.all()
+    form = CoachForm()
+
+    # Registering a coach
+    if request.method == 'POST':
+        form = CoachForm(request.POST, request.FILES)
+        if form.is_valid():
+            coach = form.save(commit=False)
+            coach.save()
+            messages.success(request, f"{coach.full_name} registered and saved successfully.")
+            return redirect('coaches')
+        else:
+            form = CoachForm()
+
+    context = {
+        'coaches': coaches,
+        'form': CoachForm()
+    }
+    return render(request, 'app/coaches/coaches_list.html', context)
