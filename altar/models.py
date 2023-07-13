@@ -54,6 +54,19 @@ class Player(models.Model):
 
     def __str__(self):
         return str(self.full_name)
+
+
+class Coach(models.Model):
+    full_name = models.CharField(max_length=150, blank=False, null=False)
+    phone_number = models.CharField(max_length=25, blank=True, null=True)
+    cv = models.FileField(upload_to='media/coach_cv/', blank=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date_joined']
+
+    def __str__(self):
+        return str(self.full_name)
     
 
 class Game(models.Model):

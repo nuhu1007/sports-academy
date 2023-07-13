@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import User, Player, TrainingSession, Attendance, Categories, Game
+from .models import User, Player, TrainingSession, Attendance, Categories, Game, Coach
 from .forms import RegistrationForm
 
 # Define classes here.
@@ -27,3 +27,4 @@ admin.site.register(Player)
 admin.site.register(Attendance)
 admin.site.register(Categories)
 admin.site.register(Game)
+admin.site.register(Coach)
