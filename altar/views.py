@@ -57,7 +57,13 @@ def index(request):
 # Dashboard View
 @login_required
 def dashboard(request):
-    return render(request, 'app/dashboard.html')
+    coaches = Coach.objects.all()
+    coach_count = len(coaches)
+
+    context = {
+        'coach_count': coach_count,
+    }
+    return render(request, 'app/dashboard.html', context)
 
 
 # Category View
