@@ -60,8 +60,11 @@ def dashboard(request):
     coaches = Coach.objects.all()
     coach_count = len(coaches)
 
+    players = Player.objects.all()
+
     context = {
         'coach_count': coach_count,
+        'players': players,
     }
     return render(request, 'app/dashboard.html', context)
 
