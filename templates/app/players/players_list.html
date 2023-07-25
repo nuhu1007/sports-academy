@@ -15,14 +15,23 @@
             <div class="col-12" style="margin-top:50px;">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center left"> 
-                        <h4 class="card-title" style="font-size:20px;"><i class="fas fa-users mr-3"></i>Players in Altar Sports Academy</h4>
+                        <h4 class="card-title" style="font-size:20px;"><i class="fas fa-users mr-3"></i><b>Players in Altar Sports Academy</b></h4>
 
                         {% if user.is_authenticated %}        
-                        <button class="btn btn-primary rounded-btn mb-2 " style="float:right;"><a href="{%url 'add_player'%}"><i class="fas fa-plus-circle mr-2"></i>Register Player</a></button>
+                        <button class="btn btn-primary rounded-btn mb-2 " style="float:right;"><a href="{%url 'add_player'%}"><i class="fas fa-plus-circle mr-2"></i><b>Register Player</b></a></button>
                         {% endif %} 
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
+                            {% if messages %}
+                            <div class="messages">
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                             <table id="example" class="display table dataTable table-striped table-bordered" >
                                 <thead>
                                     <tr>
@@ -67,15 +76,6 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                            {% if messages %}
-                            <div class="messages">
-                                {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }}">
-                                    {{ message }}
-                                </div>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
                         </div>
                     </div>
                 </div> 

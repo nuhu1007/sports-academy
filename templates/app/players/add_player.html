@@ -10,7 +10,7 @@
         <div class="row ">
             <div class="col-12  align-self-center">
                 <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
-                    <div class="w-sm-100 mr-auto"><h4 class="mb-0">Altar Sports Player Registration</h4></div>
+                    <div class="w-sm-100 mr-auto"><h4 class="mb-0"><b>Altar Sports Player Registration</b></h4></div>
 
                     <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
                         <li class="breadcrumb-item">Home</li>
@@ -26,22 +26,22 @@
             <div class="col-12 mt-4">
                 <div class="card">
                     <div class="card-header">                               
-                        <h6 class="card-title">To complete the player's registration you must fill the form</h6>                                
+                        <h6 class="card-title"><b>To complete the player's registration you must fill the form</b></h6>                                
                     </div>
                     <div class="card-content">
                         <div class="card-body">
                             <div class="row">                                           
                                 <div class="col-12">
 
-                                    <form method='post'>
+                                    <form method='post' enctype="multipart/form-data">
                                     {% csrf_token %}
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Full Name</label>
+                                                <label for="inputEmail4"><b>Full Name</b></label>
                                                 <p>{{form.full_name}}</p>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputPassword4">Date of Birth</label>
+                                                <label for="inputPassword4"><b>Date of Birth</b></label>
                                                 <input type="text" data-masked="" data-inputmask="'mask': '99/99/9999'" placeholder="Date" class="form-control" name="{{form.date_of_birth.name}}" id="{{form.date_of_birth.id_for_label}}">
                                                 {% if form.date_of_birth.errors %}
                                                     <div class="invalid-feedback">
@@ -52,29 +52,41 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="inputAddress">Home Address</label>
+                                                <label for="inputAddress"><b>Home Address</b></label>
                                                 <p>{{form.home_address}}</p>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputAddress2">School Attended</label>
+                                                <label for="inputAddress2"><b>School Attended</b></label>
                                                 <p>{{form.school_attended}}</p>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="inputCity">Player Position</label>
+                                                <label for="inputCity"><b>Player Position</b></label>
                                                 <p>{{form.player_position}}</p>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputState">Category</label>
+                                                <label for="inputState"><b>Category</b></label>
                                                 <select id="inputState" class="form-control" name="player_category">
                                                     {% for category in categories %}
                                                         <option value="{{ category.pk }}">{{ category.category }}</option>
                                                     {% endfor %}
                                                 </select>
+                                            </div>      
+                                            <div class="form-group col-md-6">
+                                                <label for="inputCity"><b>Player Image</b></label>
+                                                <p>{{form.player_image}}</p>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputState"><b>Branch</b></label>
+                                                <select id="inputState" class="form-control" name="player_branch">
+                                                    {% for branch in branches %}
+                                                        <option value="{{ branch.pk }}">{{ branch.branch }}</option>
+                                                    {% endfor %}
+                                                </select>
                                             </div>          
                                             <div class="form-group col-md-6">
-                                                <label for="inputZip">Medical Condition</label>
+                                                <label for="inputZip"><b>Medical Condition</b></label>
                                                 <div class="form-check">
                                                     {{ form.medical_condition }}
                                                     <label class="form-check-label" for="{{ form.medical_condition.id_for_label }}">Has Medical Condition</label>
@@ -87,21 +99,21 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Parent's Full Name</label>
+                                                <label for="inputEmail4"><b>Parent's Full Name</b></label>
                                                 <p>{{form.parent_full_name}}</p>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputPassword4">Parent's Phone Number</label>
+                                                <label for="inputPassword4"><b>Parent's Phone Number</b></label>
                                                 <p>{{form.parent_phone_number}}</p>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Emergency Contact</label>
+                                                <label for="inputEmail4"><b>Emergency Contact</b></label>
                                                 <p>{{form.emergency_contact}}</p>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputPassword4">Email Address</label>
+                                                <label for="inputPassword4"><b>Email Address</b></label>
                                                 <p>{{form.email_address}}</p>
                                             </div>
                                         </div>

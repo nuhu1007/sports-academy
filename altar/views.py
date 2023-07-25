@@ -121,7 +121,8 @@ def branches(request):
 @login_required
 def add_player(request):
     categories = Categories.objects.all()
-    form = PlayerForm(request.POST)
+    branches = Branches.objects.all()
+    form = PlayerForm(request.POST, request.FILES)
     
     if request.method == 'POST':
         if form.is_valid():
@@ -135,6 +136,7 @@ def add_player(request):
     context = {
         'form': form,
         'categories': categories,
+        'branches': branches,
     }
     return render(request, 'app/players/add_player.html', context)
 

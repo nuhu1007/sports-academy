@@ -101,7 +101,9 @@ class PlayerForm(forms.ModelForm):
     home_address = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Home Address', 'class':'form-control'}))
     school_attended = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'School Attended', 'class':'form-control'}))
     player_position = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Player Position', 'class':'form-control'}))
+    player_image = forms.ImageField(required=True, widget=forms.ClearableFileInput(attrs={'class':'custom-image-field'}))
     player_category = forms.ModelChoiceField(required=True, queryset=Categories.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Choose a category...'}))
+    player_branch = forms.ModelChoiceField(required=True, queryset=Branches.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Choose a branch...'}))
     medical_condition = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'medical-condition-checkbox'}))
     medical_condition_details = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'medical-condition-details'}))
     parent_full_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Parent Full Name', 'class':'form-control'}))
@@ -111,7 +113,7 @@ class PlayerForm(forms.ModelForm):
 
     class Meta:
         model = Player
-        fields = ['full_name', 'date_of_birth', 'home_address', 'school_attended', 'player_position', 'player_category', 'medical_condition', 'medical_condition_details' ,'parent_full_name', 'parent_phone_number', 'emergency_contact', 'email_address']
+        fields = ['full_name', 'date_of_birth', 'home_address', 'school_attended', 'player_position', 'player_image', 'player_category', 'player_branch', 'medical_condition', 'medical_condition_details' ,'parent_full_name', 'parent_phone_number', 'emergency_contact', 'email_address']
 
     def clean(self):
         cleaned_data = super().clean()

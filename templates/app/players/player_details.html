@@ -15,7 +15,7 @@
                 <div class="col-12 col-md-6 mt-3 mx-auto">
                     <div class="card">
                         <div class="card-header justify-content-between align-items-center">
-                            <h4 class="card-title">{{ player.full_name }}'s Information</h4>
+                            <h4 class="card-title"><b>{{ player.full_name }}'s Information</b></h4>
                         </div>
                         <div class="card-body">
                             <table id="example" class="display table dataTable table-striped table-bordered">
@@ -33,8 +33,16 @@
                                         <td>{{ player.home_address }}</td>
                                     </tr>
                                     <tr>
+                                        <th>Player Image:</th>
+                                        <td><a href="{{player.player_image.url}}" download target="_blank" style="color: red;">{{ player.player_image.name }}</a></td>
+                                    </tr>
+                                    <tr>
                                         <th>School Attended:</th>
                                         <td>{{ player.school_attended }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Academy Branch:</th>
+                                        <td>{{ player.player_branch }}</td>
                                     </tr>
                                     <tr>
                                         <th>Player Position:</th>
