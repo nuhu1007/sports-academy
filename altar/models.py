@@ -48,6 +48,7 @@ class Player(models.Model):
     school_attended = models.CharField(max_length=200, blank=False, null=False)
     player_position = models.CharField(max_length=100, null=True, blank=True)
     player_category = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True, related_name='player_category')
+    player_branch = models.ForeignKey(Branches, on_delete=models.CASCADE, blank=True, null=True, related_name='player_branch')
     medical_condition = models.BooleanField(default=False, blank=True)
     medical_condition_details = models.CharField(max_length=500, blank=True, null=True)
     parent_full_name = models.CharField(max_length=150, blank=False, null=False)

@@ -8,8 +8,8 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.db.models import Count
 
-from . models import Categories, Player, TrainingSession, Attendance, Game, Coach
-from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm, CoachForm
+from . models import Categories, Player, TrainingSession, Attendance, Game, Coach, Branches
+from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm, CoachForm, BranchForm
 
 # Create your views here.
 
@@ -91,6 +91,12 @@ def categories(request):
         'form': CategoryForm(),
     }
     return render(request, 'app/categories.html', context)
+
+
+# Branch View
+@login_required
+def branches(request):
+    pass
 
 
 # Players' Views
