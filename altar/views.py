@@ -96,7 +96,25 @@ def categories(request):
 # Branch View
 @login_required
 def branches(request):
-    pass
+    branches = Branches.objects.annotate(player_count=Count('player_branch'))
+    form = BranchForm()
+
+    # Creating a branch
+    if request.method == 'POST':
+        form = BranchForm(request.POST)
+        if form.is_valid():
+            branch = form.save(commit=False)
+            branch.save()
+            messages.success(request, f"Branch added and saved successfully.")
+            return redirect('branches')
+        else:
+            form = BranchForm()
+
+    context = {
+        'branches': branches,
+        'form': BranchForm(),
+    }
+    return render(request, 'app/branches.html', context)
 
 
 # Players' Views

@@ -22,6 +22,9 @@ urlpatterns = [
     # Categories URLs
     path('categories/', views.categories, name='categories'),
 
+    # Branches URLs
+    path('branches/', views.branches, name='branches'),
+
     # Player URLs
     path('add-player/', views.add_player, name='add_player'),
     path('players/', views.players_list, name='players'),
