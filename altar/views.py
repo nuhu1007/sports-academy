@@ -61,10 +61,16 @@ def dashboard(request):
     coach_count = len(coaches)
 
     players = Player.objects.all()
+    player_count = len(players)
+
+    branches = Branches.objects.all()
+    branches_count = len(branches)
 
     context = {
         'coach_count': coach_count,
+        'player_count': player_count,
         'players': players,
+        'branches_count': branches_count,
     }
     return render(request, 'app/dashboard.html', context)
 
@@ -96,7 +102,7 @@ def categories(request):
 # Branch View
 @login_required
 def branches(request):
-    branches = Branches.objects.annotate(player_count=Count('player_branch'))
+    branches = Branches.objects.annotate(player_count=Count('player_branch'), coach_count=Count('coaching_branch'))
     form = BranchForm()
 
     # Creating a branch

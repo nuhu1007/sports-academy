@@ -88,11 +88,12 @@ class CoachForm(forms.ModelForm):
     full_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Full Name', 'class':'form-control'}))
     phone_number = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     coaching_category = forms.ModelChoiceField(required=True, queryset=Categories.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Choose a category...'}))
+    coaching_branch = forms.ModelChoiceField(required=True, queryset=Branches.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Choose a branch...'}))
     cv = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'class':'form-control'}))
 
     class Meta:
         model = Coach
-        fields = ['full_name', 'phone_number', 'coaching_category', 'cv']
+        fields = ['full_name', 'phone_number', 'coaching_category', 'coaching_branch', 'cv']
 
 
 class PlayerForm(forms.ModelForm):

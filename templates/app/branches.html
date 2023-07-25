@@ -26,7 +26,7 @@
             <div class="col-12" style="margin-top:50px;">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">                             
-                        <h4 class="card-title" style="font-size:20px;"><i class="fas fa-list mr-2"></i>Branches</h4> 
+                        <h4 class="card-title" style="font-size:20px;"><i class="fas fa-code-branch mr-2"></i> <b>Branches</b></h4> 
 
                         {% if user.is_authenticated %}
                         <button data-toggle="modal" data-target="#cancel" class="btn btn-primary rounded-btn mb-2" style="float:right;"><i class="fas fa-plus-circle" style="margin-right:9px;"></i>Add Branch</button>
@@ -40,6 +40,7 @@
                                         <th scope="col">#</th>
                                         <th style="font-size: 15px;">Branch Name</th>
                                         <th style="font-size: 15px;">Number of Players</th>
+                                        <th style="font-size: 15px;">Number of Coaches</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,6 +49,7 @@
                                         <th scope="row">{{ forloop.counter }}</th>
                                         <td>{{branch.branch}}</td>
                                         <td>{{branch.player_count}}</td>
+                                        <td>{{branch.coach_count}}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

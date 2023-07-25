@@ -69,6 +69,7 @@ class Coach(models.Model):
     full_name = models.CharField(max_length=150, blank=False, null=False)
     phone_number = models.CharField(max_length=25, blank=True, null=True)
     coaching_category = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True, related_name='coaching_category')
+    coaching_branch = models.ForeignKey(Branches, on_delete=models.CASCADE, blank=True, null=True, related_name='coaching_branch')
     cv = models.FileField(upload_to='media/coach_cv/', blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
 
