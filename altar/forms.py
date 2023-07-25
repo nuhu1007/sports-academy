@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
-from .models import User, Categories, Player, TrainingSession, Attendance, Game, Coach
+from .models import User, Categories, Player, TrainingSession, Attendance, Game, Coach, Branches
 
 # Create Here
 class RegistrationForm(UserCreationForm):
@@ -33,6 +33,14 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Categories
         fields = ['category',]
+
+
+class BranchForm(forms.ModelForm):
+    branch = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Enter a branch e.g. Fedha, Baraka', 'class':'form-control'}))
+
+    class Meta:
+        model = Branches
+        fields = ['branch',]
 
 
 class TrainingSessionForm(forms.ModelForm):

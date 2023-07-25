@@ -27,6 +27,13 @@ class User(AbstractUser):
         return str(self.email)
     
 
+class Branches(models.Model):
+    branch = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.branch)
+    
+
 class Categories(models.Model):
     category = models.CharField(max_length=100, null=True, blank=True)
 
