@@ -48,6 +48,7 @@ class Player(models.Model):
     school_attended = models.CharField(max_length=200, blank=False, null=False)
     player_position = models.CharField(max_length=100, null=True, blank=True)
     player_image = models.ImageField(upload_to='media/player_images/', blank=True)
+    birth_certificate = models.FileField(upload_to='media/birth_certificates/', blank=True)
     player_category = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True, related_name='player_category')
     player_branch = models.ForeignKey(Branches, on_delete=models.CASCADE, blank=True, null=True, related_name='player_branch')
     medical_condition = models.BooleanField(default=False, blank=True)

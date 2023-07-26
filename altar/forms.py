@@ -103,6 +103,7 @@ class PlayerForm(forms.ModelForm):
     school_attended = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'School Attended', 'class':'form-control'}))
     player_position = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Player Position', 'class':'form-control'}))
     player_image = forms.ImageField(required=True, widget=forms.ClearableFileInput(attrs={'class':'custom-image-field'}))
+    birth_certificate = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'class':'form-control'}))
     player_category = forms.ModelChoiceField(required=True, queryset=Categories.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Choose a category...'}))
     player_branch = forms.ModelChoiceField(required=True, queryset=Branches.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Choose a branch...'}))
     medical_condition = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'medical-condition-checkbox'}))
@@ -114,7 +115,7 @@ class PlayerForm(forms.ModelForm):
 
     class Meta:
         model = Player
-        fields = ['full_name', 'date_of_birth', 'home_address', 'school_attended', 'player_position', 'player_image', 'player_category', 'player_branch', 'medical_condition', 'medical_condition_details' ,'parent_full_name', 'parent_phone_number', 'emergency_contact', 'email_address']
+        fields = ['full_name', 'date_of_birth', 'home_address', 'school_attended', 'player_position', 'player_image', 'birth_certificate', 'player_category', 'player_branch', 'medical_condition', 'medical_condition_details' ,'parent_full_name', 'parent_phone_number', 'emergency_contact', 'email_address']
 
     def clean(self):
         cleaned_data = super().clean()
