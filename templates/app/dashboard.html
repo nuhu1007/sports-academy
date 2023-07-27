@@ -63,10 +63,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
-                            <i class="fas fa-users card-liner-icon mt-2"></i>
+                            <i class="fas fa-user-tie card-liner-icon mt-2"></i>
                             <div class='card-liner-content'>
-                                <h2 class="card-liner-title"></h2>
-                                <h6 class="card-liner-subtitle">Total Number of Under 11s</h6> 
+                                <h2 class="card-liner-title">{{coach_count}}</h2>
+                                <h6 class="card-liner-subtitle">Total Number of Coaches</h6> 
                             </div>                                
                         </div>
                         <div id="apex_today_visitors"></div> 
@@ -77,10 +77,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
-                            <i class="fas fa-users card-liner-icon mt-2"></i>
+                            <i class="fas fa-code-branch card-liner-icon mt-2"></i>
                             <div class='card-liner-content'>
-                                <h2 class="card-liner-title"></h2>
-                                <h6 class="card-liner-subtitle">Total Number of Under 13s</h6> 
+                                <h2 class="card-liner-title">{{branches_count}}</h2>
+                                <h6 class="card-liner-subtitle">Total Number of Branches</h6> 
                             </div>                                
                         </div>
                         <div id="apex_today_sale"></div> 
@@ -117,9 +117,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Date of Birth</th>
                                     <th>Position</th>
                                     <th>Category</th>
+                                    <th>Branch</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -127,9 +127,9 @@
                                 <tr class="ng-scope">
                                     <td>{{forloop.counter}}</td>
                                     <td>{{player.full_name}}</td>
-                                    <td>{{player.date_of_birth}}</td>
                                     <td>{{player.player_position}}</td>
                                     <td>{{player.player_category}}</td>
+                                    <td>{{player.player_branch}}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

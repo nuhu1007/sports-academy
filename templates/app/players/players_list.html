@@ -38,9 +38,9 @@
                                         <th scope="col">#</th>
                                         <th style="font-size: 15px;">Name</th>
                                         <th style="font-size: 15px;">Date of Birth</th>
-                                        <th style="font-size: 15px;">School</th>
                                         <th style="font-size: 15px;">Position</th>
                                         <th style="font-size: 15px;">Category</th>
+                                        <th style="font-size: 15px;">Branch</th>
                                         <th style="font-size: 15px;">Date Joined</th>
                                         <th style="font-size: 15px;">View</th>
                                     </tr>
@@ -51,9 +51,9 @@
                                         <th scope="row">{{ forloop.counter }}</th>
                                         <td> {{player.full_name}} </td>
                                         <td> {{player.date_of_birth}} </td>
-                                        <td> {{player.school_attended}} </td>
                                         <td> {{player.player_position}}</td>
                                         <td> {{player.player_category}} </td>
+                                        <td> {{player.player_branch}} </td>
                                         <td> {{player.date_joined}} </td>
                                         <td><a href="{% url 'player_details' player.id %}" class="dropdown-item px-2 align-self-center d-flex"><span class="far fa-eye mr-2 h6 mb-0" title="View Details"></span></a></td>
 
@@ -68,9 +68,9 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Date of Birth</th>
-                                        <th>School</th>
                                         <th>Position</th>
                                         <th>Category</th>
+                                        <th>Branch</th>
                                         <th>Date Joined</th>
                                         <th>View</th>
                                     </tr>
