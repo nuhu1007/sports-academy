@@ -40,6 +40,9 @@ class Categories(models.Model):
     def __str__(self):
         return str(self.category)
     
+    class Meta:
+        ordering = ['id']
+    
 
 class Player(models.Model):
     full_name = models.CharField(max_length=150, blank=False, null=False)
@@ -50,7 +53,7 @@ class Player(models.Model):
     player_image = models.ImageField(upload_to='media/player_images/', blank=True)
     birth_certificate = models.FileField(upload_to='media/birth_certificates/', blank=True)
     player_category = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True, related_name='player_category')
-    player_branch = models.ForeignKey(Branches, on_delete=models.CASCADE, blank=True, null=True, related_name='player_branch')
+    player_branch = models.ForeignKey(Branches, on_delete=models.CASCADE, blank=True, null=True, related_name='players')
     medical_condition = models.BooleanField(default=False, blank=True)
     medical_condition_details = models.CharField(max_length=500, blank=True, null=True)
     parent_full_name = models.CharField(max_length=150, blank=False, null=False)
@@ -71,7 +74,7 @@ class Coach(models.Model):
     phone_number = models.CharField(max_length=25, blank=True, null=True)
     coach_image = models.ImageField(upload_to='media/coach_images/', blank=True)
     coaching_category = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True, related_name='coaching_category')
-    coaching_branch = models.ForeignKey(Branches, on_delete=models.CASCADE, blank=True, null=True, related_name='coaching_branch')
+    coaching_branch = models.ForeignKey(Branches, on_delete=models.CASCADE, blank=True, null=True, related_name='coaches')
     cv = models.FileField(upload_to='media/coach_cv/', blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
 
@@ -96,6 +99,7 @@ class Game(models.Model):
     
 
 class TrainingSession(models.Model):
+    training_branch = models.ForeignKey(Branches, on_delete=models.CASCADE, related_name='training_branch', null=True)
     date = models.DateField(null=True)
     start_time = models.TimeField(null=True)
     end_time = models.TimeField(null=True)
@@ -105,7 +109,7 @@ class TrainingSession(models.Model):
     highlights = models.FileField(upload_to='media/training_highlights/', blank=True)
 
     def __str__(self):
-        return f"Training Session, on {self.date} at: {self.location}"
+        return f"Training Session for {self.training_branch.branch}, on {self.date}"
     
 
 class Attendance(models.Model):

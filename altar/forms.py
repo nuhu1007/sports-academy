@@ -44,6 +44,7 @@ class BranchForm(forms.ModelForm):
 
 
 class TrainingSessionForm(forms.ModelForm):
+    training_branch = forms.ModelChoiceField(required=True, queryset=Branches.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Select a branch...'}))
     date = forms.DateField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'placeholder':'Enter the date', 'class':'form-control'}))
     start_time = forms.TimeField(required=True, widget=forms.TimeInput(attrs={'type':'time', 'placeholder':'Enter the time', 'class':'form-control'}))
     end_time = forms.TimeField(required=True, widget=forms.TimeInput(attrs={'type':'time', 'placeholder':'Enter the time', 'class':'form-control'}))
@@ -51,7 +52,7 @@ class TrainingSessionForm(forms.ModelForm):
 
     class Meta:
         model = TrainingSession
-        fields = ['date', 'start_time', 'end_time', 'location']
+        fields = ['training_branch' ,'date', 'start_time', 'end_time', 'location']
 
 
 class TrainingSessionExtrasForm(forms.ModelForm):
@@ -132,8 +133,15 @@ class PlayerForm(forms.ModelForm):
 
 class AttendanceForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        players = kwargs.pop('players')
+        training_session = kwargs.pop('training_session')
         super().__init__(*args, **kwargs)
+
+        # Retrieve the branch associated with the training session
+        branch = training_session.training_branch
+
+        # Filter the players based on the selected branch
+        players = Player.objects.filter(player_branch=branch)
+
         for player in players:
             self.fields[f'player_{player.id}'] = forms.BooleanField(label=player.full_name, required=False)
 

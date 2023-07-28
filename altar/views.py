@@ -6,7 +6,7 @@ from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
-from django.db.models import Count
+from django.db.models import Count, OuterRef, Subquery, IntegerField
 
 from . models import Categories, Player, TrainingSession, Attendance, Game, Coach, Branches
 from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm, CoachForm, BranchForm
@@ -102,7 +102,10 @@ def categories(request):
 # Branch View
 @login_required
 def branches(request):
-    branches = Branches.objects.annotate(player_count=Count('player_branch'), coach_count=Count('coaching_branch'))
+    # Subquery to get the player count & coach count for each branch
+    player_count_subquery = Player.objects.filter(player_branch=OuterRef('pk')).values('player_branch').annotate(count=Count('*')).values('count')
+    coach_count_subquery = Coach.objects.filter(coaching_branch=OuterRef('pk')).values('coaching_branch').annotate(count=Count('*')).values('count')
+    branches = Branches.objects.annotate(player_count=Subquery(player_count_subquery, output_field=IntegerField()), coach_count=Subquery(coach_count_subquery, output_field=IntegerField()))
     form = BranchForm()
 
     # Creating a branch
@@ -228,7 +231,12 @@ def attendance_management(request):
 def record_attendance(request, session_id):
     session = get_object_or_404(TrainingSession, pk=session_id)
     ballers = session.players.all()
-    players = Player.objects.all()
+
+    # Retrieve the branch associated with the training session
+    branch = session.training_branch
+
+    # Filter players based on the branch
+    players = Player.objects.filter(player_branch=branch)
 
     attendance_records = {}
     for player in players:
@@ -237,14 +245,14 @@ def record_attendance(request, session_id):
 
     # Marking the attendance
     if request.method == 'POST':
-        form = AttendanceForm(request.POST, players=players)
+        form = AttendanceForm(request.POST, training_session=session)
         if form.is_valid():
             form.request = request
             form.save(session)
             messages.success(request, f"Attendance marked and saved successfully.")
             return redirect('record_attendance', session_id=session.id)
     else:
-        form = AttendanceForm(players=players)
+        form = AttendanceForm(training_session=session)
 
     context = {
         'session': session,
