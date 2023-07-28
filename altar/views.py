@@ -70,6 +70,7 @@ def dashboard(request):
         'coach_count': coach_count,
         'player_count': player_count,
         'players': players,
+        'coaches': coaches,
         'branches_count': branches_count,
     }
     return render(request, 'app/dashboard.html', context)
