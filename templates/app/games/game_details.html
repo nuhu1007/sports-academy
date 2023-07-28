@@ -43,6 +43,17 @@
                                 <td>{{ game.result }}</td>
                             </tr>
                             {% endif %}
+                            {% if game.scorers.all %}
+                                <tr>
+                                    <th>Goal Scorers:</th>
+                                    <td>
+                                        {% for scorer in game.scorers.all %}
+                                            {{ scorer.full_name }}
+                                            {% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endif %}
                             {% if game.comments %}
                             <tr>
                                 <th>Comments:</th>
@@ -94,7 +105,16 @@
                         <div class="form-group">
                             <label for="shift_name" class="col-form-label" style="font-size: medium;">Result:</label>
                             <p>{{form.result}}</p>
-                        </div>                                               
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.scorers.id_for_label }}" class="col-form-label" style="font-size: medium;">Scorers:</label>
+                            {% for scorer in form.scorers %}
+                                <div class="form-check">
+                                    {{ scorer }}
+                                    <label class="form-check-label" for="{{ scorer.id_for_label }}"></label>
+                                </div>
+                            {% endfor %}
+                        </div>                                                 
                         <div class="form-group">
                             <label for="shift_name" class="col-form-label" style="font-size: medium;">Notes:</label>
                             <p>{{form.comments}}</p>

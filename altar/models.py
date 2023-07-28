@@ -92,6 +92,7 @@ class Game(models.Model):
     location = models.CharField(max_length=100, null=True, blank=True)
     result = models.CharField(max_length=50, null=True, blank=True)
     comments = models.TextField()
+    scorers = models.ManyToManyField(Player, related_name='scorers')
     highlights = models.FileField(upload_to='media/game_highlights/', blank=True)
 
     def __str__(self):

@@ -55,20 +55,32 @@
                                         {% if games.0.result %}
                                             <th style="font-size: 15px;">Result</th>
                                         {% endif %}
+                                        <th style="font-size: 15px;"> Goal Scorers</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for game in games %}
-                                    <tr>
-                                        <th scope="row">{{ forloop.counter }}</th>
-                                        <td>{{game}}</td>
-                                        {% if game.result %}
-                                            <td>{{game.result}}</td>
-                                        {% else %}
-                                            <td>N/A</td>
-                                        {% endif %}
-                                    </tr>
+                                        <tr>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>{{ game }}</td>
+                                            {% if game.result %}
+                                                <td>{{ game.result }}</td>
+                                            {% else %}
+                                                <td>N/A</td>
+                                            {% endif %}
+                                            <td>
+                                                {% if game.scorers.all %}
+                                                    {% for scorer in game.scorers.all %}
+                                                        {{ scorer.full_name }}
+                                                        {% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                {% else %}
+                                                    N/A
+                                                {% endif %}
+                                            </td>
+                                        </tr>
                                     {% endfor %}
+
                                 </tbody>
                             </table>
                             {% if messages %}
