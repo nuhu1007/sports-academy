@@ -127,13 +127,13 @@ File: Main Style
 }
 
 .semi-dark {
-    --sidebarbg: #060818;
+    --sidebarbg: #333333;
     --sidebarcolor: rgba(255,255,255,0.8);
     --sidebarbordercolor: rgba(255,255,255,0.1);
     --sidebaractivecolor: #4c75f2;
     --sidebarheadingcolor: #fff;
     --sidebarheadingbackground: rgba(59, 63, 92, 0.35);
-    --logobg: #060818;
+    --logobg: #333333;
     --logocolor: rgba(255,255,255,0.8);
 }
 
