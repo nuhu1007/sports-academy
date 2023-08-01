@@ -1,5 +1,15 @@
 {% load static %}
 
+<style>
+  .white-icon {
+    filter: invert(1);
+  }
+
+  ul li a {
+    font-size: 24px;
+  }
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,9 +38,7 @@
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top header-transparent">
     <div class="container">
-
       <div class="logo float-left">
- 
         <h1 class="text-light"><a href="{%url 'index'%}"><span><b>Altar Sports Academy</b></span></a></h1>
       </div>
 
@@ -40,13 +48,15 @@
           <li><a href="#about">About Us</a></li>
           <li><a href="#services">Services</a></li>        
           <li><a href="#footer">Contact Us</a></li>
-          <li><a href="{% url 'login' %}">Admin Login</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
           <!-- <li><a href="">Get Started</a></li> -->
         </ul>
-      </nav><!-- .nav-menu -->
+      </nav>
+      <!-- .nav-menu -->
 
     </div>
-  </header><!-- End Header -->
+  </header>
+  <!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex justify-cntent-center align-items-center">
@@ -62,24 +72,24 @@
       </div>
 
       <!-- Slide 2 -->
-      <!-- <div class="carousel-item">
+      <div class="carousel-item">
         <div class="carousel-container">
-          <h2 class="animated fadeInDown">Our System</h2>
-          <p class="animated fadeInUp">Our state-of-the-art system streamlines the check-in process, eliminates paper logs, and provides real-time data and analytics.</p>
-          <a href="" class="btn-get-started animated fadeInUp">Get Started</a>
+          <h2 class="animated fadeInDown">Our Mission</h2>
+          <p class="animated fadeInUp">At Altar Sports Academy, our mission is to foster holistic development in young athletes by providing high-quality sports training, emphasizing character-building, teamwork, and discipline.</p>
+          <!-- <a href="" class="btn-get-started animated fadeInUp">Get Started</a> -->
         </div>
-      </div> -->
+      </div>
 
       <!-- Slide 3 -->
-      <!-- <div class="carousel-item">
+      <div class="carousel-item">
         <div class="carousel-container">
-          <h2 class="animated fadeInDown">Commitment</h2>
-          <p class="animated fadeInUp">We are committed to delivering exceptional customer service and customizable solutions to meet the unique needs of every client.</p>
-          <a href="" class="btn-get-started animated fadeInUp">Get Started</a>
+          <h2 class="animated fadeInDown">Our Programs</h2>
+          <p class="animated fadeInUp">We offer a variety of sports programs designed to cater to athletes of all ages and skill levels. From introductory classes to elite training, we aim to create a positive and inclusive environment for all participants.</p>
+          <!-- <a href="" class="btn-get-started animated fadeInUp">Get Started</a> -->
         </div>
-      </div> -->
+      </div>
 
-      <!-- <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
+      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon bx bx-chevron-left" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
@@ -87,10 +97,11 @@
       <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
         <span class="carousel-control-next-icon bx bx-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
-      </a> -->
+      </a>
 
     </div>
-  </section><!-- End Hero -->
+  </section>
+  <!-- End Hero -->
 
   <main id="main">
 
@@ -141,7 +152,7 @@
 
   <section class="why-us" id="about">
     <div class="container">
-        <h3 class="title"><a href="">Why Us</a></h3>
+        <h3 class="title">Why Us</h3>
       <div class="row">
         <div class="col-lg-6 d-flex flex-column justify-content-center p-5">
           <div class="icon-box">
@@ -252,23 +263,22 @@
           <div class="col-lg-6 col-md-6 footer-contact">
             <h4>Contact Us</h4>
             <p>
-              Fedha Estate, Embakasi, <br>
+              Fedha Estate, Embakasi <br>
               Nairobi, Kenya<br>
               <br>
               <strong>Phone:</strong> +254 115 993 580<br>
               <strong>Email:</strong> altarsport2020@gmail.com<br>
             </p>
-
           </div>
 
           <div class="col-lg-13 col-md-6 footer-info">
             <h3>About Altar Sports Academy</h3>
             <p>Altar Sports wants to bring development through sports in society by impacting the younger generation in social and sports development in life.</p>
             <div class="social-links mt-3">
-              <a href="#" class="youtube"><i class="bx bxl-youtube"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="tiktok"><i class='bx bxl-tiktok'></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+              <a href="https://www.youtube.com/@altarsports" class="youtube"><i class="bx bxl-youtube"></i></a>
+              <a href="https://www.instagram.com/@altar_sports_" class="instagram"><i class="bx bxl-instagram"></i></a>
+              <a href="https://www.tiktok.com/@altar_sports_?_t=8eTHwoA3pGH&_r=1"><img class="white-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAZxJREFUSEu11b1rFFEUxuEnKIhgIQQhhVaGGEJs0oRYxEqxEOsENH6hZbpA0D5apROxkcSPYCGCpU1AbawSUARF459gI2JCxMiBO3AZZoeZ3eytdvae8/7OO+fcOwP6vAb6rK8bwBNcSYV9xWhdkb0C/uEofnWC9AoI3Tu4t5+AVcxlgn9wEetVkG4clAGh+xfP8RLf8aWAdQPIm1xVdOxf7QWQO9jBARzMSLF/rQngGG5hDIO4iw3kgC2cwxJmkmgjwE08wKGsspj9ZxWA4RRzGMfT7291DmaxVvFyC0Deg3BQAContdzkqOIHhrLoOEyfcB8vahw0AtzGoywyRm8eP0tNLM5BawevcSmJxSxHg/dKpZWb3OoVfcTpJLiC6xW+n+Jy1syRNpfdB0ymhE1MVCSHs1Pp/3c42wYQl9ZiljCN99nzebzJnh8jRrrjKk9R2P2cnczfWEZM0gncKClNIVw3BkRgeZI6JcehKz48rQARHE18iCMdMt/iArbrqo+9utv0JBZwBuPYxasEjuY2Wt1c142Ei6C+A/4Dm5FNGRUskfsAAAAASUVORK5CYII="/></a>
+              <a href="https://www.facebook.com/altarsport/" class="facebook"><i class="bx bxl-facebook"></i></a>
             </div>
           </div>
 
@@ -280,8 +290,8 @@
       <div class="copyright">
         &copy; Copyright <strong><span>Altar Sports</span></strong>. All Rights Reserved
       </div>
-     
     </div>
+
   </footer>
   <!-- End Footer -->
 
