@@ -66,12 +66,16 @@ def dashboard(request):
     branches = Branches.objects.all()
     branches_count = len(branches)
 
+    sessions = TrainingSession.objects.all()
+    sessions_count = len(sessions)
+
     context = {
         'coach_count': coach_count,
         'player_count': player_count,
         'players': players,
         'coaches': coaches,
         'branches_count': branches_count,
+        'sessions_count': sessions_count,
     }
     return render(request, 'app/dashboard.html', context)
 
