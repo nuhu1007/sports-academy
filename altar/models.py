@@ -110,7 +110,7 @@ class TrainingSession(models.Model):
     highlights = models.FileField(upload_to='media/training_highlights/', blank=True)
 
     def __str__(self):
-        return f"Training Session for {self.training_branch.branch}, on {self.date}"
+        return f"Training Session for {self.training_branch.branch} branch, on {self.date}"
     
 
 class Attendance(models.Model):
