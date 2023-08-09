@@ -25,6 +25,7 @@ urlpatterns = [
 
     # Branches URLs
     path('branches/', views.branches, name='branches'),
+    path('delete_branch/<int:branch_id>/', views.delete_branch, name='delete_branch'),
 
     # Player URLs
     path('add-player/', views.add_player, name='add_player'),

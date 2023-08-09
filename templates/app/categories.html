@@ -111,6 +111,7 @@
 </main>
 <!-- END: Content-->
 
+<!-- SCRIPTS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function deleteCategory(categoryId) {
@@ -123,7 +124,6 @@
                 },
                 success: function (response) {
                     alert(response.message);
-                    // Optionally, you can remove the category row from the table or update the UI
                 },
                 error: function () {
                     alert('An error occurred while deleting the category.');

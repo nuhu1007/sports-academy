@@ -139,6 +139,13 @@ def branches(request):
     }
     return render(request, 'app/branches.html', context)
 
+@require_POST
+@login_required
+def delete_branch(request, branch_id):
+    branch = get_object_or_404(Branches, pk=branch_id)
+    branch.delete()
+    return JsonResponse({'message': 'Branch deleted successfully.'})
+
 
 # Players' Views
 @login_required

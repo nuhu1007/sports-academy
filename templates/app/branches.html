@@ -41,6 +41,7 @@
                                         <th style="font-size: 15px;">Branch Name</th>
                                         <th style="font-size: 15px;">Number of Players</th>
                                         <th style="font-size: 15px;">Number of Coaches</th>
+                                        <th style="font-size: 15px;">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -50,6 +51,14 @@
                                         <td>{{branch.branch}}</td>
                                         <td>{{branch.player_count}}</td>
                                         <td>{{branch.coach_count}}</td>
+                                        <td>
+                                            <a href="#" class="dropdown-item px-2 align-self-center d-flex">
+                                                <span class="fas fa-edit mr-2 h6 mb-0"></span>Edit
+                                            </a>
+                                            <a href="#" class="dropdown-item px-2 text-danger align-self-center d-flex" onclick="deleteBranch('{{ branch.pk }}');">
+                                                <span class="fas fa-trash-alt mr-2 h6 mb-0"></span>Delete
+                                            </a>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -103,6 +112,29 @@
 
 </main>
 <!-- END: Content-->
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function deleteBranch(branchId) {
+        if (confirm('Are you sure you want to delete this branch?')) {
+            $.ajax({
+                type: 'POST',
+                url: '{% url "delete_branch" branch_id=0 %}'.replace('0', branchId),
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    alert(response.message);
+                },
+                error: function () {
+                    alert('An error occurred while deleting the branch.');
+                }
+            });
+        }
+    }
+</script>
+
 
 
 {% endblock %}
