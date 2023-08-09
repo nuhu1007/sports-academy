@@ -21,6 +21,7 @@ urlpatterns = [
 
     # Categories URLs
     path('categories/', views.categories, name='categories'),
+    path('delete_category/<int:category_id>/', views.delete_category, name='delete_category'),
 
     # Branches URLs
     path('branches/', views.branches, name='branches'),

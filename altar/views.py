@@ -7,6 +7,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.db.models import Count, OuterRef, Subquery, IntegerField
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 from . models import Categories, Player, TrainingSession, Attendance, Game, Coach, Branches
 from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm, CoachForm, BranchForm
@@ -102,6 +104,13 @@ def categories(request):
         'form': CategoryForm(),
     }
     return render(request, 'app/categories.html', context)
+
+@require_POST
+@login_required
+def delete_category(request, category_id):
+    category = get_object_or_404(Categories, pk=category_id)
+    category.delete()
+    return JsonResponse({'message': 'Category deleted successfully.'})
 
 
 # Branch View
