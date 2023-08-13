@@ -88,20 +88,28 @@ def categories(request):
     categories = Categories.objects.annotate(player_count=Count('player_category'))
     form = CategoryForm()
 
-    # Creating a category
+    # Creating or Editing category
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
-        if form.is_valid():
-            category = form.save(commit=False)
-            category.save()
-            messages.success(request, f"Category added and saved successfully.")
-            return redirect('categories')
-        else:
-            form = CategoryForm()
+        if 'add_category' in request.POST:  # Check if the form is for adding a category
+            form = CategoryForm(request.POST)
+            if form.is_valid():
+                category = form.save(commit=False)
+                category.save()
+                messages.success(request, f"Category added and saved successfully.")
+                return redirect('categories')
+            
+        elif 'edit_category' in request.POST:  # Check if the form is for editing a category
+            category_id = request.POST.get('category_id')
+            category = get_object_or_404(Categories, pk=category_id)
+            edit_form = CategoryForm(request.POST, instance=category)
+            if edit_form.is_valid():
+                edit_form.save()
+                messages.success(request, f"Category edited and saved successfully.")
+                return redirect('categories')
 
     context = {
         'categories': categories,
-        'form': CategoryForm(),
+        'form': form,
     }
     return render(request, 'app/categories.html', context)
 
