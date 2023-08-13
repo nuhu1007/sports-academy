@@ -88,7 +88,7 @@ def categories(request):
     categories = Categories.objects.annotate(player_count=Count('player_category'))
     form = CategoryForm()
 
-    # Creating or Editing category
+    # Creating or Editing a category
     if request.method == 'POST':
         if 'add_category' in request.POST:  # Check if the form is for adding a category
             form = CategoryForm(request.POST)
@@ -130,16 +130,29 @@ def branches(request):
     branches = Branches.objects.annotate(player_count=Subquery(player_count_subquery, output_field=IntegerField()), coach_count=Subquery(coach_count_subquery, output_field=IntegerField()))
     form = BranchForm()
 
-    # Creating a branch
+    # Creating or Editing a branch
     if request.method == 'POST':
-        form = BranchForm(request.POST)
-        if form.is_valid():
-            branch = form.save(commit=False)
-            branch.save()
-            messages.success(request, f"Branch added and saved successfully.")
-            return redirect('branches')
-        else:
-            form = BranchForm()
+        if 'add_branch' in request.POST: # Check if the form is for adding a branch
+            form = BranchForm(request.POST)
+            if form.is_valid():
+                branch = form.save(commit=False)
+                branch.save()
+                messages.success(request, f"Branch added and saved successfully.")
+                return redirect('branches')
+            else:
+                messages.error(request, f"Failed to add.")
+                form = BranchForm()
+
+        elif 'edit_branch' in request.POST:
+            branch_id = request.POST.get('branch_id')
+            branch = get_object_or_404(Branches, pk=branch_id)
+            edit_form = BranchForm(request.POST, instance=branch)
+            if edit_form.is_valid():
+                edit_form.save()
+                messages.success(request, f"Branch edited and saved successfully.")
+                return redirect('branches')
+            else:
+                messages.error(request, f"Failed to edit and save.")
 
     context = {
         'branches': branches,
