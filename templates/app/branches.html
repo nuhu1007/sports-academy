@@ -120,6 +120,7 @@
                                 </div>
                                 <form class="add-note-form" action="{% url 'branches' %}" method="post">
                                     {% csrf_token %}
+                                    <input type="hidden" name="add_branch" value="true">
                                     <div class="modal-body">                                               
                                         <div class="form-group">
                                             <label for="shift_name" class="col-form-label" style="font-size: medium;">Branch:</label>
