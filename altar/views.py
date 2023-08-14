@@ -97,6 +97,9 @@ def categories(request):
                 category.save()
                 messages.success(request, f"Category added and saved successfully.")
                 return redirect('categories')
+            else:
+                messages.error(f"Failed to add.")
+                form = CategoryForm()
             
         elif 'edit_category' in request.POST:  # Check if the form is for editing a category
             category_id = request.POST.get('category_id')
@@ -106,6 +109,9 @@ def categories(request):
                 edit_form.save()
                 messages.success(request, f"Category edited and saved successfully.")
                 return redirect('categories')
+            else:
+                messages.error(request, f"Failed to edit.")
+                edit_form = CategoryForm(instance=category)
 
     context = {
         'categories': categories,
@@ -153,6 +159,7 @@ def branches(request):
                 return redirect('branches')
             else:
                 messages.error(request, f"Failed to edit and save.")
+                edit_form = BranchForm(instance=branch)
 
     context = {
         'branches': branches,
