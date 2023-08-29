@@ -23,6 +23,10 @@ urlpatterns = [
     path('categories/', views.categories, name='categories'),
     path('delete_category/<int:category_id>/', views.delete_category, name='delete_category'),
 
+    # Equipments URLs
+    path('equipments/', views.equipments, name='equipments'),
+    path('delete_equipment/<int:equipment_id>', views.delete_equipment, name='delete_equipment'),
+
     # Branches URLs
     path('branches/', views.branches, name='branches'),
     path('delete_branch/<int:branch_id>/', views.delete_branch, name='delete_branch'),
