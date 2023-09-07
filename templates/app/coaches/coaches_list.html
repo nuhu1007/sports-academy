@@ -41,6 +41,7 @@
                                         <th style="font-size: 15px;">Coaching Branch</th>
                                         <th style="font-size: 15px;">Coaching Category</th>
                                         <th style="font-size: 15px;">Date Joined</th>
+                                        <!-- <th style="font-size: 15px;">Actions</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,6 +53,12 @@
                                         <td> {{coach.coaching_branch}} </td>
                                         <td> {{coach.coaching_category}} </td>
                                         <td> {{coach.date_joined}}</td>
+                                        <!-- <td>
+                                            <a href="" class="btn btn-primary btn-sm mr-2" title="Update"><i
+                                                class="fa fa-edit"></i></a>
+                                            <a href="" class="btn btn-danger btn-sm mr-1" title="Deactivate"><i
+                                                class="fa fa-ban"></i></a>
+                                        </td> -->
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -63,12 +70,13 @@
                                         <th>Coaching Branch</th>
                                         <th>Coaching Category</th>
                                         <th>Date Joined</th>
+                                        <!-- <th>Actions</th> -->
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
                     </div>
-                    <!-- REgister Coach -->
+                    <!-- Register Coach -->
                     <div class="modal fade" id="cancel">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">

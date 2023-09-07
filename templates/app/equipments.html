@@ -143,8 +143,12 @@
                                             <p>{{form.equipment_number}}</p>
                                         </div>  
                                         <div class="form-group">
-                                            <label for="shift_name" class="col-form-label" style="font-size: medium;">Branch:</label>
-                                            <p>{{form.equipment_branch}}</p>
+                                            <label for="shift_name" class="col-form-label" style="font-size: medium;">Equipment Branch:</label>
+                                            <select name="equipment_branch" class="form-control">
+                                                {% for branch in form.fields.equipment_branch.queryset %}
+                                                    <option value="{{ branch.pk }}" {% if branch.pk == equipment.equipment_branch.pk %}selected{% endif %}>{{ branch.branch }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>                                        
                                     </div>
                                     <div class="modal-footer">

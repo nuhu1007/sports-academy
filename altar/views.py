@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from django.db.models import Count, OuterRef, Subquery, IntegerField
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.utils import timezone
 
 from . models import Categories, Player, TrainingSession, Attendance, Game, Coach, Branches, Equipments
 from .forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm, CoachForm, BranchForm, EquipmentForm
@@ -155,7 +156,6 @@ def equipments(request):
                 messages.success(request, f"Equipment edited and saved successfully.")
                 return redirect('equipments')
             else:
-                print("ERRORS: ", edit_form.errors)
                 messages.error(request, f"Failed to edit.")
                 edit_form = EquipmentForm(instance=equipment)
 
@@ -438,3 +438,15 @@ def coaches_list(request):
         'form': CoachForm()
     }
     return render(request, 'app/coaches/coaches_list.html', context)
+
+
+@login_required
+def deactivate_coach(request, coach_id):
+    coach = get_object_or_404(Coach, id=coach_id)
+    coach.is_active = False
+    coach.date_of_separation = timezone.now()
+    coach.save()
+    messages.info(request, f"{coach.full_name} has been deactivated successfully.")
+    return redirect('coaches')
+
+
