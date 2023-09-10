@@ -1,25 +1,20 @@
-# Use an official Python runtime as a parent image
 FROM python:3.9
 
-# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV IN_OPEN_DOCKER 1
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
     postgresql-client
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the application code into the container
-COPY . /app/
+COPY requirements.txt /app/
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-# Expose the port for the Django development server (optional)
-EXPOSE 8000
+COPY . .
 
-# Start the Django development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+EXPOSE 9000
+
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:9000"]

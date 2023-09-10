@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  altar_backend:
+    build: .
+    command: python manage.py runserver 0.0.0.0:9000
+    ports:
+      - 9000:9000
+    depends_on:
+      - altar_database
+    tty: true
+    volumes:
+      - ./app/:/usr/src/app/
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_HOST=${DATABASE_HOST}
+    env_file:
+      - ./.env
+      
+  altar_database:
+    image: postgres:15
+    restart: unless-stopped
+    volumes:
+      - altar_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=hello_django_dev
+    ports:
+      - '5432:5432'
+
+volumes:
+  altar_data:
