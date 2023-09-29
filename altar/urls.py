@@ -39,6 +39,7 @@ urlpatterns = [
     # Coach URLs
     path('coaches/', views.coaches_list, name='coaches'),
     path('coach/deactivate/<int:coach_id>/', views.deactivate_coach, name='deactivate_coach'),
+    path('coach/reactivate/<int:coach_id>/', views.reactivate_coach, name='reactivate_coach'),
 
     # Training URLs
     path('training-management/', views.training_management, name='training_management'),

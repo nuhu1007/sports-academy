@@ -41,7 +41,7 @@
                                         <th style="font-size: 15px;">Coaching Branch</th>
                                         <th style="font-size: 15px;">Coaching Category</th>
                                         <th style="font-size: 15px;">Date Joined</th>
-                                        <!-- <th style="font-size: 15px;">Actions</th> -->
+                                        <th style="font-size: 15px;">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,12 +53,17 @@
                                         <td> {{coach.coaching_branch}} </td>
                                         <td> {{coach.coaching_category}} </td>
                                         <td> {{coach.date_joined}}</td>
-                                        <!-- <td>
+                                        <td>
                                             <a href="" class="btn btn-primary btn-sm mr-2" title="Update"><i
                                                 class="fa fa-edit"></i></a>
-                                            <a href="" class="btn btn-danger btn-sm mr-1" title="Deactivate"><i
+                                            {% if coach.is_active == True %}
+                                            <a href="{% url 'deactivate_coach' coach.pk %}" class="btn btn-danger btn-sm mr-1" title="Deactivate"><i
                                                 class="fa fa-ban"></i></a>
-                                        </td> -->
+                                            {% else %}
+                                            <a href="{% url 'reactivate_coach' coach.pk %}" class="btn btn-success btn-sm mr-1" title="Reactivate"><i
+                                                class="fa fa-check-circle"></i></a>
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -70,7 +75,7 @@
                                         <th>Coaching Branch</th>
                                         <th>Coaching Category</th>
                                         <th>Date Joined</th>
-                                        <!-- <th>Actions</th> -->
+                                        <th>Actions</th>
                                     </tr>
                                 </tfoot>
                             </table>

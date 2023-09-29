@@ -33,6 +33,10 @@
         .text-right{
             color: darkblue;
         }
+
+        .text-underline {
+            text-decoration: underline;
+        }
     </style>
 
     <!-- START: Body-->
@@ -40,21 +44,21 @@
         <!-- START: Main Content-->
         <div class="container">
             <div class="row vh-100 justify-content-between align-items-center">
-                <div class="col-12" style="height: 500px; font-size: 14px;">
-                    <p class="subheader" style="margin-left: 430px; text-decoration: underline;">Ensure your details are correct.</p>
+                <div class="col-12 min-vh-50">
+                    <p class="subheader text-center ms-lg-5 text-underline">Ensure your details are correct.</p>
 
                     <form action="{% url 'login'%}" method="post" class="row row-eq-height lockscreen mt-5 mb-5">
                         {% csrf_token %}
                         <div class="lock-image col-12 col-sm-5"></div>
                         <div class="login-form col-12 col-sm-7">
                             <div class="form-group mb-3">
-                                <label for="emailaddress">Email Address</label>
+                                <label for="emailaddress"><strong>Email Address</strong></label>
                                 {{form.email}}
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="password" class="d-flex justify-content-between mb-1 align-item-center ml-2"></label>
-                                <span>Password</span>
+                                <span><strong>Password</strong></span>
                                 <a href="{% url 'password-reset' %}" class="float-right text-right">Forgot Password?</a>
                                 {{form.password}}
                             </div>
@@ -82,8 +86,6 @@
                     </div>
                     {% endif %}
                 </div>
-                
-
             </div>
         </div>
         <!-- END: Content-->

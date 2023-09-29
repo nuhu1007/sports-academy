@@ -449,4 +449,11 @@ def deactivate_coach(request, coach_id):
     messages.info(request, f"{coach.full_name} has been deactivated successfully.")
     return redirect('coaches')
 
-
+@login_required
+def reactivate_coach(request, coach_id):
+    coach = get_object_or_404(Coach, id=coach_id)
+    coach.is_active = True
+    coach.date_of_reactivation = timezone.now()
+    coach.save()
+    messages.info(request, f"{coach.full_name} has been reactivated successfully.")
+    return redirect('coaches')    

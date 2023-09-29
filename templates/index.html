@@ -1,15 +1,5 @@
 {% load static %}
 
-<style>
-  .white-icon {
-    filter: invert(1);
-  }
-
-  ul li a {
-    font-size: 24px;
-  }
-</style>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,9 +26,9 @@
 
 <body>
   <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top header-transparent">
+  <header id="header" class="fixed-top d-flex align-items-center header-transparent">
     <div class="container">
-      <div class="logo float-left">
+      <div class="logo">
         <h1 class="text-light"><a href="{%url 'index'%}"><span><b>Altar Sports Academy</b></span></a></h1>
       </div>
 
@@ -46,7 +36,8 @@
         <ul>
           <li class="active"><a href="{%url 'index'%}">Home</a></li>
           <li><a href="#about">About Us</a></li>
-          <li><a href="#services">Services</a></li>        
+          <li><a href="#services">Services</a></li>
+          <li><a href="#features">Programs</a></li>        
           <li><a href="#footer">Contact Us</a></li>
           <li><a href="{% url 'login' %}">Login</a></li>
           <!-- <li><a href="">Get Started</a></li> -->
@@ -59,7 +50,7 @@
   <!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex justify-cntent-center align-items-center">
+  <section id="hero" class="d-flex justify-content-center align-items-center">
     <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
 
       <!-- Slide 1 -->
@@ -108,13 +99,13 @@
 <!-- ======= Services Section ======= -->
 <section id="services" class="services">
     <div class="container">
-      <h1 class="title"><a href="">Our Services</a></h1>
+      <h1 class="title">Our Services</h1>
   
       <div class="row">
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
           <div class="icon-box icon-box-blue">
             <div class="icon"><i class="bx bx-trophy"></i></div>
-            <h4 class="title"><a href="#">Competitive Matchplay and Tournaments</a></h4>
+            <h4 class="title">Competitive Matchplay and Tournaments</h4>
             <p class="description">Participation in friendly matches, local leagues, and national tournaments, offering opportunities to showcase skills and gain exposure to potential scouts.</p>
           </div>
         </div>
@@ -122,7 +113,7 @@
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
           <div class="icon-box icon-box-cyan">
             <div class="icon"><i class="bx bx-user"></i></div>
-            <h4 class="title"><a href="#">Personalized Player Development Plans</a></h4>
+            <h4 class="title">Personalized Player Development Plans</h4>
             <p class="description">Individualized assessments and performance evaluations to identify strengths, weaknesses, and areas for improvement, leading to customized training programs.</p>
           </div>
         </div>
@@ -130,7 +121,7 @@
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
           <div class="icon-box icon-box-green">
             <div class="icon"><i class="bx bx-football"></i></div>
-            <h4 class="title"><a href="#">Comprehensive Skills Training</a></h4>
+            <h4 class="title">Comprehensive Skills Training</h4>
             <p class="description">Receive expert coaching in various football skills, including passing, shooting, dribbling, and defensive techniques, tailored to different age groups and skill levels.</p>
           </div>
         </div>
@@ -138,7 +129,7 @@
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
           <div class="icon-box icon-box-blue">
             <div class="icon"><i class="bx bx-analyse"></i></div>
-            <h4 class="title"><a href="#">Academic and Athletic Balance</a></h4>
+            <h4 class="title">Academic and Athletic Balance</h4>
             <p class="description">Assistance in balancing academics and football pursuits, providing study support and time management guidance to ensure academic success.</p>
           </div>
         </div>
@@ -157,14 +148,14 @@
         <div class="col-lg-6 d-flex flex-column justify-content-center p-5">
           <div class="icon-box">
             <div class="icon"><i class="bx bx-heart"></i></div>
-            <h4 class="title"><a href="">Individualized Attention and Support</a></h4>
+            <h4 class="title">Individualized Attention and Support</h4>
             <p class="description">Each player receives personalized attention, ensuring that their unique needs and goals are addressed, and they are supported in their journey to reach their full potential.</p>
           </div>
         </div>
         <div class="col-lg-6 d-flex flex-column justify-content-center p-5">
           <div class="icon-box">
             <div class="icon"><i class="bx bx-line-chart"></i></div>
-            <h4 class="title"><a href="">Holistic Player Development Philosophy</a></h4>
+            <h4 class="title">Holistic Player Development Philosophy</h4>
             <p class="description">We prioritize the overall growth of our athletes, focusing not only on football skills but also on character development, teamwork, and sportsmanship.</p>
           </div>
         </div>
@@ -175,65 +166,65 @@
   
 
  <!-- ======= Features Section ======= -->
- <!-- <section class="features">
+ <section class="features" id="features">
     <div class="container">
 
       <div class="section-title">
-        <h2>Our Clients</h2>
+        <h2>Our Programs</h2>
       </div>
       
       <div class="row" data-aos="fade-up">
         <div class="col-md-5">
-          <img src='{%static "/images/building.jpg"%}' class="img-fluid" alt="" style="max-height: 250px;">
+          <img src='/static/images/Altar_2.jpeg' class="img-fluid" alt="" style="max-height: 250px;">
         </div>
         <div class="col-md-7 pt-4">
-          <h3>Commercial Buildings</h3>
+          <h3>Youth Development Program</h3>
           <p class="font-italic">
-            Streamline your visitor management process and enhance security for your commercial building with our solution. Our system allows for easy visitor registration, tracking and access control for your building.
+            Nurture young talent with our Youth Development Program designed for budding athletes. We provide expert coaching and mentorship, emphasizing fundamental skills and fostering a love for the sport.
           </p>
           <ul>
-            <li><i class="icofont-check"></i> Efficiently manage visitor traffic and improve building security</li>
-            <li><i class="icofont-check"></i> Simplify visitor registration and check-in process</li>
-            <li><i class="icofont-check"></i> Customizable access control and visitor restrictions</li>
+            <li><i class="icofont-check"></i> Age-appropriate coaching for young athletes.</li>
+            <li><i class="icofont-check"></i> Skill development in a positive and supportive environment.</li>
+            <li><i class="icofont-check"></i> Mentorship to instill discipline, teamwork, and sportsmanship.</li>
           </ul>
         </div>
       </div>
       
       <div class="row" data-aos="fade-up">
         <div class="col-md-5 order-1 order-md-2">
-            <img src='{%static "/images/factory.jpg"%}' class="img-fluid" alt style="max-height: 250px;">
+            <img src='/static/images/Altar_6.jpeg' class="img-fluid" alt style="max-height: 250px;">
         </div>
         <div class="col-md-7 pt-5 order-2 order-md-1">
-          <h3>Factories</h3>
+          <h3>Advanced Training Program</h3>
           <p class="font-italic">
-            Enhance safety and security for your factory by implementing our visitor management solution. Our system allows for easy tracking and management of visitors, contractors, and employees.
+            Elevate skills to the next level with our Advanced Training Program. Tailored for experienced athletes, this program focuses on advanced techniques, tactical gameplay, and mental conditioning to excel in competitions.
           </p>
           <ul>
-            <li><i class="icofont-check"></i> Streamline visitor registration and check-in process</li>
-            <li><i class="icofont-check"></i> Ensure compliance with safety and security regulations</li>
-            <li><i class="icofont-check"></i> Monitor visitor traffic and keep your factory safe</li>
+            <li><i class="icofont-check"></i> Intensive training for competitive leagues and tournaments</li>
+            <li><i class="icofont-check"></i> Tactical coaching and strategic gameplay analysis</li>
+            <li><i class="icofont-check"></i> Mental and physical conditioning for peak performance</li>
           </ul>
         </div>
       </div>
       
       <div class="row" data-aos="fade-up">
         <div class="col-md-5">
-            <img src='{%static "/images/apartment.jpg"%}' class="img-fluid" alt style="max-height: 250px;">
+            <img src='/static/images/Altar_3.jpeg' class="img-fluid" alt style="max-height: 250px;">
         </div>
         <div class="col-md-7 pt-5">
-          <h3>Residential Buildings</h3>
-          <p>Keep your residential building secure and well-managed with our visitor management system. Our solution simplifies the visitor registration process and enhances the safety and security of your building.</p>
+          <h3>Inclusive Sports Program</h3>
+          <p>Encourage diversity and sportsmanship through our Inclusive Sports Program. We provide a supportive environment for athletes of all abilities, promoting teamwork, respect, and a love for the game.</p>
           <ul>
-            <li><i class="icofont-check"></i> Efficiently manage visitor traffic and improve building security</li>
-            <li><i class="icofont-check"></i> Simplify visitor registration and check-in process</li>
-            <li><i class="icofont-check"></i> Customizable access control and visitor restrictions</li>
+            <li><i class="icofont-check"></i> Tailored coaching for athletes of diverse abilities</li>
+            <li><i class="icofont-check"></i> Fostering an inclusive and respectful team atmosphere</li>
+            <li><i class="icofont-check"></i> Promoting the joy of sports for everyone</li>
           </ul>
         </div>
       </div>
       
 
     </div>
- </section> -->
+ </section>
   <!-- End Features Section -->
 
 
@@ -280,7 +271,7 @@
 
               <a href="https://www.youtube.com/@altarsports" class="youtube"><i class="bx bxl-youtube"></i></a>
               <a href="https://www.instagram.com/@altar_sports_" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="https://www.tiktok.com/@altar_sports_?_t=8eTHwoA3pGH&_r=1"><img class="white-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAZxJREFUSEu11b1rFFEUxuEnKIhgIQQhhVaGGEJs0oRYxEqxEOsENH6hZbpA0D5apROxkcSPYCGCpU1AbawSUARF459gI2JCxMiBO3AZZoeZ3eytdvae8/7OO+fcOwP6vAb6rK8bwBNcSYV9xWhdkb0C/uEofnWC9AoI3Tu4t5+AVcxlgn9wEetVkG4clAGh+xfP8RLf8aWAdQPIm1xVdOxf7QWQO9jBARzMSLF/rQngGG5hDIO4iw3kgC2cwxJmkmgjwE08wKGsspj9ZxWA4RRzGMfT7291DmaxVvFyC0Deg3BQAContdzkqOIHhrLoOEyfcB8vahw0AtzGoywyRm8eP0tNLM5BawevcSmJxSxHg/dKpZWb3OoVfcTpJLiC6xW+n+Jy1syRNpfdB0ymhE1MVCSHs1Pp/3c42wYQl9ZiljCN99nzebzJnh8jRrrjKk9R2P2cnczfWEZM0gncKClNIVw3BkRgeZI6JcehKz48rQARHE18iCMdMt/iArbrqo+9utv0JBZwBuPYxasEjuY2Wt1c142Ei6C+A/4Dm5FNGRUskfsAAAAASUVORK5CYII="/></a>
+              <a href="https://www.tiktok.com/@altar_sports_?_t=8eTHwoA3pGH&_r=1"><img class="white-icon" style="filter: invert(100%);" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAZxJREFUSEu11b1rFFEUxuEnKIhgIQQhhVaGGEJs0oRYxEqxEOsENH6hZbpA0D5apROxkcSPYCGCpU1AbawSUARF459gI2JCxMiBO3AZZoeZ3eytdvae8/7OO+fcOwP6vAb6rK8bwBNcSYV9xWhdkb0C/uEofnWC9AoI3Tu4t5+AVcxlgn9wEetVkG4clAGh+xfP8RLf8aWAdQPIm1xVdOxf7QWQO9jBARzMSLF/rQngGG5hDIO4iw3kgC2cwxJmkmgjwE08wKGsspj9ZxWA4RRzGMfT7291DmaxVvFyC0Deg3BQAContdzkqOIHhrLoOEyfcB8vahw0AtzGoywyRm8eP0tNLM5BawevcSmJxSxHg/dKpZWb3OoVfcTpJLiC6xW+n+Jy1syRNpfdB0ymhE1MVCSHs1Pp/3c42wYQl9ZiljCN99nzebzJnh8jRrrjKk9R2P2cnczfWEZM0gncKClNIVw3BkRgeZI6JcehKz48rQARHE18iCMdMt/iArbrqo+9utv0JBZwBuPYxasEjuY2Wt1c142Ei6C+A/4Dm5FNGRUskfsAAAAASUVORK5CYII="/></a>
               <a href="https://www.facebook.com/altarsport/" class="facebook"><i class="bx bxl-facebook"></i></a>
             </div>
           </div>
