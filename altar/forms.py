@@ -99,9 +99,9 @@ class GameExtrasForm(forms.ModelForm):
 class CoachForm(forms.ModelForm):
     full_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Full Name', 'class':'form-control'}))
     phone_number = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
-    coach_image = forms.ImageField(required=True, widget=forms.ClearableFileInput(attrs={'class':'custom-image-field'}))
-    coaching_category = forms.ModelChoiceField(required=True, queryset=Categories.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Choose a category...'}))
-    coaching_branch = forms.ModelChoiceField(required=True, queryset=Branches.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Choose a branch...'}))
+    coach_image = forms.ImageField(required=True, widget=forms.ClearableFileInput(attrs={'class':'form-control'}))
+    coaching_category = forms.ModelChoiceField(required=True, queryset=Categories.objects.all(), widget=forms.Select(attrs={'class':'form-control', 'placeholder':'Choose a category...'}))
+    coaching_branch = forms.ModelChoiceField(required=True, queryset=Branches.objects.all(), widget=forms.Select(attrs={'class':'form-control', 'placeholder':'Choose a branch...'}))
     cv = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'class':'form-control'}))
 
     class Meta:
