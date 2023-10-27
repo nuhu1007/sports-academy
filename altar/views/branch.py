@@ -11,12 +11,14 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 
-from altar.models import Categories, Player, TrainingSession, Attendance, Game, Coach, Branches, Equipments
-from altar.forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm, CoachForm, BranchForm, EquipmentForm
+from altar.forms.branch import BranchForm
+
+from altar.models.branch import Branches
+from altar.models.coaches import Coach
+from altar.models.players import Player
 
 # Create your views here.
 
-# Branch View
 @login_required
 def branches(request):
     # Subquery to get the player count & coach count for each branch

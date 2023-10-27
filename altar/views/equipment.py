@@ -11,8 +11,9 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 
-from altar.models import Categories, Player, TrainingSession, Attendance, Game, Coach, Branches, Equipments
-from altar.forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm, CoachForm, BranchForm, EquipmentForm
+from altar.forms.equipment import EquipmentForm
+
+from altar.models.equipment import Equipments
 
 # Create your views here.
 

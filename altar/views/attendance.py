@@ -4,15 +4,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import TemplateView
-from django.urls import reverse_lazy
-from django.db.models import Count, OuterRef, Subquery, IntegerField
 from django.http import JsonResponse
-from django.views.decorators.http import require_POST
 from django.utils import timezone
 
-from altar.models import Categories, Player, TrainingSession, Attendance, Game, Coach, Branches, Equipments
-from altar.forms import LoginForm, CategoryForm, PlayerForm, TrainingSessionForm, AttendanceForm, TrainingSessionExtrasForm, GameForm, GameExtrasForm, CoachForm, BranchForm, EquipmentForm
+from altar.forms.training import AttendanceForm
+from altar.models.players import Player
+from altar.models.training import Attendance, TrainingSession
 
 # Create your views here.
 # Attendance Views

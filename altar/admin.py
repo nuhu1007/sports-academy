@@ -1,8 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import User, Player, TrainingSession, Attendance, Categories, Game, Coach, Branches
-from .forms import RegistrationForm
+from altar.models.branch import Branches
+from altar.models.category import Categories
+from altar.models.coaches import Coach
+from altar.models.games import Game
+from altar.models.players import Player
+from altar.models.training import Attendance, TrainingSession
+from altar.models.user import User
 
 # Define classes here.
 class CustomUserAdmin(UserAdmin):
