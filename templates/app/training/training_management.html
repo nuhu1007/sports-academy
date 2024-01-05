@@ -2,39 +2,25 @@
 {% load static %}
 {% block content %}
 
-<style>
-    .search-container {
-      margin-bottom: 20px;
-    }
-  
-    #searchInput {
-      width: 300px;
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      float: right;
-    }
-</style>
+<!-- jQuery -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
+<!-- SELECT2 -->
+<link rel="stylesheet" href="{% static '/js/select2/select2.min.css' %}">
+<script src="{% static '/js/select2/select2.min.js' %}"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
+
+<!-- DATERANGEPICKER -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 
 <!-- START: Main Content-->
 <main>
     <div class="container-fluid site-width">
-        <!-- START: Breadcrumbs-->
-        <!-- <div class="row ">
-            <div class="col-12  align-self-center">
-                <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
-
-                    <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
-                        <li class="breadcrumb-item">Home</li>
-                        <li class="breadcrumb-item">Building</li>
-                        <li class="breadcrumb-item active"><a>Visitors</a></li>
-                    </ol>
-                </div>
-            </div>
-        </div> -->
-        <!-- END: Breadcrumbs-->
-        
         <!-- START: Card Data -->
         <div class="row">
             <div class="col-12" style="margin-top:50px;">
@@ -48,10 +34,24 @@
                         </button>
                         {% endif %}
                     </div>
-                    <div class="">
-                        <input type="text" style="position:relative; border-radius:30px; margin-top:20px; margin-right:9px;" id="searchInput" placeholder="Search...">
-                    </div>
-                    <div class="card-body">                      
+                    
+                    <div class="card-body">  
+
+                        {% block messages %}
+                        {% include 'partials/messages.html' %}
+                        {% endblock messages %}
+
+                        <div class="row g-3 mb-4 d-flex">
+                            <div class="col-lg-4 col-sm-12 col-md-4">
+                              <p><b>Filter by date</b></p>
+                              <input type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Select Date">
+                            </div>
+                            <div class="col-lg-4 col-sm-12 col-md-4">
+                                <p><b>Filter by branch</b></p>
+                                <input type="text" class="form-control" id="filter_branch" name="filter_branch">
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table id="example" class="display table dataTable table-striped table-bordered" >
                                 <thead>
@@ -62,32 +62,16 @@
                                         <th style="font-size: 15px;">Start Time</th>
                                         <th style="font-size: 15px;">End Time</th>
                                         <th style="font-size: 15px;">Location</th>
-                                        <th style="font-size: 15px;">Details</th>
+                                        <th style="font-size: 15px;">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {% for training in trainings %}
-                                    <tr>
-                                        <th scope="row">{{ forloop.counter }}</th>
-                                        <td>{{training.training_branch}}</td>
-                                        <td>{{training.date}}</td>
-                                        <td>{{training.start_time}}</td>
-                                        <td>{{training.end_time}}</td>
-                                        <td>{{training.location}}</td>
-                                        <td><a href="{% url 'training_details' training.id %}" class="dropdown-item px-2 align-self-center d-flex"><span class="far fa-eye mr-2 h6 mb-0" title="View Details"></span></a></td>
-                                    </tr>
-                                    {% endfor %}
+                                <tbody id="table-notes">
+                                    
                                 </tbody>
                             </table>
-                            {% if messages %}
-                            <div class="messages">
-                                {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }}">
-                                    {{ message }}
-                                </div>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
+                            {% include 'partials/spinner.html' %}
+
+                            
                         </div>
                     </div>
 
@@ -142,21 +126,223 @@
         <!-- END: Card DATA-->
     </div>
 
+
+<!-- SCRIPTS -->
+<script>
+    // Setting daterangepicker
+    $('#datepicker').daterangepicker({
+        autoUpdateInput: true,
+        locale: {
+          format: 'YYYY-MM-DD'
+        },
+        // Setting start date to today
+        startDate: moment().startOf('day'),
+    });
+
+    var state = {
+        enableSelect: false,
+        trainings: [],
+        selectedNotes: [],
+        rows: 15,
+        page: 1,
+        setPage: function (currentPage) {
+          state = {
+            ...state,
+            page: currentPage
+          };
+        },
+        setRows: function (row) {
+          state = {
+            ...state,
+            rows: !isNaN(row) ? row : 0
+          };
+          state.events("rowChanged", row);
+        },
+        setSelectedNotes: function (data, event) {
+          var new_notes = [];
+          if (event) {
+            new_notes = state.trainings.filter(note => note.pk === data);
+          } else {
+            new_notes = state.selectedNotes.filter(note => note.pk !== data);
+          }
+
+          state = {
+            ...state,
+            selectedNotes: new_notes
+          }
+          state.events("notesAdded");
+        },
+        setSelectedNotesAll: function (status) {
+          if (status) {
+            state = {
+              ...state,
+              selectedNotes: state.trainings
+            }
+          } else {
+            state = {
+              ...state,
+              selectedNotes: []
+            }
+          }
+          state.events("notesAdded");
+        },
+        setNotes: function (data) {
+          state = {
+            ...state,
+            trainings: data
+          }
+        },
+        setEnableSelect: function (value) {
+          state = {
+            ...state,
+            enableSelect: value
+          };
+          state.events('enabled', value);
+        },
+        
+        fetchData: function (data) {
+          $('#spinner').show();
+          var {page, rows} = state;
+          var date = $('#datepicker').val();
+          var branch = $('#filter_branch').val() ;
+
+          var query = '?action=filter&date=' + date + '&page=' + page + '&rows=' + rows;
+          
+          if (branch.length > 0) {
+            query += '&branch=' + branch;
+          }
+
+          $.ajax({
+            url: query,
+            type: 'GET',
+            data: data ? {data: JSON.stringify(data)} : undefined,
+
+            success: function (data) {
+              console.log("DATAAA:", data)
+              $('#spinner').hide();
+              
+              if (data?.action) {
+
+              } else {
+                let options = '';
+                state.setNotes(data.trainings);
+                if (data.trainings.length > 0) {
+                  data.trainings.forEach(function (loader) {
+                    console.log("LOADER OBJECT: ", loader)
+                    options += generate_table({
+                      loader: loader,
+                    });
+                  });
+                  options += '<tr>';
+                  options += '</td>';
+                  options += '</tr>';
+                } else {
+                  options += '<tr><td colspan="17">No Training Sessions Found</td></tr>'
+                }
+                $('#table-notes').html(options);
+                $('#remove').remove();
+                $('#paginator').append(element);
+              }
+            }
+          });
+        },
+
+        events: function (event, data) {
+          if (event === "enabled") {
+          } else if (event === "rowChanged") {
+            state.fetchData();
+          } else if (event === "notesAdded") {
+          }
+        }
+    };
+
+    var {fetchData, setEnableSelect, setNotes, setPage, setSelectedNotesAll, setSelectedNotes, setRows} = state;
+
+    // Filtering by Branch
+    $(document).ready(function() {
+        $('#filter_branch').select2({
+            placeholder: 'Search by branch',
+            width: '100%',
+            ajax: {
+                url: '?action=get_branches',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                      q: params.term, // search term
+                      date: $('#datepicker').val()
+                    };
+                  },
+                processResults: function(data, params) {
+                    params.page = params.page || 1;
+                    var branches = data.branches.map(function(branch){
+                        return {
+                            id: branch.id,
+                            text: branch.branch_name
+                        };
+                    });
+                    return {
+                        results: branches,
+                        
+                    };
+                    console.log("BRANCHES RESULTS: ", results)
+                },
+                cache: true
+            },
+        })
+    });
+
+    $('#filter_branch').on('change', function () {
+        fetchData();
+
+        var selectedBranch = $('#filter_branch').select2('data');
+        if (selectedBranch && selectedBranch.length > 0) {
+            $('#filter_branch').val(selectedBranch[0].text);
+        } else {
+            $('#filter_branch').val('');
+        }
+    })
+
+    $('#datepicker').change(function () {
+        fetchData();
+    });
+
+    // Initial fetch data
+    fetchData();
+
+    // Next page function
+    function nextPage(n_page) {
+        setPage(n_page);
+        fetchData();
+    }
+
+    // URLs
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_view = protocol + "//" + host + "/training_details/";
+   
+    function generate_table({loader, total_value, counter} = {}) {
+        var {enableSelect} = state;
+        let options = '';
+        options += '<tr>';
+        options += '<th scope="row">' + '#' + '</th>';
+        options += '<td>' + loader.training_branch + '</td>';
+        options += '<td>' + loader.date + '</td>';
+        options += '<td>' + loader.start_time + '</td>';
+        options += '<td>' + loader.end_time + '</td>';
+        options += '<td>' + loader.location + '<td>';
+        options += '<a href="' + url_view + loader.pk + '" class="dropdown-item" title="View Details"><i class="dropdown-icon fa fa-eye"></i> </a>';
+        options += '</td>';
+        options += '</tr>';
+        return options;
+    }
+
+</script>
+
+
 </main>
 <!-- END: Content-->
 
 
-<!-- SCRIPTS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-    $("#searchInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("table tbody tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-        });
-    });
-    });
-</script>
 
 {% endblock %}

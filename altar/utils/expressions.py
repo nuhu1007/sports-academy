@@ -1,0 +1,1 @@
+SELECT_RELATED_TRAININGS = ['training_branch']

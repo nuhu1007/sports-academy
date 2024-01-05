@@ -42,8 +42,8 @@ urlpatterns = [
     path('coach/reactivate/<int:coach_id>/', coaches.ReactivateCoach.as_view(), name='reactivate_coach'),
 
     # Training URLs
-    path('training-management/', training.training_management, name='training_management'),
-    path('training-details/<int:training_id>/', training.training_details, name='training_details'),
+    path('training-management/', training.TrainingManagement.as_view(), name='training_management'),
+    path('training_details/<int:training_id>/', training.training_details, name='training_details'),
 
     # Attendance URLs
     path('attendance-management/', attendance.attendance_management, name='attendance_management'),

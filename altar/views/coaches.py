@@ -66,46 +66,11 @@ class CoachesView(LoginRequiredMixin, View):
                 messages.success(request, f"Coach edited and saved successfully.")
                 return redirect('coaches')
             else:
-                messages.error(request, f"Failed to edit.")
+                messages.warning(request, f"Failed to edit.")
                 edit_form = CoachForm(instance=coach)
 
         context = {
             'form': form
-        }
-        return render(request, self.template_name, context)
-    
-class EditAgent(LoginRequiredMixin, View):
-    template_name = 'company/edit_agent.html'
-
-    def get(self, request, agent_id):
-        try:
-            agent = Coach.objects.get(id=agent_id)
-        except Coach.DoesNotExist:
-            return redirect('404')
-        
-        form = CoachForm(instance=agent)
-
-        context = {
-            'form': form,
-            'agent': agent,
-        }
-        return render(request, self.template_name, context)
-    
-    def post(self, request, agent_id):
-        try:
-            agent = Coach.objects.get(id=agent_id)
-        except Coach.DoesNotExist:
-            return redirect('404')
-        
-        form = CoachForm(request.POST, request.FILES, instance=agent)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"{agent.full_name}'s details have been edited successfully.")
-            return redirect('agents')
-        
-        context = {
-            'agent': agent,
-            'form': form,
         }
         return render(request, self.template_name, context)
     
@@ -128,52 +93,4 @@ class ReactivateCoach(LoginRequiredMixin, View):
         coach.save()
         messages.info(request, f"{coach.full_name} has been reactivated successfully.")
         return redirect('coaches')
-    
-
-
-
-
-
-
-
-# Coaches' Views
-@login_required
-def coaches_list(request):
-    coaches = Coach.objects.all()
-    form = CoachForm()
-
-    # Registering a coach
-    if request.method == 'POST':
-        form = CoachForm(request.POST, request.FILES)
-        if form.is_valid():
-            coach = form.save(commit=False)
-            coach.save()
-            messages.success(request, f"{coach.full_name} registered and saved successfully.")
-            return redirect('coaches')
-        else:
-            form = CoachForm()
-
-    context = {
-        'coaches': coaches,
-        'form': CoachForm()
-    }
-    return render(request, 'app/coaches/coaches_list.html', context)
-
-
-@login_required
-def deactivate_coach(request, coach_id):
-    coach = get_object_or_404(Coach, id=coach_id)
-    coach.is_active = False
-    coach.date_of_separation = timezone.now()
-    coach.save()
-    messages.info(request, f"{coach.full_name} has been deactivated successfully.")
-    return redirect('coaches')
-
-@login_required
-def reactivate_coach(request, coach_id):
-    coach = get_object_or_404(Coach, id=coach_id)
-    coach.is_active = True
-    coach.date_of_reactivation = timezone.now()
-    coach.save()
-    messages.info(request, f"{coach.full_name} has been reactivated successfully.")
-    return redirect('coaches')    
+      
