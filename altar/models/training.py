@@ -20,9 +20,6 @@ class TrainingSession(models.Model):
     @property
     def ref_no(self):
         return "ON-" + str(self.id).zfill(4)
-
-    # def __str__(self):
-    #     return self.ref_no
     
 
 class Attendance(models.Model):

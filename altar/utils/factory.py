@@ -2,9 +2,10 @@ from datetime import datetime, date
 
 from django.apps import apps
 from django.core.paginator import Paginator
-from django.db.models import Q, Model
+from django.db.models import Q, Model, Max
+from django.db import models
 
-from altar.utils.training import TrainingAttributes
+from altar.utils.training import TrainingAttributes, SessionAttributes
 
 # Create Here
 class OrdersData:
@@ -17,6 +18,7 @@ class OrdersData:
     _query = Q(pk__isnull=False)
     _data_type = ''
     _selected_related = []
+    _prefetch_related = []
     _annotations = None
     _paginate: bool = True
     _jsonify: bool = True
@@ -39,6 +41,7 @@ class GetSerializedData(OrdersData):
         query (Q): Any filtration created using Q object
         data_type (str): Schema name to extract data from
         select_related (list): List of select related fields
+        prefetch_related (list): List of prefetch related fields
         annotate (None): Any annotations that require addition
         (default is False)
 
@@ -52,6 +55,7 @@ class GetSerializedData(OrdersData):
                  query: Q,
                  data_type: str,
                  select_related: list,
+                 prefetch_related: list,
                  annotate: None = None,
                  paginated: bool = True,
                  jsonify: bool = False,
@@ -64,6 +68,7 @@ class GetSerializedData(OrdersData):
         self._query = query
         self._data_type = data_type
         self._select_related = select_related
+        self._prefetch_related = prefetch_related
         self._annotations = annotate
         self._paginate = paginated
         self._jsonify = jsonify
@@ -74,14 +79,21 @@ class GetSerializedData(OrdersData):
 
     def get_model(self) -> Model:
         model = apps.get_model(app_label=self._app_name, model_name=self._model_name)
+        
         if isinstance(self._annotations, dict):
-            return model.objects.filter(self._query).annotate(
+            queryset = model.objects.filter(self._query).annotate(
                 **self._annotations
-            ).select_related(*self._select_related).order_by("-pk").distinct() if self._distinct else model.objects.filter(self._query).annotate(
-                **self._annotations
-            ).select_related(*self._select_related).order_by("-pk").distinct()
+            )
+        else:
+            queryset = model.objects.filter(self._query)
 
-        return model.objects.filter(self._query).select_related(*self._select_related).order_by("-pk").distinct() if self._distinct else model.objects.filter(self._query).select_related(*self._select_related).order_by("-pk")
+        if self._select_related:
+            queryset = queryset.select_related(*self._select_related)
+
+        if self._prefetch_related:
+            queryset = queryset.prefetch_related(*self._prefetch_related)
+
+        return queryset.order_by("-pk").distinct() if self._distinct else queryset.order_by("-pk")
 
     def check_related_field(self, key, value: str, data, d_dict):
         new_data = data
@@ -94,6 +106,16 @@ class GetSerializedData(OrdersData):
 
     def get_data(self):
         return self.pagination()
+    
+    def get_m2m_count(self, instance, field_name):
+        # Helper method to get the count of ManyToManyField relationships
+        m2m_field = getattr(instance, field_name)
+        return m2m_field.count()
+    
+    def get_last_recorded_at(self, instance):
+        # Helper method to get the last recorded date
+        last_recorded_at = instance.aggregate(Max('session_attendance__recorded_at'))['session_attendance__recorded_at__max']
+        return last_recorded_at
 
     def pagination(self) -> None:
         rows = self._request.GET.get('rows') or 25
@@ -146,7 +168,14 @@ class GetSerializedData(OrdersData):
             for attr in attrs.items():
                 key = attr[0]
                 value = attr[1]
-                if hasattr(data, value):
+                if value == 'get_last_recorded_at':
+                    # Call the helper method to get the last recorded date
+                    last_attendance = data.session_attendance.last()
+                    d_dict[key] = last_attendance.recorded_at if last_attendance else 'Not yet recorded'
+                elif value == 'get_players_count':
+                    # Call the helper method to get the count of ManyToManyField
+                    d_dict[key] = self.get_m2m_count(data, 'players')
+                elif hasattr(data, value):
                     new_value = getattr(data, value)
                     if self._jsonify:
                         if isinstance(new_value, datetime):
@@ -179,5 +208,22 @@ class DataFactory(object):
         if self.data_type == "trainings":
             self.attrs = TrainingAttributes().attrs
 
-            
+        elif self.data_type == "sessions":
+            self.attrs = SessionAttributes().attrs
+
         return self.attrs
+    
+
+
+
+
+    # def get_model(self) -> Model:
+    #     model = apps.get_model(app_label=self._app_name, model_name=self._model_name)
+    #     if isinstance(self._annotations, dict):
+    #         return model.objects.filter(self._query).annotate(
+    #             **self._annotations
+    #         ).select_related(*self._select_related).order_by("-pk").distinct() if self._distinct else model.objects.filter(self._query).annotate(
+    #             **self._annotations
+    #         ).select_related(*self._select_related).order_by("-pk").distinct()
+
+    #     return model.objects.filter(self._query).select_related(*self._select_related).order_by("-pk").distinct() if self._distinct else model.objects.filter(self._query).select_related(*self._select_related).order_by("-pk")

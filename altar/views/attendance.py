@@ -1,26 +1,51 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordResetView
-from django.contrib.messages.views import SuccessMessageMixin
 from django.http import JsonResponse
-from django.utils import timezone
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 
+from altar.utils.expressions import SELECT_RELATED_TRAININGS, PREFETCH_RELATED_TRAININGS
+from altar.utils.factory import GetSerializedData
 from altar.forms.training import AttendanceForm
 from altar.models.players import Player
 from altar.models.training import Attendance, TrainingSession
 
 # Create your views here.
-# Attendance Views
-@login_required
-def attendance_management(request):
-    sessions = TrainingSession.objects.all()
 
-    context = {
-        'sessions': sessions,
-    }
-    return render(request, 'app/attendance/attendance_management.html', context)
+class AttendanceManagement(LoginRequiredMixin, View):
+    template_name = 'app/attendance/attendance_management.html'
+
+    def get(self, request):
+        if "action" in request.GET.keys():
+            action = request.GET["action"]
+            if action == "filter":
+                date = request.GET.get('date')
+
+                date = date.split(' - ')
+                if date:
+                    start = date[0]
+                    end = date[1]
+                    if start == end:
+                        filter = Q(Q(date=start))
+                    else:
+                        filter = Q(date__range=date)
+
+                response = GetSerializedData(request=request, app_name="altar", model_name="TrainingSession",
+                                             query=filter, data_type='sessions', select_related=SELECT_RELATED_TRAININGS,
+                                             prefetch_related=PREFETCH_RELATED_TRAININGS, paginated=True, jsonify=True)
+                
+                return JsonResponse(
+                    {
+                        **response.response,
+                    }
+                )
+        
+        context = {
+            'sessions': TrainingSession.objects.all().order_by("-id"),
+        }
+        return render(request, self.template_name, context)
 
 
 @login_required

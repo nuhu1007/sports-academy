@@ -2,37 +2,25 @@
 {% load static %}
 {% block content %}
 
-<style>
-    .search-container {
-      margin-bottom: 20px;
-    }
-  
-    #searchInput {
-      width: 300px;
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-</style>
+<!-- jQuery -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
+<!-- SELECT2 -->
+<link rel="stylesheet" href="{% static '/js/select2/select2.min.css' %}">
+<script src="{% static '/js/select2/select2.min.js' %}"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
+
+<!-- DATERANGEPICKER -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 
 <!-- START: Main Content-->
 <main>
     <div class="container-fluid site-width">
-        <!-- START: Breadcrumbs-->
-        <!-- <div class="row ">
-            <div class="col-12  align-self-center">
-                <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
-
-                    <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
-                        <li class="breadcrumb-item">Home</li>
-                        <li class="breadcrumb-item">Building</li>
-                        <li class="breadcrumb-item active"><a>Visitors</a></li>
-                    </ol>
-                </div>
-            </div>
-        </div> -->
-        <!-- END: Breadcrumbs-->
         
         <!-- START: Card Data -->
         <div class="row">
@@ -40,10 +28,20 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">                             
                         <h4 class="card-title" style="font-size:20px;"><i class="fas fa-list mr-2"></i> Attendance Records</h4> 
-
-                        <input type="text" style="position:relative; border-radius:30px;" id="searchInput" placeholder="Search...">
                     </div>
-                    <div class="card-body">                      
+                    <div class="card-body">   
+
+                        {% block messages %}
+                        {% include 'partials/messages.html' %}
+                        {% endblock messages %}
+
+                        <div class="row g-3 mb-4 d-flex">
+                            <div class="col-lg-4 col-sm-12 col-md-4">
+                              <p><b>Filter by date</b></p>
+                              <input type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Select Date">
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table id="example" class="display table dataTable table-striped table-bordered" >
                                 <thead>
@@ -52,30 +50,15 @@
                                         <th style="font-size: 15px;">Training Session</th>
                                         <th style="font-size: 15px;">Players Attended</th>
                                         <th style="font-size: 15px;">Date Recorded</th>
-                                        <th style="font-size: 15px;">Details</th>
+                                        <th style="font-size: 15px;">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {% for session in sessions %}
-                                    <tr>
-                                        <th scope="row">{{ forloop.counter }}</th>
-                                        <td>{{session}}</td>
-                                        <td>{{session.players.count}}</td>
-                                        <td>{% if session.session_attendance.last.recorded_at %} {{session.session_attendance.last.recorded_at}} {% else %} N/A {% endif %}</td>
-                                        <td><a href="{% url 'record_attendance' session.id %}" class="dropdown-item px-2 align-self-center d-flex"><span class="far fa-eye mr-2 h6 mb-0" title="View Details"></span></a></td>
-                                    </tr>
-                                    {% endfor %}
+                                <tbody id="table-notes">
+                                    
                                 </tbody>
                             </table>
-                            {% if messages %}
-                            <div class="messages">
-                                {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }}">
-                                    {{ message }}
-                                </div>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
+                            {% include 'partials/spinner.html' %}
+                            
                         </div>
                     </div>
                 </div> 
@@ -85,22 +68,173 @@
         <!-- END: Card DATA-->
     </div>
 
+
+<!-- SCRIPTS -->
+<script>
+    // Setting daterangepicker
+    $('#datepicker').daterangepicker({
+        autoUpdateInput: true,
+        locale: {
+          format: 'YYYY-MM-DD'
+        },
+        // Setting start date to today
+        startDate: moment().startOf('day'),
+    });
+
+    var state = {
+        enableSelect: false,
+        sessions: [],
+        selectedNotes: [],
+        rows: 15,
+        page: 1,
+        setPage: function (currentPage) {
+          state = {
+            ...state,
+            page: currentPage
+          };
+        },
+        setRows: function (row) {
+          state = {
+            ...state,
+            rows: !isNaN(row) ? row : 0
+          };
+          state.events("rowChanged", row);
+        },
+        setSelectedNotes: function (data, event) {
+          var new_notes = [];
+          if (event) {
+            new_notes = state.sessions.filter(note => note.pk === data);
+          } else {
+            new_notes = state.selectedNotes.filter(note => note.pk !== data);
+          }
+
+          state = {
+            ...state,
+            selectedNotes: new_notes
+          }
+          state.events("notesAdded");
+        },
+        setSelectedNotesAll: function (status) {
+          if (status) {
+            state = {
+              ...state,
+              selectedNotes: state.sessions
+            }
+          } else {
+            state = {
+              ...state,
+              selectedNotes: []
+            }
+          }
+          state.events("notesAdded");
+        },
+        setNotes: function (data) {
+          state = {
+            ...state,
+            sessions: data
+          }
+        },
+        setEnableSelect: function (value) {
+          state = {
+            ...state,
+            enableSelect: value
+          };
+          state.events('enabled', value);
+        },
+        
+        fetchData: function (data) {
+          $('#spinner').show();
+          var {page, rows} = state;
+          var date = $('#datepicker').val();
+
+          var query = '?action=filter&date=' + date + '&page=' + page + '&rows=' + rows;
+
+          $.ajax({
+            url: query,
+            type: 'GET',
+            data: data ? {data: JSON.stringify(data)} : undefined,
+
+            success: function (data) {
+              console.log("DATAAA:", data)
+              $('#spinner').hide();
+              
+              if (data?.action) {
+
+              } else {
+                let options = '';
+                state.setNotes(data.sessions);
+                if (data.sessions.length > 0) {
+                  data.sessions.forEach(function (loader) {
+                    console.log("LOADER OBJECT: ", loader)
+                    options += generate_table({
+                      loader: loader,
+                    });
+                  });
+                  options += '<tr>';
+                  options += '</td>';
+                  options += '</tr>';
+                } else {
+                  options += '<tr><td colspan="17">No Attendance Records Today</td></tr>'
+                }
+                $('#table-notes').html(options);
+                $('#remove').remove();
+                $('#paginator').append(element);
+              }
+            }
+          });
+        },
+
+        events: function (event, data) {
+          if (event === "enabled") {
+          } else if (event === "rowChanged") {
+            state.fetchData();
+          } else if (event === "notesAdded") {
+          }
+        }
+    };
+
+    var {fetchData, setEnableSelect, setNotes, setPage, setSelectedNotesAll, setSelectedNotes, setRows} = state;
+
+    $('#datepicker').change(function () {
+        fetchData();
+    });
+
+    // Initial fetch data
+    fetchData();
+
+    // Next page function
+    function nextPage(n_page) {
+        setPage(n_page);
+        fetchData();
+    }
+
+    // URLs
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_view = protocol + "//" + host + "/record_attendance/";
+   
+    function generate_table({loader, total_value, counter} = {}) {
+        var {enableSelect} = state;
+        let options = '';
+        options += '<tr>';
+        options += '<th scope="row">' + '#' + '</th>';
+        options += '<td>' + loader.training_branch + ' branch: ' + loader.date + '</td>';
+        options += '<td>' + loader.players_count + '</td>';
+        options += '<td>' + loader.last_recorded_at + '</td>';
+        options += '<td>';
+        options += '<a href="' + url_view + loader.pk + '" class="dropdown-item" title="View Details"><i class="dropdown-icon fa fa-eye"></i> </a>';
+        options += '</td>';
+        options += '</tr>';
+        return options;
+    }
+
+</script>
+
+
+
 </main>
 <!-- END: Content-->
 
-
-<!-- SCRIPTS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-    $("#searchInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("table tbody tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-        });
-    });
-    });
-</script>
 
 
 {% endblock %}

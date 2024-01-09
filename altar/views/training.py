@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -52,7 +51,7 @@ class TrainingManagement(LoginRequiredMixin, View):
 
                 response = GetSerializedData(request=request, app_name="altar", model_name="TrainingSession",
                                              query=filter, data_type='trainings', select_related=SELECT_RELATED_TRAININGS,
-                                             paginated=True, jsonify=True)
+                                             prefetch_related=None, paginated=True, jsonify=True)
                 
                 return JsonResponse(
                     {
@@ -80,11 +79,6 @@ class TrainingManagement(LoginRequiredMixin, View):
             'form': form
         }
         return render(request, self.template_name, context)
-    
-
-class TrainingDetails(LoginRequiredMixin, View):
-    template_name = 'app/training/training_details.html'
-
 
 
 @login_required
