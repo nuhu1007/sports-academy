@@ -4,7 +4,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Q
-from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
 from altar.models import Coach
@@ -66,7 +65,7 @@ class CoachesView(LoginRequiredMixin, View):
                 messages.success(request, f"Coach edited and saved successfully.")
                 return redirect('coaches')
             else:
-                messages.warning(request, f"Failed to edit.")
+                messages.error(request, f"Failed to edit.")
                 edit_form = CoachForm(instance=coach)
 
         context = {

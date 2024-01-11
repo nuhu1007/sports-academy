@@ -55,7 +55,10 @@
                                         <td> {{player.player_category}} </td>
                                         <td> {{player.player_branch}} </td>
                                         <td> {{player.date_joined}} </td>
-                                        <td><a href="{% url 'player_details' player.id %}" class="dropdown-item px-2 align-self-center d-flex"><span class="far fa-eye mr-2 h6 mb-0" title="View Details"></span></a></td>
+                                        <td>
+                                            <a href="{% url 'player_details' player.id %}" class="btn btn-secondary btn-sm mr-3" title="View Details"><i class="fas fa-eye"></i></a>
+                                            <a href="{% url 'edit_player' player.id %}" class="btn btn-primary btn-sm mr-3" title="Edit"><i class="icon-pencil"></i></a>
+                                        </td>
 
                                         <!-- <td><a href="" class="dropdown-item px-2 align-self-center d-flex"><span class="icon-pencil mr-2 h6 mb-0"></span></a></td>
                                         <td><a href="" class="dropdown-item px-2 text-danger align-self-center d-flex">
