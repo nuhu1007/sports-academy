@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DeleteView
+from django.urls import reverse_lazy
 
 from altar.forms.players import PlayerForm
 from altar.models.branch import Branches
@@ -42,6 +44,7 @@ def players_list(request):
         'players': players,
     }
     return render(request, 'app/players/players_list.html', context)
+    
 
 
 @login_required
@@ -82,3 +85,11 @@ class EditPlayer(LoginRequiredMixin, View):
             'form': form,
         }
         return render(request, self.template_name, context)
+    
+
+class DeletePlayer(LoginRequiredMixin, View):
+    def post(self, request, player_id):
+        player = get_object_or_404(Player, id=player_id)
+        player.delete()
+        messages.info(request, f"{player.full_name} deleted successfully.")
+        return redirect('players')

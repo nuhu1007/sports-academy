@@ -58,12 +58,39 @@
                                         <td>
                                             <a href="{% url 'player_details' player.id %}" class="btn btn-secondary btn-sm mr-3" title="View Details"><i class="fas fa-eye"></i></a>
                                             <a href="{% url 'edit_player' player.id %}" class="btn btn-primary btn-sm mr-3" title="Edit"><i class="icon-pencil"></i></a>
+                                            <a href="" data-toggle="modal" data-target="#delete{{ player.id }}" class="btn btn-danger btn-sm mr-3" title="Delete"><i class="fas fa-trash"></i></a>
                                         </td>
-
-                                        <!-- <td><a href="" class="dropdown-item px-2 align-self-center d-flex"><span class="icon-pencil mr-2 h6 mb-0"></span></a></td>
-                                        <td><a href="" class="dropdown-item px-2 text-danger align-self-center d-flex">
-                                                <span class="fas fa-ban mr-2 h6  mb-0"></span></a></td> -->
                                     </tr>
+
+
+                                    <!-- Delete Player Modal -->
+                                    <div class="modal fade" id="delete{{ player.id }}">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">
+                                                        <i class="fas fa-trash mr-2"></i> Delete Player
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <i class="icon-close"></i>
+                                                    </button>
+                                                </div>
+                                                <form class="add-note-form" action="{% url 'delete_player' player.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="edit_category" value="true">
+                                                    <input type="hidden" name="player_id" value="{{ player.id }}">
+                                                    <div class="modal-body">    
+                                                        <p>Are you sure you want to delete {{player.full_name}}?</p>                                           
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     {%endfor%}
                                 </tbody>
                                 <tfoot>
@@ -75,7 +102,7 @@
                                         <th>Category</th>
                                         <th>Branch</th>
                                         <th>Date Joined</th>
-                                        <th>View</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -91,16 +118,8 @@
 <!-- END: Content-->
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-    $("#searchInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("table tbody tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-        });
-    });
-    });
+
 </script>
 
 <!-- START: Template JS-->

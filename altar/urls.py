@@ -36,6 +36,7 @@ urlpatterns = [
     path('players/', players.players_list, name='players'),
     path('player-details/<int:player_id>/', players.player_details, name='player_details'),
     path('edit-player/<int:player_id>/', players.EditPlayer.as_view(), name='edit_player'),
+    path('delete-player/<int:player_id>/', players.DeletePlayer.as_view(), name='delete_player'),
 
     # Coach URLs
     path('coaches/', coaches.CoachesView.as_view(), name='coaches'),
