@@ -18,7 +18,6 @@ from altar.models.players import Player
 @login_required
 def add_player(request):
     form = PlayerForm(request.POST, request.FILES)
-    
     if request.method == 'POST':
         if form.is_valid():
             player = form.save(commit=False)
@@ -35,26 +34,27 @@ def add_player(request):
     }
     return render(request, 'app/players/add_player.html', context)
 
-
-@login_required
-def players_list(request):
-    players = Player.objects.all()
-
-    context = {
-        'players': players,
-    }
-    return render(request, 'app/players/players_list.html', context)
     
+class PlayersList(LoginRequiredMixin, View):
+    template_name = 'app/players/players_list.html'
+
+    def get(self, request):
+
+        context = {
+            'players': Player.objects.all()
+        }
+        return render(request, self.template_name, context)
 
 
-@login_required
-def player_details(request, player_id):
-    player = get_object_or_404(Player, id=player_id)
+class PlayerDetails(LoginRequiredMixin, View):
+    template_name = 'app/players/player_details.html'
 
-    context = {
-        'player': player
-    }
-    return render(request, 'app/players/player_details.html', context)
+    def get(self, request, player_id):
+
+        context = {
+            'player': get_object_or_404(Player, id=player_id)
+        }
+        return render(request, self.template_name, context)
 
 
 class EditPlayer(LoginRequiredMixin, View):
