@@ -1,11 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DeleteView
-from django.urls import reverse_lazy
 
 from altar.forms.players import PlayerForm
 from altar.models.branch import Branches
@@ -15,24 +12,36 @@ from altar.models.players import Player
 # Create your views here.
 
 # Players' Views
-@login_required
-def add_player(request):
-    form = PlayerForm(request.POST, request.FILES)
-    if request.method == 'POST':
+class AddPlayer(LoginRequiredMixin, View):
+    template_name = 'app/players/add_player.html'
+
+    def get(self, request):
+        form = PlayerForm()
+
+        context = {
+            'form': form,
+            'categories': Categories.objects.all(),
+            'branches': Branches.objects.all(),
+        }
+        return render(request, self.template_name, context)
+    
+    def post(self, request):
+        form = PlayerForm(request.POST, request.FILES)
         if form.is_valid():
             player = form.save(commit=False)
             player.save()
             messages.success(request, f"{player.full_name} has been registered and saved successfully.")
             return redirect('players')
         else:
+            messages.warning(request, f"{form.errors}")
             form = PlayerForm()
 
-    context = {
-        'form': form,
-        'categories': Categories.objects.all(),
-        'branches': Branches.objects.all(),
-    }
-    return render(request, 'app/players/add_player.html', context)
+        context = {
+            'form': form,
+            'categories': Categories.objects.all(),
+            'branches': Branches.objects.all(),
+        }
+        return render(request, self.template_name, context)
 
     
 class PlayersList(LoginRequiredMixin, View):

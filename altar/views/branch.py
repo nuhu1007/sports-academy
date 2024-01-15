@@ -4,8 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, OuterRef, Subquery, IntegerField
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
 
 from altar.forms.branch import BranchForm
 from altar.models.branch import Branches
@@ -53,12 +51,6 @@ def branches(request):
     }
     return render(request, 'app/branches.html', context)
 
-@require_POST
-@login_required
-def delete_branch(request, branch_id):
-    branch = get_object_or_404(Branches, pk=branch_id)
-    branch.delete()
-    return JsonResponse({'message': 'Branch deleted successfully.'})
 
 class DeleteBranch(LoginRequiredMixin, View):
     def post(self, request, branch_id):

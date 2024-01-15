@@ -7,11 +7,11 @@ from altar.models.players import Player
 # Create here
 class PlayerForm(forms.ModelForm):
     full_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Full Name', 'class':'form-control'}))
-    date_of_birth = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Date of Birth', 'class':'form-control'}))
+    date_of_birth = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Date of Birth', 'class':'form-control'}), label='Date of Birth',)
     home_address = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Home Address', 'class':'form-control'}))
     school_attended = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'School Attended', 'class':'form-control'}))
     player_position = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Player Position', 'class':'form-control'}))
-    player_image = forms.ImageField(required=True, widget=forms.ClearableFileInput(attrs={'class':'custom-image-field'}))
+    player_image = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'class':'custom-image-field'}))
     birth_certificate = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'class':'form-control'}))
     player_category = forms.ModelChoiceField(required=True, queryset=Categories.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Choose a category...'}))
     player_branch = forms.ModelChoiceField(required=True, queryset=Branches.objects.all(), widget=forms.Select(attrs={'class':'my-select', 'placeholder':'Choose a branch...'}))

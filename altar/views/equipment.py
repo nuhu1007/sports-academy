@@ -1,18 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordResetView
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import TemplateView
-from django.urls import reverse_lazy
-from django.db.models import Count, OuterRef, Subquery, IntegerField
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-from django.utils import timezone
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from altar.forms.equipment import EquipmentForm
-
 from altar.models.equipment import Equipments
 
 # Create your views here.
@@ -54,10 +46,9 @@ def equipments(request):
     }
     return render(request, 'app/equipments.html', context)
 
-
-@require_POST
-@login_required
-def delete_equipment(request, equipment_id):
-    equipment = get_object_or_404(Equipments, pk=equipment_id)
-    equipment.delete()
-    return JsonResponse({'message': 'Equipment deleted successfully.'})
+class DeleteEquipment(LoginRequiredMixin, View):
+    def post(self, request, equipment_id):
+        equipment = get_object_or_404(Equipments, id=equipment_id)
+        equipment.delete()
+        messages.info(request, f"Equipment deleted successfully")
+        return redirect('equipments')

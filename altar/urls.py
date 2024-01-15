@@ -25,15 +25,14 @@ urlpatterns = [
 
     # Equipments URLs
     path('equipments/', equipment.equipments, name='equipments'),
-    path('delete_equipment/<int:equipment_id>', equipment.delete_equipment, name='delete_equipment'),
+    path('delete_equipment/<int:equipment_id>', equipment.DeleteEquipment.as_view(), name='delete_equipment'),
 
     # Branches URLs
     path('branches/', branch.branches, name='branches'),
     path('delete_branch/<int:branch_id>', branch.DeleteBranch.as_view(), name='delete_branch'),
-    # path('delete_branch/<int:branch_id>/', branch.delete_branch, name='delete_branch'),
 
     # Player URLs
-    path('add-player/', players.add_player, name='add_player'),
+    path('add-player/', players.AddPlayer.as_view(), name='add_player'),
     path('players/', players.PlayersList.as_view(), name='players'),
     path('player-details/<int:player_id>/', players.PlayerDetails.as_view(), name='player_details'),
     path('edit-player/<int:player_id>/', players.EditPlayer.as_view(), name='edit_player'),

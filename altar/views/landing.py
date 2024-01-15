@@ -1,20 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordResetView
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import TemplateView
-from django.urls import reverse_lazy
-from django.db.models import Count, OuterRef, Subquery, IntegerField
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-from django.utils import timezone
 
 from altar.models.branch import Branches
 from altar.models.coaches import Coach
 from altar.models.players import Player
 from altar.models.training import TrainingSession
+from altar.models.equipment import Equipments
 
 # Create your views here.
 
@@ -37,6 +28,9 @@ def dashboard(request):
     sessions = TrainingSession.objects.all()
     sessions_count = len(sessions)
 
+    equipments = Equipments.objects.all()
+    equipment_count = len(equipments)
+
     context = {
         'coach_count': coach_count,
         'player_count': player_count,
@@ -44,5 +38,6 @@ def dashboard(request):
         'coaches': coaches,
         'branches_count': branches_count,
         'sessions_count': sessions_count,
+        'equipment_count': equipment_count,
     }
     return render(request, 'app/dashboard.html', context)
