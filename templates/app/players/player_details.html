@@ -34,12 +34,24 @@
                                     </tr>
                                     <tr>
                                         <th>Player Image:</th>
-                                        <td><a href="{{player.player_image.url}}" download target="_blank" style="color: red;">{{ player.player_image.name }}</a></td>
+                                        <td>
+                                            {% if player.player_image %}
+                                                <a href="{{ player.player_image.url }}" download target="_blank" style="color: red;">{{ player.player_image.name }}</a>
+                                            {% else %}
+                                                None
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Player Birth Certificate:</th>
-                                        <td><a href="{{player.birth_certificate.url}}" download target="_blank" style="color: red;">{{ player.birth_certificate.name }}</a></td>
-                                    </tr>
+                                        <td>
+                                            {% if player.birth_certificate %}
+                                                <a href="{{ player.birth_certificate.url }}" download target="_blank" style="color: red;">{{ player.birth_certificate.name }}</a>
+                                            {% else %}
+                                                None
+                                            {% endif %}
+                                        </td>
+                                    </tr>                                    
                                     <tr>
                                         <th>School Attended:</th>
                                         <td>{{ player.school_attended }}</td>
