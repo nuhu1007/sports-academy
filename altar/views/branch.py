@@ -1,18 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordResetView
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import TemplateView
-from django.urls import reverse_lazy
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, OuterRef, Subquery, IntegerField
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from django.utils import timezone
 
 from altar.forms.branch import BranchForm
-
 from altar.models.branch import Branches
 from altar.models.coaches import Coach
 from altar.models.players import Player
@@ -64,3 +59,10 @@ def delete_branch(request, branch_id):
     branch = get_object_or_404(Branches, pk=branch_id)
     branch.delete()
     return JsonResponse({'message': 'Branch deleted successfully.'})
+
+class DeleteBranch(LoginRequiredMixin, View):
+    def post(self, request, branch_id):
+        branch = get_object_or_404(Branches, id=branch_id)
+        branch.delete()
+        messages.info(request, f"Branch deleted successfully")
+        return redirect('branches')

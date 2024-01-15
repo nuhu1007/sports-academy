@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -48,13 +46,6 @@ def categories(request):
         'form': form,
     }
     return render(request, 'app/categories.html', context)
-
-@require_POST
-@login_required
-def delete_category(request, category_id):
-    category = get_object_or_404(Categories, pk=category_id)
-    category.delete()
-    return JsonResponse({'message': 'Category deleted successfully.'})
 
 
 class DeleteCategory(LoginRequiredMixin, View):

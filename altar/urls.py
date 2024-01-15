@@ -22,7 +22,6 @@ urlpatterns = [
     # Categories URLs
     path('categories/', category.categories, name='categories'),
     path('delete-category/<int:category_id>', category.DeleteCategory.as_view(), name='delete_category'),
-    # path('delete_category/<int:category_id>/', category.delete_category, name='delete_category'),
 
     # Equipments URLs
     path('equipments/', equipment.equipments, name='equipments'),
@@ -30,7 +29,8 @@ urlpatterns = [
 
     # Branches URLs
     path('branches/', branch.branches, name='branches'),
-    path('delete_branch/<int:branch_id>/', branch.delete_branch, name='delete_branch'),
+    path('delete_branch/<int:branch_id>', branch.DeleteBranch.as_view(), name='delete_branch'),
+    # path('delete_branch/<int:branch_id>/', branch.delete_branch, name='delete_branch'),
 
     # Player URLs
     path('add-player/', players.add_player, name='add_player'),

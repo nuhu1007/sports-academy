@@ -68,7 +68,7 @@
                                                     {% csrf_token %}
                                                     <input type="hidden" name="category_id" value="{{ category.id }}">
                                                     <div class="modal-body">    
-                                                        <p>Are you sure you want to delete {{category.category}}?</p>                                           
+                                                        <p>Are you sure you want to delete: {{category.category}}?</p>                                           
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
