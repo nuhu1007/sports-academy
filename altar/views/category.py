@@ -1,18 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordResetView
-from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Count
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from django.utils import timezone
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from altar.forms.category import CategoryForm
-
 from altar.models.category import Categories
-
 
 # Create your views here.
 
@@ -59,3 +55,11 @@ def delete_category(request, category_id):
     category = get_object_or_404(Categories, pk=category_id)
     category.delete()
     return JsonResponse({'message': 'Category deleted successfully.'})
+
+
+class DeleteCategory(LoginRequiredMixin, View):
+    def post(self, request, category_id):
+        category = get_object_or_404(Categories, id=category_id)
+        category.delete()
+        messages.info(request, f"Category deleted successfully.")
+        return redirect('categories')

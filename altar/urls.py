@@ -21,7 +21,8 @@ urlpatterns = [
 
     # Categories URLs
     path('categories/', category.categories, name='categories'),
-    path('delete_category/<int:category_id>/', category.delete_category, name='delete_category'),
+    path('delete-category/<int:category_id>', category.DeleteCategory.as_view(), name='delete_category'),
+    # path('delete_category/<int:category_id>/', category.delete_category, name='delete_category'),
 
     # Equipments URLs
     path('equipments/', equipment.equipments, name='equipments'),
