@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.views import View
 
 from altar.models.branch import Branches
 from altar.models.coaches import Coach
@@ -8,9 +9,11 @@ from altar.models.training import TrainingSession
 from altar.models.equipment import Equipments
 
 # Create your views here.
+class IndexView(View):
+    template_name = 'index.html'
 
-def index(request):
-    return render(request, 'index.html')
+    def get(self, request):
+        return render(request, self.template_name)
 
 
 # Dashboard View

@@ -14,7 +14,7 @@ urlpatterns = [
     path('logout/', authentication.logout, name='logout'),
 
     # Index URLs
-    path("", landing.index, name='index'),
+    path("", landing.IndexView.as_view(), name='index'),
 
     # Dashboard URLs
     path('dashboard/', landing.dashboard, name='dashboard'),
