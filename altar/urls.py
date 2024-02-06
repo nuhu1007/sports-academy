@@ -17,7 +17,7 @@ urlpatterns = [
     path("", landing.IndexView.as_view(), name='index'),
 
     # Dashboard URLs
-    path('dashboard/', landing.dashboard, name='dashboard'),
+    path('dashboard/', landing.DashboardView.as_view(), name='dashboard'),
 
     # Categories URLs
     path('categories/', category.categories, name='categories'),
