@@ -80,24 +80,33 @@ class TrainingManagement(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context)
 
+class TrainingDetails(LoginRequiredMixin, View):
+    template_name = 'app/training/training_details.html'
 
-@login_required
-def training_details(request, training_id):
-    training = get_object_or_404(TrainingSession, id=training_id)
-    form = TrainingSessionExtrasForm(instance=training)
+    def get(self, request, training_id):
+        training = get_object_or_404(TrainingSession, id=training_id)
+        form = TrainingSessionExtrasForm(instance=training)
 
-    # Adding training notes & highlights
-    if request.method == 'POST':
-        form = TrainingSessionExtrasForm(request.POST, request.FILES, instance=training)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"Training session has been updated successfully.")
-            return redirect('training_details', training_id=training.id)
-        else:
-            form = TrainingSessionExtrasForm()
-
-    context = {
+        context = {
         'training': training,
         'form': form
-    }
-    return render(request, 'app/training/training_details.html', context)
+        }
+        return render(request, self.template_name, context)
+    
+    def post(self, request, training_id):
+        training = get_object_or_404(TrainingSession, id=training_id)
+        form = TrainingSessionExtrasForm(instance=training)
+        if request.method == 'POST':
+            form = TrainingSessionExtrasForm(request.POST, request.FILES, instance=training)
+            if form.is_valid():
+                form.save()
+                messages.success(request, f"Training session has been updated successfully.")
+                return redirect('training_details', training_id=training.id)
+            else:
+                form = TrainingSessionExtrasForm()
+
+        context = {
+        'training': training,
+        'form': form
+        }
+        return render(request, self.template_name, context)

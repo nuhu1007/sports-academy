@@ -45,7 +45,7 @@ urlpatterns = [
 
     # Training URLs
     path('training-management/', training.TrainingManagement.as_view(), name='training_management'),
-    path('training_details/<int:training_id>/', training.training_details, name='training_details'),
+    path('training_details/<int:training_id>/', training.TrainingDetails.as_view(), name='training_details'),
 
     # Attendance URLs
     path('attendance-management/', attendance.AttendanceManagement.as_view(), name='attendance_management'),
