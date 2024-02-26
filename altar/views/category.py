@@ -11,13 +11,21 @@ from altar.models.category import Categories
 # Create your views here.
 
 # Category View
-@login_required
-def categories(request):
-    categories = Categories.objects.annotate(player_count=Count('player_category'))
-    form = CategoryForm()
+class CategoriesView(LoginRequiredMixin, View):
+    template_name = 'app/categories.html'
 
-    # Creating or Editing a category
-    if request.method == 'POST':
+    def get(self, request):
+        categories = Categories.objects.annotate(player_count=Count('player_category'))
+        form = CategoryForm()
+
+        context = {
+            'form': CategoryForm(),
+            'categories': Categories.objects.annotate(player_count=Count('player_category'))
+        }
+        return render(request, self.template_name, context)
+    
+    def post(self, request):
+        form = CategoryForm(request.POST)
         if 'add_category' in request.POST:  # Check if the form is for adding a category
             form = CategoryForm(request.POST)
             if form.is_valid():
@@ -28,7 +36,7 @@ def categories(request):
             else:
                 messages.error(f"Failed to add.")
                 form = CategoryForm()
-            
+
         elif 'edit_category' in request.POST:  # Check if the form is for editing a category
             category_id = request.POST.get('category_id')
             category = get_object_or_404(Categories, pk=category_id)
@@ -41,11 +49,10 @@ def categories(request):
                 messages.error(request, f"Failed to edit.")
                 edit_form = CategoryForm(instance=category)
 
-    context = {
-        'categories': categories,
-        'form': form,
-    }
-    return render(request, 'app/categories.html', context)
+        context = {
+            'form': form,
+        }
+        return render(request, self.template_name, context)
 
 
 class DeleteCategory(LoginRequiredMixin, View):

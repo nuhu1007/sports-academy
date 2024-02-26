@@ -20,7 +20,7 @@ urlpatterns = [
     path('dashboard/', landing.DashboardView.as_view(), name='dashboard'),
 
     # Categories URLs
-    path('categories/', category.categories, name='categories'),
+    path('categories/', category.CategoriesView.as_view(), name='categories'),
     path('delete-category/<int:category_id>', category.DeleteCategory.as_view(), name='delete_category'),
 
     # Equipments URLs
