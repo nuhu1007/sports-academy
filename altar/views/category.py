@@ -15,8 +15,6 @@ class CategoriesView(LoginRequiredMixin, View):
     template_name = 'app/categories.html'
 
     def get(self, request):
-        categories = Categories.objects.annotate(player_count=Count('player_category'))
-        form = CategoryForm()
 
         context = {
             'form': CategoryForm(),

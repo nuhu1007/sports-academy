@@ -46,6 +46,18 @@ def equipments(request):
     }
     return render(request, 'app/equipments.html', context)
 
+class EquipmentsView(LoginRequiredMixin, View):
+    template_name = 'app/equipments.html'
+
+    def get(self, request):
+
+        context = {
+            'form': EquipmentForm(),
+            'equipments': Equipments.objects.all()
+        }
+        return render(request, self.template_name, context)
+
+
 class DeleteEquipment(LoginRequiredMixin, View):
     def post(self, request, equipment_id):
         equipment = get_object_or_404(Equipments, id=equipment_id)
