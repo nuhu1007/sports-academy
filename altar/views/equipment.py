@@ -57,6 +57,9 @@ class EquipmentsView(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context)
 
+    def post(self, request):
+        ...
+
 
 class DeleteEquipment(LoginRequiredMixin, View):
     def post(self, request, equipment_id):
