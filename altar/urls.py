@@ -24,7 +24,7 @@ urlpatterns = [
     path('delete-category/<int:category_id>', category.DeleteCategory.as_view(), name='delete_category'),
 
     # Equipments URLs
-    path('equipments/', equipment.equipments, name='equipments'),
+    path('equipments/', equipment.EquipmentsView.as_view(), name='equipments'),
     path('delete_equipment/<int:equipment_id>', equipment.DeleteEquipment.as_view(), name='delete_equipment'),
 
     # Branches URLs
