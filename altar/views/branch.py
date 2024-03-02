@@ -52,6 +52,17 @@ def branches(request):
     return render(request, 'app/branches.html', context)
 
 
+class BranchesView(LoginRequiredMixin, View):
+    template_name = 'app/branches.html'
+
+    def get(self, request):
+
+        context = {
+
+        }
+        return render(request, self.template_name, context)
+
+
 class DeleteBranch(LoginRequiredMixin, View):
     def post(self, request, branch_id):
         branch = get_object_or_404(Branches, id=branch_id)
