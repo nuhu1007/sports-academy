@@ -61,7 +61,13 @@ class BranchesView(LoginRequiredMixin, View):
 
         }
         return render(request, self.template_name, context)
+    
+    def post(self, request):
 
+        context = {
+
+        }
+        return render(request, self.template_name, context)
 
 class DeleteBranch(LoginRequiredMixin, View):
     def post(self, request, branch_id):
