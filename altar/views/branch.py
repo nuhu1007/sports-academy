@@ -56,9 +56,15 @@ class BranchesView(LoginRequiredMixin, View):
     template_name = 'app/branches.html'
 
     def get(self, request):
+        # Subquery to get the player count & coach count for each branch
+        player_count_subquery = Player.objects.filter(player_branch=OuterRef('pk')).values('player_branch').annotate(count=Count('*')).values('count')
+        coach_count_subquery = Coach.objects.filter(coaching_branch=OuterRef('pk')).values('coaching_branch').annotate(count=Count('*')).values('count')
+        branches = Branches.objects.annotate(player_count=Subquery(player_count_subquery, output_field=IntegerField()), coach_count=Subquery(coach_count_subquery, output_field=IntegerField()))
+        form = BranchForm()
 
         context = {
-
+            'branches': branches,
+            'form': form,
         }
         return render(request, self.template_name, context)
     
