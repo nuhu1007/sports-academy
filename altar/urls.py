@@ -28,7 +28,7 @@ urlpatterns = [
     path('delete_equipment/<int:equipment_id>', equipment.DeleteEquipment.as_view(), name='delete_equipment'),
 
     # Branches URLs
-    path('branches/', branch.branches, name='branches'),
+    path('branches/', branch.BranchesView.as_view(), name='branches'),
     path('delete_branch/<int:branch_id>', branch.DeleteBranch.as_view(), name='delete_branch'),
 
     # Player URLs
