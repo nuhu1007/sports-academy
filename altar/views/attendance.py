@@ -13,7 +13,6 @@ from altar.models.players import Player
 from altar.models.training import Attendance, TrainingSession
 
 # Create your views here.
-
 class AttendanceManagement(LoginRequiredMixin, View):
     template_name = 'app/attendance/attendance_management.html'
 
