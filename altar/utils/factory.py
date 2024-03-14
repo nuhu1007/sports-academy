@@ -3,7 +3,6 @@ from datetime import datetime, date
 from django.apps import apps
 from django.core.paginator import Paginator
 from django.db.models import Q, Model, Max
-from django.db import models
 
 from altar.utils.training import TrainingAttributes, SessionAttributes
 
