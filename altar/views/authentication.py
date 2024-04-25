@@ -10,8 +10,6 @@ from django.urls import reverse_lazy
 from altar.forms.user import LoginForm
 
 # Create your views here.
-
-# Authentication Views
 def login(request):
     if request.method == 'POST':
         user = authenticate(request, email=request.POST['email'], password=request.POST['password'])
