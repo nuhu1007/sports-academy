@@ -9,6 +9,7 @@ from altar.models.players import Player
 from altar.models.training import TrainingSession
 from altar.models.equipment import Equipments
 
+
 # Create your views here.
 class IndexView(View):
     template_name = 'index.html'
