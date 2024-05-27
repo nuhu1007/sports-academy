@@ -10,7 +10,6 @@ from altar.utils.expressions import SELECT_RELATED_TRAININGS
 from altar.utils.factory import GetSerializedData
 from altar.models.branch import Branches
 from altar.forms.training import TrainingSessionExtrasForm, TrainingSessionForm
-
 from altar.models.training import TrainingSession
 
 # Create your views here.
