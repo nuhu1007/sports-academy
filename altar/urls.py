@@ -6,7 +6,7 @@ from altar.views import attendance, authentication, branch, category, coaches, e
 # Create Here
 urlpatterns = [
     # Authentication URLs
-    path('login/', authentication.login, name='login'),
+    path('login/', authentication.LoginView.as_view(), name='login'),
     path('password-reset', authentication.ResetPasswordView.as_view(), name='password-reset'),
     path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='authentication/password-reset-confirm.html'), name='password-reset-confirm'),
     path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='authentication/password-reset-complete.html'), name='password_reset_complete'),

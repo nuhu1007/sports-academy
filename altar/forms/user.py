@@ -18,10 +18,10 @@ class RegistrationForm(UserCreationForm):
         fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email', 'phone_number')
 
 
-class LoginForm(forms.ModelForm):
+class LoginForm(forms.Form):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder':'Enter your email', 'class':'custom-email-input form-control'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Enter your password', 'class':'prompt srch_explore form-control'}))
 
-    class Meta:
-        model = User
-        fields = ['email', 'password']
+    # class Meta:
+    #     model = User
+    #     fields = ['email', 'password']

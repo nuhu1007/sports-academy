@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, logout as auth_logout, login as au
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
@@ -22,6 +24,36 @@ def login(request):
             return render(request, 'authentication/login.html', {'form':LoginForm()})
     else:
         return render(request, 'authentication/login.html', {'form':LoginForm()})
+    
+
+class LoginView(View):
+    template_name = 'authentication/login.html'
+
+    def get(self, request):
+        form = LoginForm()
+
+        context = {
+            'form': form,
+        }
+        return render(request, self.template_name, context)
+    
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(request, email=form.cleaned_data['email'], password=form.cleaned_data['password'])
+            if user:
+                auth_login(request, user)
+                messages.success(request, f'Successfully logged in!')
+                return redirect('dashboard')
+            else:
+                messages.error(request, f'Invalid email or password.')
+        else:
+            messages.warning(request, f"{form.errors}")
+
+        context = {
+            'form': form,
+        }
+        return render(request, self.template_name, context)
     
 
 @login_required
