@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
@@ -12,20 +11,6 @@ from django.urls import reverse_lazy
 from altar.forms.user import LoginForm
 
 # Create your views here.
-def login(request):
-    if request.method == 'POST':
-        user = authenticate(request, email=request.POST['email'], password=request.POST['password'])
-        if user:
-            auth_login(request, user)
-            messages.success(request, f'Successfully logged in')
-            return redirect('dashboard')
-        else:
-            messages.error(request, f'Incorrect credentials.')
-            return render(request, 'authentication/login.html', {'form':LoginForm()})
-    else:
-        return render(request, 'authentication/login.html', {'form':LoginForm()})
-    
-
 class LoginView(View):
     template_name = 'authentication/login.html'
 
@@ -56,11 +41,11 @@ class LoginView(View):
         return render(request, self.template_name, context)
     
 
-@login_required
-def logout(request):
-    auth_logout(request)
-    messages.success(request, f"Successfully logged out")
-    return redirect('login')
+class LogoutView(LoginRequiredMixin, View):
+    def get(self, request):
+        auth_logout(request)
+        messages.success(request, f"Successfully logged out!")
+        return redirect('login')
 
 
 class ResetPasswordView(PasswordResetView, SuccessMessageMixin):
