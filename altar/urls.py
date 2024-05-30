@@ -49,7 +49,7 @@ urlpatterns = [
 
     # Attendance URLs
     path('attendance-management/', attendance.AttendanceManagement.as_view(), name='attendance_management'),
-    path('record_attendance/<int:session_id>/', attendance.record_attendance, name='record_attendance'),
+    path('record_attendance/<int:session_id>/', attendance.RecordAttendance.as_view(), name='record_attendance'),
 
     # Game URLs
     path('game-schedule/', games.game_schedule, name='game_schedule'),
