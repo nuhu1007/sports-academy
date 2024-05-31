@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,8 +8,6 @@ from altar.forms.category import CategoryForm
 from altar.models.category import Categories
 
 # Create your views here.
-
-# Category View
 class CategoriesView(LoginRequiredMixin, View):
     template_name = 'app/categories.html'
 

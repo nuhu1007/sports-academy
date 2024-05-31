@@ -9,8 +9,6 @@ from altar.models.category import Categories
 from altar.models.players import Player
 
 # Create your views here.
-
-# Players' Views
 class AddPlayer(LoginRequiredMixin, View):
     template_name = 'app/players/add_player.html'
 
