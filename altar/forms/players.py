@@ -1,6 +1,6 @@
 from django import forms
-from altar.models.branch import Branches
 
+from altar.models.branch import Branches
 from altar.models.category import Categories
 from altar.models.players import Player
 

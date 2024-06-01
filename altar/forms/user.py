@@ -3,7 +3,6 @@ from django.contrib.auth.forms import UserCreationForm
 
 from altar.models.user import User
 
-
 # Create here
 class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'prompt srch_explore'}))
